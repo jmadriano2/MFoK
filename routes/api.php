@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +18,20 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+//get
+// Route::get('admins', 'AdminController@index');
+Route::get('admins', [AdminController::class, 'index']);
+
+// Route::get('admins/{id}','AdminController@show');
+Route::get('admin/{username}', [AdminController::class, 'show']);
+
+// Route::post('admin', 'AdminController@store');
+Route::post('admin', [AdminController::class, 'store']);
+
+Route::put('admin', [AdminController::class, 'store']);
+
+// Route::put('admins', 'AdminController@store');
+
+// Route::delete('admins', 'AdminController@destroy');
+Route::delete('admin/{username}', [AdminController::class, 'destroy']);
