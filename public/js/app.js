@@ -95,6 +95,8 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -154,7 +156,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
-    return {
+    var _ref;
+
+    return _ref = {
       searchQuery: '',
       errors: [],
       error: {
@@ -166,8 +170,9 @@ __webpack_require__.r(__webpack_exports__);
       },
       error_id: "",
       pageSize: 5,
-      pagination: {}
-    };
+      pagination: {},
+      currentPage: 0
+    }, _defineProperty(_ref, "pageSize", 5), _defineProperty(_ref, "errorsInPage", []), _defineProperty(_ref, "filteredErrors", []), _ref;
   },
   created: function created() {
     console.log("yourmom");
@@ -183,9 +188,25 @@ __webpack_require__.r(__webpack_exports__);
         return res.json();
       }).then(function (res) {
         _this.errors = res.data;
+        _this.filteredErrors = res.data; //Update Errors in Page for Pagination
+
+        _this.updateErrorsInPage();
       })["catch"](function (err) {
         return console.log(err);
       });
+    },
+    updateErrorsInPage: function updateErrorsInPage() {
+      var startIndex = this.currentPage * this.pageSize;
+      console.log(startIndex);
+      this.errorsInPage = this.filteredErrors.slice(startIndex, startIndex + this.pageSize); // if there are 0 errors, go back a page
+
+      if (this.errorsInPage.length === 0 && this.currentPage > 0) {
+        this.updatePage(this.currentPage - 1);
+      }
+    },
+    updatePage: function updatePage(pageNumber) {
+      this.currentPage = pageNumber;
+      this.updateErrorsInPage();
     }
   },
   computed: {
@@ -193,13 +214,18 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       if (this.searchQuery) {
-        return this.errors.filter(function (error) {
+        //Save the result of queries in array filteredErrors
+        this.filteredErrors = this.errors.filter(function (error) {
           return _this2.searchQuery.toLowerCase().split(' ').every(function (v) {
             return error.component.toLowerCase().includes(v);
           });
         });
+        this.updateErrorsInPage();
+        return this.errorsInPage;
       } else {
-        return this.errors;
+        this.filteredErrors = this.errors;
+        this.updateErrorsInPage();
+        return this.errorsInPage;
       }
     }
   }
