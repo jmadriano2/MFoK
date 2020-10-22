@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\AdminController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ErrorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,3 +36,18 @@ Route::put('admin', [AdminController::class, 'store']);
 
 // Route::delete('admins', 'AdminController@destroy');
 Route::delete('admin/{username}', [AdminController::class, 'destroy']);
+
+
+Route::middleware('auth:api')->get('/user', function (Request $request) {
+    return $request->user();
+});
+
+Route::get('errors', [ErrorController::class, 'index']);
+
+Route::get('errors/{id}', [ErrorController::class, 'show']);
+
+Route::post('errors', [ErrorController::class, 'store']);
+
+Route::put('errors', [ErrorController::class, 'store']);
+
+Route::delete('errors', [ErrorController::class, 'destroy']);
