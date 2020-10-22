@@ -38,9 +38,6 @@ Route::put('admin', [AdminController::class, 'store']);
 Route::delete('admin/{username}', [AdminController::class, 'destroy']);
 
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
 
 Route::get('errors', [ErrorController::class, 'index']);
 
