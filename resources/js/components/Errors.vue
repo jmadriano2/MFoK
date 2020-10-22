@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>Errors</h2>
+    <h2>CoB Errors</h2>
     <div class="row">
       <div class="search-wrapper panel-heading col-sm-2 mb-2">
         <input
@@ -10,40 +10,16 @@
           placeholder="Search"
         />
       </div>
+      <div class="col-sm-2 mt-2" v-if="filteredDifference">Showing <b>{{ filteredErrors.length }}</b> Results</div>
     </div>
-    <nav aria-label="Page navigation example">
-      <ul class="pagination">
-        <li
-          v-bind:class="[{ disabled: !pagination.prev_page_url }]"
-          class="page-item"
-        >
-          <a
-            class="page-link"
-            href="#"
-            @click="fetchErrors(pagination.prev_page_url)"
-          >
-            Previous
-          </a>
-        </li>
-        <li class="page-item disabled">
-          <a class="page-link text-dark" href="#">
-            Page {{ pagination.current_page }} of {{ pagination.last_page }}
-          </a>
-        </li>
-        <li
-          v-bind:class="[{ disabled: !pagination.next_page_url }]"
-          class="page-item"
-        >
-          <a
-            class="page-link"
-            href="#"
-            @click="fetchErrors(pagination.next_page_url)"
-          >
-            Next
-          </a>
-        </li>
-      </ul>
-    </nav>
+
+    <Pagination
+      v-bind:errors="filteredErrors"
+      v-bind:currentPage="currentPage"
+      v-bind:pageSize="pageSize"
+      v-on:pageUpdate="updatePage">
+    </Pagination>
+
     <div v-if="errors.length">
     <div class="card card-body mb-2 col-sm-6"
       v-bind:key="error.id"
@@ -56,6 +32,8 @@
 </template>
 
 <script>
+import Pagination from './Pagination.vue';
+
 export default {
   data() {
     return {
@@ -77,8 +55,10 @@ export default {
       filteredErrors: [],
     };
   },
+  components: {
+    Pagination,
+  },
   created() {
-    console.log("yourmom");
     this.fetchErrors();
   },
   methods: {
@@ -97,7 +77,6 @@ export default {
     },
     updateErrorsInPage() {
       let startIndex = this.currentPage * this.pageSize;
-      console.log(startIndex);
       this.errorsInPage = this.filteredErrors.slice(startIndex, startIndex + this.pageSize)
 
       // if there are 0 errors, go back a page
@@ -108,7 +87,7 @@ export default {
     updatePage(pageNumber) {
       this.currentPage = pageNumber;
       this.updateErrorsInPage();
-    }
+    },
   },
   computed: {
     resultQuery(){
@@ -127,6 +106,9 @@ export default {
         this.updateErrorsInPage();
         return this.errorsInPage;
       }
+    },
+    filteredDifference(){
+      return this.errors.length - this.filteredErrors.length;
     }
   }
 };
