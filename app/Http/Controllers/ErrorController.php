@@ -30,7 +30,17 @@ class ErrorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $error = $request->isMethod('put') ? Error::findorFail
+        ($request->error_id) : new Error;
+
+        $error->id = $request->input('error_id');
+        $error->component = $request->input('component');
+        $error->resolution = $request->input('resolution');
+        $error->og_resolver = $request->input('og_resolver');
+
+        if($error->save()) {
+            return new ErrorResource($error);
+        }
     }
 
     /**
@@ -41,7 +51,9 @@ class ErrorController extends Controller
      */
     public function show($id)
     {
-        //
+        $error = Error::findOrFail($id);
+
+        return new ErrorResource($error);
     }
     /**
      * Remove the specified resource from storage.
@@ -51,6 +63,10 @@ class ErrorController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $error = Error::findOrFail($id);
+
+        if($error->delete()) {
+            return new ErrorResource($error);
+        }
     }
 }

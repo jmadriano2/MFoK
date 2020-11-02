@@ -41,10 +41,10 @@ Route::delete('admin/{username}', [AdminController::class, 'destroy']);
 
 Route::get('errors', [ErrorController::class, 'index']);
 
-Route::get('errors/{id}', [ErrorController::class, 'show']);
+Route::get('error/{id}', [ErrorController::class, 'show']);
 
-Route::post('errors', [ErrorController::class, 'store']);
+Route::post('error', [ErrorController::class, 'store']);
 
-Route::put('errors', [ErrorController::class, 'store']);
+Route::put('error', [ErrorController::class, 'store']);
 
-Route::delete('errors', [ErrorController::class, 'destroy']);
+Route::delete('error/{id}', [ErrorController::class, 'destroy']);

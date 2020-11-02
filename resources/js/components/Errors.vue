@@ -10,7 +10,7 @@
           placeholder="Search"
         />
       </div>
-      <div class="col-sm-2 mt-2" v-if="filteredDifference">Showing <b>{{ filteredErrors.length }}</b> Results</div>
+      <div class="col-sm-2 mt-2">Showing <b>{{ filteredErrors.length }}</b> Results</div>
     </div>
 
     <Pagination
@@ -25,7 +25,7 @@
       v-bind:key="error.id"
       v-for="error in resultQuery">
       <h3>{{ error.id }}: {{ error.component }}</h3>
-      <p>{{ error.resolution }}</p>
+      <p><strong>{{ error.resolution }}</strong></p>
     </div>
     </div>
   </div>
@@ -107,9 +107,11 @@ export default {
         return this.errorsInPage;
       }
     },
-    filteredDifference(){
-      return this.errors.length - this.filteredErrors.length;
-    }
   }
 };
 </script>
+
+<style scoped>
+.card { background-color: rgba(245, 245, 245, 0.4); }
+.card-header, .card-footer { opacity: .7}
+</style>
