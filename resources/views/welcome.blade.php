@@ -13,11 +13,12 @@
     </script>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:100,600" type="text/css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="css/app.css" >
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        type="text/css">
+    <link rel="stylesheet" href="css/app.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
         integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-        
+
 
     <title>Midas Fountain of Knowledge</title>
 
@@ -27,20 +28,7 @@
 
 <body class="antialiased">
     <div id="app">
-        <navbar></navbar>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-2">
-                    
-                </div>
-                <div class="col-sm-5">
-
-                </div>
-                <div class="col-sm-5">
-                    <errors></errors>
-                </div>
-            </div>
-        </div>
+        <maincontent></maincontent>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
