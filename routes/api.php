@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ErrorController;
+use App\Http\Controllers\CobLogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,13 +39,13 @@ Route::put('admin', [AdminController::class, 'store']);
 Route::delete('admin/{username}', [AdminController::class, 'destroy']);
 
 
-
+//Errors and Resolutions API Routes
 Route::get('errors', [ErrorController::class, 'index']);
-
 Route::get('error/{id}', [ErrorController::class, 'show']);
-
 Route::post('error', [ErrorController::class, 'store']);
-
 Route::put('error', [ErrorController::class, 'store']);
-
 Route::delete('error/{id}', [ErrorController::class, 'destroy']);
+
+
+//Cob Logs API Routes
+Route::get('coblogs', [CobLogController::class, 'index']);

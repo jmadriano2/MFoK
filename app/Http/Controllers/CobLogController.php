@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests;
+use App\Models\CobLog;
+use App\Http\Resources\CobLog as CobLogResource;
 
 class CobLogController extends Controller
 {
@@ -13,7 +16,10 @@ class CobLogController extends Controller
      */
     public function index()
     {
-        //
+        //Get CobLogs
+        $coblogs = CobLog::all();
+
+        return CobLogResource::collection($coblogs);
     }
 
     /**
