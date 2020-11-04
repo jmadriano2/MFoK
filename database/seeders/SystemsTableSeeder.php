@@ -15,7 +15,7 @@ class SystemsTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('logs')->delete();
+        DB::table('cob_logs')->delete();
         DB::table('systems')->delete();
 
         $machines = array('MNF', 'MNP', 'MNQ', 'GBMKILNW');

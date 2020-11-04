@@ -18,7 +18,7 @@ class CreateLogsContainErrorsTable extends Migration
             $table->bigInteger('error_id')->unsigned();
             $table->timestamps();
             
-            $table->foreign('log_id')->references('id')->on('logs');
+            $table->foreign('log_id')->references('id')->on('cob_logs');
             $table->foreign('error_id')->references('id')->on('errors');
             
             $table->primary(['log_id','error_id']);

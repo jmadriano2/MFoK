@@ -13,7 +13,7 @@ class CreateLogsTable extends Migration
      */
     public function up()
     {
-        Schema::create('logs', function (Blueprint $table) {
+        Schema::create('cob_logs', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('system_id')->unsigned();
             $table->string('runday', 6);
@@ -37,6 +37,6 @@ class CreateLogsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('logs');
+        Schema::dropIfExists('cob_logs');
     }
 }

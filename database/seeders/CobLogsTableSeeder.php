@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
 
-class LogsTableSeeder extends Seeder
+class CobLogsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -20,7 +20,7 @@ class LogsTableSeeder extends Seeder
         
         $current_date_time = Carbon::now()->toDateTimeString();
         for ($x = 0; $x < 4; $x++) {
-            DB::table('logs')->insert([
+            DB::table('cob_logs')->insert([
                 'id' => $x + 1,
                 'system_id' => $x + 1,
                 'runday' => '201018',
