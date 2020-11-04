@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-sm navbar-dark bg-info mb-2">
+  <nav class="navbar navbar-expand-sm navbar-dark mb-2 custom">
     <div class="container-fluid">
       <button
         type="button"
@@ -18,9 +18,19 @@
 export default {
   methods: {
     toggleSidebar() {
-        console.log('i was here');
       this.$emit('toggleSidebar');
     },
   },
 };
 </script>
+
+<style scoped>
+.custom {
+    background-color: #d2cbeb;
+}
+
+a {
+    font-weight: bold;
+    color: black !important;
+}
+</style>

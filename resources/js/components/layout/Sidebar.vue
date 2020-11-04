@@ -13,22 +13,19 @@
           data-toggle="collapse"
           aria-expanded="false"
           class="dropdown-toggle"
-          >Home</a
+          >CoB Logs</a
         >
         <ul class="collapse list-unstyled" id="homeSubmenu">
           <li>
-            <a href="#">Home 1</a>
+            <a href="#">View All Logs</a>
           </li>
           <li>
-            <a href="#">Home 2</a>
+            <a href="#">Logs Created by Me</a>
           </li>
           <li>
-            <a href="#">Home 3</a>
+            <a href="#">Create New Log</a>
           </li>
         </ul>
-      </li>
-      <li>
-        <a href="#">About</a>
       </li>
       <li>
         <a
@@ -36,25 +33,28 @@
           data-toggle="collapse"
           aria-expanded="false"
           class="dropdown-toggle"
-          >Pages</a
+          >Errors and Resolutions</a
         >
         <ul class="collapse list-unstyled" id="pageSubmenu">
           <li>
-            <a href="#">Page 1</a>
+            <a href="#">All Errors</a>
           </li>
           <li>
-            <a href="#">Page 2</a>
+            <a href="#">Errors Reported by Me</a>
           </li>
           <li>
-            <a href="#">Page 3</a>
+            <a href="#">Report New Error</a>
           </li>
         </ul>
       </li>
       <li>
-        <a href="#">Portfolio</a>
+        <a href="#">Forum</a>
       </li>
       <li>
-        <a href="#">Contact</a>
+        <a href="#">Profile</a>
+      </li>
+      <li>
+        <a href="#">Sign Out</a>
       </li>
     </ul>
   </nav>
