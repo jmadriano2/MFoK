@@ -6,9 +6,7 @@
       <Navbar v-on:toggleSidebar="sidebarToggle"></Navbar>
       <div class="container-fluid">
         <div class="row">
-          <div class="col-sm-12">
-            <Errors></Errors>
-          </div>
+          <router-view></router-view>
         </div>
       </div>
     </div>
@@ -33,7 +31,7 @@ export default {
   },
   methods: {
     sidebarToggle() {
-        console.log('i was here 2');
+      console.log("i was here 2");
       this.sidebarActive = !this.sidebarActive;
     },
   },

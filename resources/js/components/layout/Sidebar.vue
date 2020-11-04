@@ -7,17 +7,20 @@
 
     <ul class="list-unstyled components">
       <p>Functions</p>
+      <li>
+        <router-link to="/">Dashboard</router-link>
+      </li>
       <li class="active">
         <a
           href="#homeSubmenu"
           data-toggle="collapse"
-          aria-expanded="false"
+          aria-expanded="true"
           class="dropdown-toggle"
           >CoB Logs</a
         >
         <ul class="collapse list-unstyled" id="homeSubmenu">
           <li>
-            <a href="#">View All Logs</a>
+            <router-link to="/coblogs">View All Logs</router-link>
           </li>
           <li>
             <a href="#">Logs Created by Me</a>
@@ -31,13 +34,13 @@
         <a
           href="#pageSubmenu"
           data-toggle="collapse"
-          aria-expanded="false"
+          aria-expanded="true"
           class="dropdown-toggle"
           >Errors and Resolutions</a
         >
         <ul class="collapse list-unstyled" id="pageSubmenu">
           <li>
-            <a href="#">All Errors</a>
+            <router-link to="/errors">All Errors</router-link>
           </li>
           <li>
             <a href="#">Errors Reported by Me</a>
@@ -95,7 +98,7 @@ export default {
 }
 
 .sidebar-header {
-    text-align: center;
+  text-align: center;
 }
 
 a[data-toggle="collapse"] {

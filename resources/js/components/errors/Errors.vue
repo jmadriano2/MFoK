@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="col-sm-12">
     <h2>CoB Errors</h2>
     <div class="row">
       <div class="search-wrapper panel-heading col mb-2">
