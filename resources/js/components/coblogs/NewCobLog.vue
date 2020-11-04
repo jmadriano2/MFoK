@@ -5,11 +5,37 @@
       color="#6c7ae0"
       title="Close of Business Logger"
       subtitle="New CoB Log"
-      finishButtonText="Create"
+      finishButtonText="Start"
     >
+      <tab-content title="Pre-CoB" icon="fa fa-cog">
+        <div class="row">
+          <div class="col-sm-6 offset-sm-3">
+            <ul class="list-group">
+              <li class="list-group-item">
+                1.0 - Check for Outstanding Transactions
+              </li>
+              <li class="list-group-item">
+                2.0 - Check for objects in xxINVLIB that could affect CoB output
+              </li>
+              <li class="list-group-item">
+                3.0 - Check for requested Halts for bug investigation
+              </li>
+              <li class="list-group-item">4.0 - Run VALD</li>
+              <li class="list-group-item">
+                5.0 - Check Queue Managers and Channels are Active
+              </li>
+              <li class="list-group-item">6.0 - Check System Status</li>
+              <li class="list-group-item">
+                7.0 - Sign-in to BFMI to check if WAS is up
+              </li>
+              <li class="list-group-item">8.0 - Clear Message Queues</li>
+            </ul>
+          </div>
+        </div>
+      </tab-content>
       <tab-content title="CoB Info" icon="fa fa-info">
         <div class="row">
-          <div class="col-sm-2 offset-sm-1">
+          <div class="offset-sm-4 col-sm-3">
             <div class="form-group mb-2">
               <label for="recipient-name" class="col-form-label mr-4"
                 >Machine:</label
@@ -36,14 +62,36 @@
               >
               <input type="text" class="form-control" id="component-name" />
             </div>
+
+            <div class="form-group mb-2">
+              <label for="recipient-name" class="col-form-label mr-4"
+                >Current Run Date:</label
+              >
+              <input type="text" class="form-control" id="component-name" />
+            </div>
+
+            <div class="form-group mb-2">
+              <label for="recipient-name" class="col-form-label mr-4"
+                >Next Run Date:</label
+              >
+              <input type="text" class="form-control" id="component-name" />
+            </div>
+
           </div>
         </div>
       </tab-content>
-      <tab-content title="CoB Details" icon="fa fa-cog">
-        My second tab content
-      </tab-content>
-      <tab-content title="Summary" icon="fa fa-list">
-        Yuhuuu! This seems pretty damn simple
+      <tab-content title="Start Log" icon="fa fa-list">
+        <div class="row">
+          <div class="col-sm-6 offset-sm-3">
+            <ul class="list-group">
+              <li class="list-group-item">Machine:</li>
+              <li class="list-group-item">System:</li>
+              <li class="list-group-item">Zone:</li>
+              <li class="list-group-item">Current Run Date:</li>
+              <li class="list-group-item">Next Run Date:</li>
+            </ul>
+          </div>
+        </div>
       </tab-content>
     </form-wizard>
   </div>
@@ -65,3 +113,10 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.list-group-item {
+  font-weight: bold;
+  opacity: 0.7;
+}
+</style>
