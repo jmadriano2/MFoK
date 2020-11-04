@@ -17,6 +17,7 @@
 import Sidebar from "./Sidebar.vue";
 import Navbar from "./Navbar.vue";
 import Errors from "../errors/Errors.vue";
+import NewCobLog from "../coblogs/NewCobLog.vue";
 
 export default {
   data() {
@@ -28,6 +29,7 @@ export default {
     Sidebar,
     Navbar,
     Errors,
+    NewCobLog,
   },
   methods: {
     sidebarToggle() {

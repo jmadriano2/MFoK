@@ -26,7 +26,7 @@
             <a href="#">Logs Created by Me</a>
           </li>
           <li>
-            <a href="#">Create New Log</a>
+            <router-link to="/newcoblog">Create New Log</router-link>
           </li>
         </ul>
       </li>
