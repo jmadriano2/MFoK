@@ -198,6 +198,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -747,7 +768,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.list-group-item[data-v-5e5bad69] {\r\n  font-weight: bold;\r\n  opacity: 0.7;\n}\r\n", ""]);
+exports.push([module.i, "\n.list-group-item[data-v-5e5bad69] {\n  background-color: whitesmoke;\n  font-weight: bold;\n  opacity: 0.9;\n}\n.see-through[data-v-5e5bad69] {\n  background-color: whitesmoke;\n  opacity: 0.9;\n}\n", ""]);
 
 // exports
 
@@ -766,7 +787,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.card[data-v-19459af4] {\r\n  background-color: rgba(245, 245, 245, 0.4);\n}\n.card-header[data-v-19459af4],\r\n.card-footer[data-v-19459af4] {\r\n  opacity: 0.7;\n}\r\n", ""]);
+exports.push([module.i, "\n.card[data-v-19459af4] {\n  background-color: rgba(245, 245, 245, 0.4);\n}\n.card-header[data-v-19459af4],\n.card-footer[data-v-19459af4] {\n  opacity: 0.7;\n}\n", ""]);
 
 // exports
 
@@ -2107,7 +2128,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [_c("h1", [_vm._v("Welcome to Cob Logs Maniggah")])])
+    return _c("div", [_c("h1", [_vm._v("Welcome to Cob Logs")])])
   }
 ]
 render._withStripped = true
@@ -2206,92 +2227,112 @@ var render = function() {
             { attrs: { title: "CoB Info", icon: "fa fa-info" } },
             [
               _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "offset-sm-4 col-sm-3" }, [
-                  _c("div", { staticClass: "form-group mb-2" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "col-form-label mr-4",
-                        attrs: { for: "recipient-name" }
-                      },
-                      [_vm._v("Machine:")]
-                    ),
-                    _vm._v(" "),
-                    _c("select", { attrs: { id: "cars", name: "cars" } }, [
-                      _c("option", { attrs: { value: "1" } }, [_vm._v("MNA")]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "2" } }, [_vm._v("MNE")]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "3" } }, [_vm._v("MNF")]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "4" } }, [_vm._v("MNP")]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "4" } }, [_vm._v("MNQ")])
+                _c("div", { staticClass: "offset-sm-2 col-sm-8" }, [
+                  _c("div", { staticClass: "card see-through" }, [
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "offset-sm-1 col-sm-10" }, [
+                        _c("div", { staticClass: "form-group mb-2 mt-1" }, [
+                          _c(
+                            "label",
+                            {
+                              staticClass: "col-form-label mr-4",
+                              attrs: { for: "recipient-name" }
+                            },
+                            [_vm._v("Machine:")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "select",
+                            { attrs: { id: "cars", name: "cars" } },
+                            [
+                              _c("option", { attrs: { value: "1" } }, [
+                                _vm._v("MNA")
+                              ]),
+                              _vm._v(" "),
+                              _c("option", { attrs: { value: "2" } }, [
+                                _vm._v("MNE")
+                              ]),
+                              _vm._v(" "),
+                              _c("option", { attrs: { value: "3" } }, [
+                                _vm._v("MNF")
+                              ]),
+                              _vm._v(" "),
+                              _c("option", { attrs: { value: "4" } }, [
+                                _vm._v("MNP")
+                              ]),
+                              _vm._v(" "),
+                              _c("option", { attrs: { value: "4" } }, [
+                                _vm._v("MNQ")
+                              ])
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group mb-2" }, [
+                          _c(
+                            "label",
+                            {
+                              staticClass: "col-form-label mr-4",
+                              attrs: { for: "recipient-name" }
+                            },
+                            [_vm._v("System:")]
+                          ),
+                          _vm._v(" "),
+                          _c("input", {
+                            staticClass: "form-control",
+                            attrs: { type: "text", id: "component-name" }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group mb-2" }, [
+                          _c(
+                            "label",
+                            {
+                              staticClass: "col-form-label mr-4",
+                              attrs: { for: "recipient-name" }
+                            },
+                            [_vm._v("Zone:")]
+                          ),
+                          _vm._v(" "),
+                          _c("input", {
+                            staticClass: "form-control",
+                            attrs: { type: "text", id: "component-name" }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group mb-2" }, [
+                          _c(
+                            "label",
+                            {
+                              staticClass: "col-form-label mr-4",
+                              attrs: { for: "recipient-name" }
+                            },
+                            [_vm._v("Current Run Date:")]
+                          ),
+                          _vm._v(" "),
+                          _c("input", {
+                            staticClass: "form-control",
+                            attrs: { type: "text", id: "component-name" }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group mb-3" }, [
+                          _c(
+                            "label",
+                            {
+                              staticClass: "col-form-label mr-4",
+                              attrs: { for: "recipient-name" }
+                            },
+                            [_vm._v("Next Run Date:")]
+                          ),
+                          _vm._v(" "),
+                          _c("input", {
+                            staticClass: "form-control",
+                            attrs: { type: "text", id: "component-name" }
+                          })
+                        ])
+                      ])
                     ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group mb-2" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "col-form-label mr-4",
-                        attrs: { for: "recipient-name" }
-                      },
-                      [_vm._v("System:")]
-                    ),
-                    _vm._v(" "),
-                    _c("input", {
-                      staticClass: "form-control",
-                      attrs: { type: "text", id: "component-name" }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group mb-2" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "col-form-label mr-4",
-                        attrs: { for: "recipient-name" }
-                      },
-                      [_vm._v("Zone:")]
-                    ),
-                    _vm._v(" "),
-                    _c("input", {
-                      staticClass: "form-control",
-                      attrs: { type: "text", id: "component-name" }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group mb-2" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "col-form-label mr-4",
-                        attrs: { for: "recipient-name" }
-                      },
-                      [_vm._v("Current Run Date:")]
-                    ),
-                    _vm._v(" "),
-                    _c("input", {
-                      staticClass: "form-control",
-                      attrs: { type: "text", id: "component-name" }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group mb-2" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "col-form-label mr-4",
-                        attrs: { for: "recipient-name" }
-                      },
-                      [_vm._v("Next Run Date:")]
-                    ),
-                    _vm._v(" "),
-                    _c("input", {
-                      staticClass: "form-control",
-                      attrs: { type: "text", id: "component-name" }
-                    })
                   ])
                 ])
               ])
@@ -2365,7 +2406,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [_c("h1", [_vm._v("Welcome to Dashboard Maniggah!")])])
+    return _c("div", [_c("h1", [_vm._v("Welcome to Dashboard!")])])
   }
 ]
 render._withStripped = true
@@ -18710,15 +18751,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!***************************************************!*\
   !*** ./resources/js/components/layout/Navbar.vue ***!
   \***************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Navbar_vue_vue_type_template_id_2c4263fa_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Navbar.vue?vue&type=template&id=2c4263fa&scoped=true& */ "./resources/js/components/layout/Navbar.vue?vue&type=template&id=2c4263fa&scoped=true&");
 /* harmony import */ var _Navbar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Navbar.vue?vue&type=script&lang=js& */ "./resources/js/components/layout/Navbar.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _Navbar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _Navbar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _Navbar_vue_vue_type_style_index_0_id_2c4263fa_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Navbar.vue?vue&type=style&index=0&id=2c4263fa&scoped=true&lang=css& */ "./resources/js/components/layout/Navbar.vue?vue&type=style&index=0&id=2c4263fa&scoped=true&lang=css&");
+/* empty/unused harmony star reexport *//* harmony import */ var _Navbar_vue_vue_type_style_index_0_id_2c4263fa_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Navbar.vue?vue&type=style&index=0&id=2c4263fa&scoped=true&lang=css& */ "./resources/js/components/layout/Navbar.vue?vue&type=style&index=0&id=2c4263fa&scoped=true&lang=css&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -18750,7 +18790,7 @@ component.options.__file = "resources/js/components/layout/Navbar.vue"
 /*!****************************************************************************!*\
   !*** ./resources/js/components/layout/Navbar.vue?vue&type=script&lang=js& ***!
   \****************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -19000,7 +19040,7 @@ var routes = [{
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\Jade_Ericson\Documents\GitHub\MFoK\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\jadriano\Documents\GitHub\MFoK\resources\js\app.js */"./resources/js/app.js");
 
 
 /***/ })

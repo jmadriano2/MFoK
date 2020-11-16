@@ -35,48 +35,69 @@
       </tab-content>
       <tab-content title="CoB Info" icon="fa fa-info">
         <div class="row">
-          <div class="offset-sm-4 col-sm-3">
-            <div class="form-group mb-2">
-              <label for="recipient-name" class="col-form-label mr-4"
-                >Machine:</label
-              >
-              <select id="cars" name="cars">
-                <option value="1">MNA</option>
-                <option value="2">MNE</option>
-                <option value="3">MNF</option>
-                <option value="4">MNP</option>
-                <option value="4">MNQ</option>
-              </select>
-            </div>
+          <div class="offset-sm-2 col-sm-8">
+            <div class="card see-through">
+              <div class="row">
+                <div class="offset-sm-1 col-sm-10">
+                  <div class="form-group mb-2 mt-1">
+                    <label for="recipient-name" class="col-form-label mr-4"
+                      >Machine:</label
+                    >
+                    <select id="cars" name="cars">
+                      <option value="1">MNA</option>
+                      <option value="2">MNE</option>
+                      <option value="3">MNF</option>
+                      <option value="4">MNP</option>
+                      <option value="4">MNQ</option>
+                    </select>
+                  </div>
 
-            <div class="form-group mb-2">
-              <label for="recipient-name" class="col-form-label mr-4"
-                >System:</label
-              >
-              <input type="text" class="form-control" id="component-name" />
-            </div>
+                  <div class="form-group mb-2">
+                    <label for="recipient-name" class="col-form-label mr-4"
+                      >System:</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="component-name"
+                    />
+                  </div>
 
-            <div class="form-group mb-2">
-              <label for="recipient-name" class="col-form-label mr-4"
-                >Zone:</label
-              >
-              <input type="text" class="form-control" id="component-name" />
-            </div>
+                  <div class="form-group mb-2">
+                    <label for="recipient-name" class="col-form-label mr-4"
+                      >Zone:</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="component-name"
+                    />
+                  </div>
 
-            <div class="form-group mb-2">
-              <label for="recipient-name" class="col-form-label mr-4"
-                >Current Run Date:</label
-              >
-              <input type="text" class="form-control" id="component-name" />
-            </div>
+                  <div class="form-group mb-2">
+                    <label for="recipient-name" class="col-form-label mr-4"
+                      >Current Run Date:</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="component-name"
+                    />
+                  </div>
 
-            <div class="form-group mb-2">
-              <label for="recipient-name" class="col-form-label mr-4"
-                >Next Run Date:</label
-              >
-              <input type="text" class="form-control" id="component-name" />
+                  <div class="form-group mb-3">
+                    <label for="recipient-name" class="col-form-label mr-4"
+                      >Next Run Date:</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="component-name"
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
-
           </div>
         </div>
       </tab-content>
@@ -116,7 +137,13 @@ export default {
 
 <style scoped>
 .list-group-item {
+  background-color: whitesmoke;
   font-weight: bold;
-  opacity: 0.7;
+  opacity: 0.9;
+}
+
+.see-through {
+  background-color: whitesmoke;
+  opacity: 0.9;
 }
 </style>

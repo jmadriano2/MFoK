@@ -1,5 +1,5 @@
 <template>
   <div>
-    <h1>Welcome to Cob Logs Maniggah</h1>
+    <h1>Welcome to Cob Logs</h1>
   </div>
 </template>

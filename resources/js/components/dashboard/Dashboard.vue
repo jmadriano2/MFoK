@@ -1,5 +1,5 @@
 <template>
     <div>
-        <h1>Welcome to Dashboard Maniggah!</h1>
+        <h1>Welcome to Dashboard!</h1>
     </div>
 </template>
