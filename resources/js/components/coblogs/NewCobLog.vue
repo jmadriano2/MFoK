@@ -54,12 +54,20 @@
                       v-model="rundate"
                       v-on:click="toggleRDCalendar()"
                     />
-                    <v-date-picker
-                      v-if="showRDCalendar"
-                      mode="date"
-                      v-model="rundate"
-                      :model-config="modelConfig"
-                    />
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <v-date-picker
+                          v-if="showRDCalendar"
+                          mode="date"
+                          v-model="rundate"
+                          :model-config="modelConfig"
+                        />
+                      </div>
+                      <div
+                        class="col-sm-8"
+                        v-on:click="toggleRDCalendar()"
+                      ></div>
+                    </div>
                   </div>
 
                   <div class="form-group mb-3">
@@ -74,12 +82,20 @@
                       v-model="nextRundate"
                       v-on:click="toggleNRDCalendar()"
                     />
-                    <v-date-picker
-                      v-if="showNRDCalendar"
-                      mode="date"
-                      v-model="nextRundate"
-                      :model-config="modelConfig"
-                    />
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <v-date-picker
+                          v-if="showNRDCalendar"
+                          mode="date"
+                          v-model="nextRundate"
+                          :model-config="modelConfig"
+                        />
+                      </div>
+                      <div
+                        class="col-sm-8"
+                        v-on:click="toggleNRDCalendar()"
+                      ></div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -90,17 +106,17 @@
       <tab-content title="Start Log" icon="fa fa-list">
         <div class="row">
           <div class="col-sm-6 offset-sm-3">
+              <li class="list-group-item">
+                <div class="row">
+                  <div class="col-sm-4">Machine:</div>
+                  <div class="col-sm-6">{{ selectedSystem.machine }}</div>
+                </div>
+              </li>
             <ul class="list-group">
               <li class="list-group-item">
                 <div class="row">
                   <div class="col-sm-4">System:</div>
                   <div class="col-sm-6">{{ selectedSystem.system }}</div>
-                </div>
-              </li>
-              <li class="list-group-item">
-                <div class="row">
-                  <div class="col-sm-4">Machine:</div>
-                  <div class="col-sm-6">{{ selectedSystem.machine }}</div>
                 </div>
               </li>
               <li class="list-group-item">

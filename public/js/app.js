@@ -233,6 +233,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -22696,127 +22712,153 @@ var render = function() {
                           )
                         ]),
                         _vm._v(" "),
-                        _c(
-                          "div",
-                          { staticClass: "form-group mb-2" },
-                          [
-                            _c(
-                              "label",
+                        _c("div", { staticClass: "form-group mb-2" }, [
+                          _c(
+                            "label",
+                            {
+                              staticClass: "col-form-label mr-4",
+                              attrs: { for: "recipient-name", disa: "" }
+                            },
+                            [_vm._v("Current Run Date:")]
+                          ),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
                               {
-                                staticClass: "col-form-label mr-4",
-                                attrs: { for: "recipient-name", disa: "" }
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.rundate,
+                                expression: "rundate"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              readonly: "",
+                              type: "text",
+                              id: "component-name"
+                            },
+                            domProps: { value: _vm.rundate },
+                            on: {
+                              click: function($event) {
+                                return _vm.toggleRDCalendar()
                               },
-                              [_vm._v("Current Run Date:")]
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.rundate = $event.target.value
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "row" }, [
+                            _c(
+                              "div",
+                              { staticClass: "col-sm-4" },
+                              [
+                                _vm.showRDCalendar
+                                  ? _c("v-date-picker", {
+                                      attrs: {
+                                        mode: "date",
+                                        "model-config": _vm.modelConfig
+                                      },
+                                      model: {
+                                        value: _vm.rundate,
+                                        callback: function($$v) {
+                                          _vm.rundate = $$v
+                                        },
+                                        expression: "rundate"
+                                      }
+                                    })
+                                  : _vm._e()
+                              ],
+                              1
                             ),
                             _vm._v(" "),
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.rundate,
-                                  expression: "rundate"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              attrs: {
-                                readonly: "",
-                                type: "text",
-                                id: "component-name"
-                              },
-                              domProps: { value: _vm.rundate },
+                            _c("div", {
+                              staticClass: "col-sm-8",
                               on: {
                                 click: function($event) {
                                   return _vm.toggleRDCalendar()
-                                },
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.rundate = $event.target.value
                                 }
                               }
-                            }),
-                            _vm._v(" "),
-                            _vm.showRDCalendar
-                              ? _c("v-date-picker", {
-                                  attrs: {
-                                    mode: "date",
-                                    "model-config": _vm.modelConfig
-                                  },
-                                  model: {
-                                    value: _vm.rundate,
-                                    callback: function($$v) {
-                                      _vm.rundate = $$v
-                                    },
-                                    expression: "rundate"
-                                  }
-                                })
-                              : _vm._e()
-                          ],
-                          1
-                        ),
+                            })
+                          ])
+                        ]),
                         _vm._v(" "),
-                        _c(
-                          "div",
-                          { staticClass: "form-group mb-3" },
-                          [
-                            _c(
-                              "label",
+                        _c("div", { staticClass: "form-group mb-3" }, [
+                          _c(
+                            "label",
+                            {
+                              staticClass: "col-form-label mr-4",
+                              attrs: { for: "recipient-name" }
+                            },
+                            [_vm._v("Next Run Date:")]
+                          ),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
                               {
-                                staticClass: "col-form-label mr-4",
-                                attrs: { for: "recipient-name" }
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.nextRundate,
+                                expression: "nextRundate"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              readonly: "",
+                              type: "text",
+                              id: "component-name"
+                            },
+                            domProps: { value: _vm.nextRundate },
+                            on: {
+                              click: function($event) {
+                                return _vm.toggleNRDCalendar()
                               },
-                              [_vm._v("Next Run Date:")]
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.nextRundate = $event.target.value
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "row" }, [
+                            _c(
+                              "div",
+                              { staticClass: "col-sm-4" },
+                              [
+                                _vm.showNRDCalendar
+                                  ? _c("v-date-picker", {
+                                      attrs: {
+                                        mode: "date",
+                                        "model-config": _vm.modelConfig
+                                      },
+                                      model: {
+                                        value: _vm.nextRundate,
+                                        callback: function($$v) {
+                                          _vm.nextRundate = $$v
+                                        },
+                                        expression: "nextRundate"
+                                      }
+                                    })
+                                  : _vm._e()
+                              ],
+                              1
                             ),
                             _vm._v(" "),
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.nextRundate,
-                                  expression: "nextRundate"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              attrs: {
-                                readonly: "",
-                                type: "text",
-                                id: "component-name"
-                              },
-                              domProps: { value: _vm.nextRundate },
+                            _c("div", {
+                              staticClass: "col-sm-8",
                               on: {
                                 click: function($event) {
                                   return _vm.toggleNRDCalendar()
-                                },
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.nextRundate = $event.target.value
                                 }
                               }
-                            }),
-                            _vm._v(" "),
-                            _vm.showNRDCalendar
-                              ? _c("v-date-picker", {
-                                  attrs: {
-                                    mode: "date",
-                                    "model-config": _vm.modelConfig
-                                  },
-                                  model: {
-                                    value: _vm.nextRundate,
-                                    callback: function($$v) {
-                                      _vm.nextRundate = $$v
-                                    },
-                                    expression: "nextRundate"
-                                  }
-                                })
-                              : _vm._e()
-                          ],
-                          1
-                        )
+                            })
+                          ])
+                        ])
                       ])
                     ])
                   ])
@@ -22831,6 +22873,18 @@ var render = function() {
             [
               _c("div", { staticClass: "row" }, [
                 _c("div", { staticClass: "col-sm-6 offset-sm-3" }, [
+                  _c("li", { staticClass: "list-group-item" }, [
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-sm-4" }, [
+                        _vm._v("Machine:")
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-6" }, [
+                        _vm._v(_vm._s(_vm.selectedSystem.machine))
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
                   _c("ul", { staticClass: "list-group" }, [
                     _c("li", { staticClass: "list-group-item" }, [
                       _c("div", { staticClass: "row" }, [
@@ -22840,18 +22894,6 @@ var render = function() {
                         _vm._v(" "),
                         _c("div", { staticClass: "col-sm-6" }, [
                           _vm._v(_vm._s(_vm.selectedSystem.system))
-                        ])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("li", { staticClass: "list-group-item" }, [
-                      _c("div", { staticClass: "row" }, [
-                        _c("div", { staticClass: "col-sm-4" }, [
-                          _vm._v("Machine:")
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-sm-6" }, [
-                          _vm._v(_vm._s(_vm.selectedSystem.machine))
                         ])
                       ])
                     ]),
