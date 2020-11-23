@@ -20,25 +20,45 @@
                     <label for="recipient-name" class="col-form-label mr-4"
                       >System:</label
                     >
-                    <select id="systems" class="form-control">
+                    <select
+                      id="systems"
+                      class="form-control"
+                      v-model="selectedSystem"
+                    >
                       <option
                         v-for="system in systems"
                         v-bind:key="system.id"
-                        value="system.id"
+                        v-bind:value="{
+                          id: system.id,
+                          machine: system.machine,
+                          system: system.system,
+                          zone: system.zone,
+                        }"
                       >
-                        {{ system.machine }} - {{ system.system }}/{{ system.zone }}
+                        {{ system.machine }} - {{ system.system }}/{{
+                          system.zone
+                        }}
                       </option>
                     </select>
                   </div>
 
                   <div class="form-group mb-2">
-                    <label for="recipient-name" class="col-form-label mr-4"
+                    <label for="recipient-name" class="col-form-label mr-4" disa
                       >Current Run Date:</label
                     >
                     <input
+                      readonly
                       type="text"
                       class="form-control"
                       id="component-name"
+                      v-model="rundate"
+                      v-on:click="toggleRDCalendar()"
+                    />
+                    <v-date-picker
+                      v-if="showRDCalendar"
+                      mode="date"
+                      v-model="rundate"
+                      :model-config="modelConfig"
                     />
                   </div>
 
@@ -47,9 +67,18 @@
                       >Next Run Date:</label
                     >
                     <input
+                      readonly
                       type="text"
                       class="form-control"
                       id="component-name"
+                      v-model="nextRundate"
+                      v-on:click="toggleNRDCalendar()"
+                    />
+                    <v-date-picker
+                      v-if="showNRDCalendar"
+                      mode="date"
+                      v-model="nextRundate"
+                      :model-config="modelConfig"
                     />
                   </div>
                 </div>
@@ -62,11 +91,36 @@
         <div class="row">
           <div class="col-sm-6 offset-sm-3">
             <ul class="list-group">
-              <li class="list-group-item">Machine:</li>
-              <li class="list-group-item">System:</li>
-              <li class="list-group-item">Zone:</li>
-              <li class="list-group-item">Current Run Date:</li>
-              <li class="list-group-item">Next Run Date:</li>
+              <li class="list-group-item">
+                <div class="row">
+                  <div class="col-sm-4">System:</div>
+                  <div class="col-sm-6">{{ selectedSystem.system }}</div>
+                </div>
+              </li>
+              <li class="list-group-item">
+                <div class="row">
+                  <div class="col-sm-4">Machine:</div>
+                  <div class="col-sm-6">{{ selectedSystem.machine }}</div>
+                </div>
+              </li>
+              <li class="list-group-item">
+                <div class="row">
+                  <div class="col-sm-4">Zone:</div>
+                  <div class="col-sm-6">{{ selectedSystem.zone }}</div>
+                </div>
+              </li>
+              <li class="list-group-item">
+                <div class="row">
+                  <div class="col-sm-4">Current Run Date:</div>
+                  <div class="col-sm-6">{{ rundate }}</div>
+                </div>
+              </li>
+              <li class="list-group-item">
+                <div class="row">
+                  <div class="col-sm-4">Next Run Date:</div>
+                  <div class="col-sm-6">{{ nextRundate }}</div>
+                </div>
+              </li>
             </ul>
           </div>
         </div>
@@ -77,18 +131,29 @@
 
 <script>
 import { FormWizard, TabContent } from "vue-form-wizard";
+import DatePicker from "v-calendar/lib/components/date-picker.umd";
 import "vue-form-wizard/dist/vue-form-wizard.min.css";
 import PreCob from "./PreCob";
 
 export default {
   components: {
     FormWizard,
+    DatePicker,
     TabContent,
     PreCob,
   },
   data() {
     return {
       systems: [],
+      selectedSystem: "",
+      rundate: "",
+      showRDCalendar: false,
+      nextRundate: "",
+      showNRDCalendar: false,
+      modelConfig: {
+        type: "string",
+        mask: "MMMM D, YYYY", // Uses 'iso' if missing
+      },
     };
   },
   created() {
@@ -99,7 +164,6 @@ export default {
       alert("Yay. Done!");
     },
     fetchSystems(page_url) {
-      console.log("I was here");
       let vm = this;
       page_url = page_url || "/api/systems";
       fetch(page_url)
@@ -108,6 +172,12 @@ export default {
           this.systems = res.data;
         })
         .catch((err) => console.log(err));
+    },
+    toggleRDCalendar() {
+      this.showRDCalendar = !this.showRDCalendar;
+    },
+    toggleNRDCalendar() {
+      this.showNRDCalendar = !this.showNRDCalendar;
     },
   },
 };
