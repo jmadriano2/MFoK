@@ -3,12 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests;
-use App\Models\CobLog;
-use App\Http\Resources\CobLog as CobLogResource;
-use Illuminate\Support\Carbon;
+use App\Models\System;
+use App\Http\Resources\System as SystemResource;
 
-class CobLogController extends Controller
+class SystemController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,10 +15,10 @@ class CobLogController extends Controller
      */
     public function index()
     {
-        //Get CobLogs
-        $coblogs = CobLog::all();
+        //Get All Systems
+        $systems = System::all();
 
-        return CobLogResource::collection($coblogs);
+        return SystemResource::collection($systems);
     }
 
     /**
@@ -34,15 +32,11 @@ class CobLogController extends Controller
         $system = $request->isMethod('put') ? System::findorFail
         ($request->system_id) : new System;
 
-        $system->id = $request->input('coblog_id');
-        $system->system_id = $request->input('system_id');
-        $system->runday = $request->input('runday');
-        $system->next_working_day = $request->input('zone');
-        $system->next_working_day = $request->input('next_working_day');
-        $system->status = $request->input('status');
-        $system->runtime = $request->input('runtime');
-        $system->conclusion = $request->input('conclusion');
-        $system->creator = $request->input('creator');
+        $system->id = $request->input('system_id');
+        $system->machine = $request->input('machine');
+        $system->system = $request->input('system');
+        $system->zone = $request->input('zone');
+        $system->release = $request->input('release');
 
         if($system->save()) {
             return new SystemResource($system);
@@ -57,7 +51,9 @@ class CobLogController extends Controller
      */
     public function show($id)
     {
-        //
+        $system = System::findOrFail($id);
+
+        return new SystemResource($system);
     }
 
     /**
@@ -68,6 +64,10 @@ class CobLogController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $system = System::findOrFail($id);
+
+        if($system->delete()) {
+            return new SystemResource($system);
+        }
     }
 }

@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ErrorController;
 use App\Http\Controllers\CobLogController;
+use App\Http\Controllers\SystemController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,3 +50,15 @@ Route::delete('error/{id}', [ErrorController::class, 'destroy']);
 
 //Cob Logs API Routes
 Route::get('coblogs', [CobLogController::class, 'index']);
+Route::get('coblog/{id}', [CobLogController::class, 'show']);
+Route::post('coblog', [CobLogController::class, 'store']);
+Route::put('coblog', [CobLogController::class, 'store']);
+Route::delete('coblog/{id}', [CobLogController::class, 'destroy']);
+
+
+//Systems API Routes
+Route::get('systems', [SystemController::class, 'index']);
+Route::get('system/{id}', [SystemController::class, 'show']);
+Route::post('system', [SystemController::class, 'store']);
+Route::put('system', [SystemController::class, 'store']);
+Route::delete('system/{id}', [SystemController::class, 'destroy']);
