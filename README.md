@@ -50,6 +50,11 @@ Functions:
 13. Enter `php artisan db:seed` to seed the tables with the initial values set by the project. This would create the default admin records on the database.
 14. Go to `http://localhost:<apache http port>/phpmyadmin/` and check the mfok_cob database if the tables and records have been added.
 
+### Setting up Vue dependencies
+1. Open command prompt on the project root directory.
+2. Enter the command `npm install`.
+3. While running the server either using a Virtual host or an artisan server, remember to run `npm run watch` on the project's root directory in order for the code changes to apply.
+
 ### Setting up a Virtual Host (Optional)
 1. Go to `<xampp installation folder>\apache\conf\extra` and open `httpd-vhosts.conf` using a text editor.
 2. Add the following lines at the end of the document:
