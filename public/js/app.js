@@ -839,7 +839,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.list-group-item[data-v-5e5bad69] {\n  background-color: whitesmoke;\n  font-weight: bold;\n  opacity: 0.9;\n}\n.see-through[data-v-5e5bad69] {\n  background-color: whitesmoke;\n  opacity: 0.9;\n}\n", ""]);
+exports.push([module.i, "\n.list-group-item[data-v-5e5bad69] {\r\n  background-color: whitesmoke;\r\n  font-weight: bold;\r\n  opacity: 0.9;\n}\n.see-through[data-v-5e5bad69] {\r\n  background-color: whitesmoke;\r\n  opacity: 0.9;\n}\r\n", ""]);
 
 // exports
 
@@ -858,7 +858,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.card[data-v-19459af4] {\n  background-color: rgba(245, 245, 245, 0.4);\n}\n.card-header[data-v-19459af4],\n.card-footer[data-v-19459af4] {\n  opacity: 0.7;\n}\n", ""]);
+exports.push([module.i, "\n.card[data-v-19459af4] {\r\n  background-color: rgba(245, 245, 245, 0.4);\n}\n.card-header[data-v-19459af4],\r\n.card-footer[data-v-19459af4] {\r\n  opacity: 0.7;\n}\r\n", ""]);
 
 // exports
 
@@ -39741,7 +39741,7 @@ var routes = [{
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\jadriano\Documents\GitHub\MFoK\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\github\MFoK\resources\js\app.js */"./resources/js/app.js");
 
 
 /***/ })
