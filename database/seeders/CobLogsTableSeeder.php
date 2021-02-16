@@ -17,17 +17,29 @@ class CobLogsTableSeeder extends Seeder
     {
         //DB::table('logs')->delete();
         DB::table('logs_contains_errors')->delete();
-        
+
         $current_date_time = Carbon::now()->toDateTimeString();
-        for ($x = 0; $x < 4; $x++) {
+        DB::table('cob_logs')->insert([
+            'id' => 1,
+            'system_id' => 1,
+            'runday' => '20210216',
+            'next_working_day' => '20210217',
+            'status' => 'Ongoing',
+            'runtime' => 3600,
+            'conclusion' => 'Full CoB',
+            'creator' => 'Administrator',
+            'created_at' => $current_date_time,
+            'updated_at' => $current_date_time
+        ]);
+        for ($x = 1; $x < 4; $x++) {
             DB::table('cob_logs')->insert([
                 'id' => $x + 1,
                 'system_id' => $x + 1,
-                'runday' => '201018',
-                'next_working_day' => '201019',
-                'status' => 'Z',
+                'runday' => '20210216',
+                'next_working_day' => '20210217',
+                'status' => 'Completed',
                 'runtime' => 3600,
-                'conclusion' => 'Z',
+                'conclusion' => 'Reopened',
                 'creator' => 'Administrator',
                 'created_at' => $current_date_time,
                 'updated_at' => $current_date_time

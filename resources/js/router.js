@@ -7,6 +7,7 @@ import dashboardPage from './components/dashboard/Dashboard.vue'
 import errorPage from './components/errors/Errors.vue'
 import cobLogPage from './components/coblogs/CobLogs.vue'
 import newCobLogPage from './components/coblogs/NewCobLog.vue'
+import cobLogDetailsPage from './components/coblogs/CobLogDetails.vue'
 
 const routes = [
     {
@@ -24,6 +25,11 @@ const routes = [
     {
         path: '/newcoblog',
         component: newCobLogPage
+    },
+    {
+        path: '/coblog/:id/details',
+        name: 'cobLogDetails',
+        component: cobLogDetailsPage
     },
 ]
 

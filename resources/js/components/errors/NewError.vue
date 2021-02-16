@@ -82,7 +82,9 @@ export default {
       addErrorResolution() {
           if(this.edit === false) {
               //Add
-              fetch('api/error',{
+              let page_url = window.location.origin + '/api/error';
+              console.log(page_url);
+              fetch(page_url,{
                   method: 'post',
                   body: JSON.stringify(this.error),
                   headers: {

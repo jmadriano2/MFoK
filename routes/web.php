@@ -20,3 +20,9 @@ Route::get('/', function () {
 Route::any('{slug}', function(){
     return view('welcome');
 });
+
+// This is added to fix the error of directly accessing a route
+// from vue-router which doesn't exist in laravel routes
+Route::get('/{vue_capture?}', function () {
+    return view('welcome');
+})->where('vue_capture', '[\/\w\.-]*');

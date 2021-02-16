@@ -15,10 +15,10 @@ class LogErrorTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
         $current_date_time = Carbon::now()->toDateTimeString();
         for ($x = 0; $x < 4; $x++) {
-            for ($y = 0; $y < 25; $y++) {
+            for ($y = 0; $y < 8; $y++) {
                 DB::table('logs_contains_errors')->insert([
                     'log_id' => $x + 1,
                     'error_id' => ($x * 5) + $y + 1,

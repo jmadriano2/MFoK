@@ -7,6 +7,7 @@ use App\Http\Requests;
 use App\Models\CobLog;
 use App\Http\Resources\CobLog as CobLogResource;
 use Illuminate\Support\Carbon;
+use DB;
 
 class CobLogController extends Controller
 {
@@ -18,9 +19,12 @@ class CobLogController extends Controller
     public function index()
     {
         //Get CobLogs
-        $coblogs = CobLog::all();
+        $coblogs = DB::table('cob_logs')
+        ->select('*')
+        ->join('systems','systems.id','=','cob_logs.system_id')
+        ->get();
 
-        return CobLogResource::collection($coblogs);
+        return new CobLogResource($coblogs);
     }
 
     /**
@@ -57,7 +61,28 @@ class CobLogController extends Controller
      */
     public function show($id)
     {
-        //
+        $coblog = DB::table('cob_logs')
+        ->select('*')
+        ->join('systems','systems.id','=','cob_logs.system_id')
+        ->where(['cob_logs.id' => $id])
+        ->get();
+        return new CobLogResource($coblog);
+    }
+
+    /**
+     * Display the existing errors assigned to a CoB Log.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showErrors($id)
+    {
+        $coblog = DB::table('logs_contains_errors')
+        ->select('*')
+        ->join('errors','logs_contains_errors.error_id','=','errors.id')
+        ->where(['logs_contains_errors.log_id' => $id])
+        ->get();
+        return new CobLogResource($coblog);
     }
 
     /**

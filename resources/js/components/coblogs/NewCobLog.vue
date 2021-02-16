@@ -170,6 +170,18 @@ export default {
         type: "string",
         mask: "MMMM D, YYYY", // Uses 'iso' if missing
       },
+      coblog: {
+          id: "",
+          systemId: "",
+          runday: "",
+          nextWorkingDay: "",
+          start: "",
+          end: "",
+          status: "",
+          runtime: "",
+          conclusion: "",
+          creator: "",
+      }
     };
   },
   created() {
@@ -195,6 +207,22 @@ export default {
     toggleNRDCalendar() {
       this.showNRDCalendar = !this.showNRDCalendar;
     },
+    addNewCobLog() {
+        fetch('api/error',{
+            method: 'post',
+            body: JSON.stringify(this.error),
+            headers: {
+                'content-type': 'application/json'
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            this.error.component = '';
+            this.error.resolution = '';
+            alert('New Cob Log Added');
+        })
+        .catch(err => console.log(err));
+    }
   },
 };
 </script>

@@ -16,13 +16,13 @@ class CreateLogsTable extends Migration
         Schema::create('cob_logs', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('system_id')->unsigned();
-            $table->string('runday', 6);
-            $table->string('next_working_day', 6);
+            $table->string('runday', 8);
+            $table->string('next_working_day', 8);
             $table->timestamp('start', 0)->nullable();
             $table->timestamp('end', 0)->nullable();
-            $table->string('status', 1);
+            $table->string('status', 10);
             $table->integer('runtime');
-            $table->string('conclusion', 1);
+            $table->string('conclusion', 10);
             $table->string('creator', 20);
             $table->timestamps();
 

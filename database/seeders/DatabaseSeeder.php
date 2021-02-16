@@ -17,6 +17,6 @@ class DatabaseSeeder extends Seeder
         $this->call(SystemsTableSeeder::class);
         $this->call(CobLogsTableSeeder::class);
         $this->call(ErrorsTableSeeder::class);
-        // $this->call(LogErrorTableSeeder::class);
+        $this->call(LogErrorTableSeeder::class);
     }
 }

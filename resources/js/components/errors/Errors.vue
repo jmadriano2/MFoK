@@ -1,6 +1,6 @@
 <template>
   <div class="col-sm-12">
-    <h2>CoB Errors</h2>
+    <h2>All CoB Errors</h2>
     <div class="row">
       <div class="search-wrapper panel-heading col mb-2">
         <input
@@ -36,10 +36,21 @@
         v-bind:key="error.id"
         v-for="error in resultQuery"
       >
-        <h3>{{ error.id }}: {{ error.component }}</h3>
-        <p>
-          <strong>{{ error.resolution }}</strong>
-        </p>
+        <div class="row">
+          <div v-if="isCobDetails"
+            class="col-sm-1 r-border d-flex align-items-center justify-content-center"
+          >
+            <div style="font-size: 4rem">
+              <i class="fa fa-angle-double-left"></i>
+            </div>
+          </div>
+          <div v-bind:class="[isCobDetails ? CDClass : notCDClass]">
+            <h3>{{ error.id }}: {{ error.component }}</h3>
+            <p>
+              <strong>{{ error.resolution }}</strong>
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -68,6 +79,9 @@ export default {
       pageSize: 5,
       errorsInPage: [],
       filteredErrors: [],
+      isCobDetails: false,
+      CDClass: 'col-sm-11',
+      notCDClass: 'col-sm-12',
     };
   },
   components: {
@@ -76,6 +90,9 @@ export default {
   },
   created() {
     this.fetchErrors();
+    if (window.location.pathname.substring(1, 7) === "coblog") {
+      this.isCobDetails = true;
+    }
   },
   methods: {
     fetchErrors(page_url) {
@@ -109,21 +126,23 @@ export default {
     },
     refreshPage() {
       this.fetchErrors();
-    }
+    },
   },
   computed: {
     resultQuery() {
       if (this.searchQuery) {
         //Save the result of queries in array filteredErrors
         this.filteredErrors = this.errors.filter((error) => {
-          return this.searchQuery
-            .toLowerCase()
-            .split(" ")
-            .every((v) => error.component.toLowerCase().includes(v)) ||
+          return (
             this.searchQuery
-            .toLowerCase()
-            .split(" ")
-            .every((v) => error.resolution.toLowerCase().includes(v));
+              .toLowerCase()
+              .split(" ")
+              .every((v) => error.component.toLowerCase().includes(v)) ||
+            this.searchQuery
+              .toLowerCase()
+              .split(" ")
+              .every((v) => error.resolution.toLowerCase().includes(v))
+          );
         });
 
         this.updateErrorsInPage();
@@ -140,6 +159,10 @@ export default {
 </script>
 
 <style scoped>
+.r-border {
+  border-right: 3px solid indigo;
+  color: indigo;
+}
 .card {
   background-color: rgba(245, 245, 245, 0.4);
 }
