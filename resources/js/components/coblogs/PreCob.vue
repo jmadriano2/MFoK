@@ -27,7 +27,7 @@
             data-toggle="collapse"
             :class="{active: isItem3Expanded}"
             v-on:click="toggleListItem(3)">
-                3.0 - Check for requested Halts for bug investigation
+                3.0 - Check for requested halts for bug investigation
         </a>
         <PreCobItem3></PreCobItem3>
         <a
