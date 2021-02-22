@@ -10,7 +10,10 @@
       <tab-content title="Pre-CoB" icon="fa fa-cog">
         <PreCob></PreCob>
       </tab-content>
-      <tab-content title="CoB Info" icon="fa fa-info">
+      <tab-content
+        title="CoB Info"
+        icon="fa fa-info"
+        :beforeChange="validateSystem">
         <div class="row">
           <div class="offset-sm-2 col-sm-8">
             <div class="card see-through">
@@ -20,10 +23,17 @@
                     <label for="recipient-name" class="col-form-label mr-4"
                       >System:</label
                     >
+                    <div
+                        class="alert alert-danger d-none"
+                        role="alert"
+                        :class="{'d-block': hasError}">
+                      System is required.
+                    </div>
                     <select
                       id="systems"
                       class="form-control"
                       v-model="selectedSystem"
+                      @change="onSystemChange()"
                     >
                       <option
                         v-for="system in systems"
@@ -160,6 +170,8 @@ export default {
   },
   data() {
     return {
+        hasError: false,
+        isClearedToProceed: false,
       systems: [],
       selectedSystem: "",
       rundate: "",
@@ -181,7 +193,7 @@ export default {
           runtime: "",
           conclusion: "",
           creator: "",
-      }
+      },
     };
   },
   created() {
@@ -222,6 +234,20 @@ export default {
             alert('New Cob Log Added');
         })
         .catch(err => console.log(err));
+    },
+    validateSystem() {
+        if (this.selectedSystem == '') {
+            this.hasError = true;
+            this.isClearedToProceed = false;
+        } else {
+            this.hasError = false;
+            this.isClearedToProceed = true;
+        }
+        console.log(this.selectedSystem);
+        return this.isClearedToProceed;
+    },
+    onSystemChange() {
+      console.log(this.selectedSystem);
     }
   },
 };

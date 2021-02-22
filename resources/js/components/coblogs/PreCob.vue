@@ -81,14 +81,14 @@
 </template>
 
 <script>
-import PreCobItem1 from "./PreCobItem1";
-import PreCobItem2 from "./PreCobItem2";
-import PreCobItem3 from "./PreCobItem3";
-import PreCobItem4 from "./PreCobItem4";
-import PreCobItem5 from "./PreCobItem5";
-import PreCobItem6 from "./PreCobItem6";
-import PreCobItem7 from "./PreCobItem7";
-import PreCobItem8 from "./PreCobItem8";
+import PreCobItem1 from "./cobitems/PreCobItem1";
+import PreCobItem2 from "./cobitems/PreCobItem2";
+import PreCobItem3 from "./cobitems/PreCobItem3";
+import PreCobItem4 from "./cobitems/PreCobItem4";
+import PreCobItem5 from "./cobitems/PreCobItem5";
+import PreCobItem6 from "./cobitems/PreCobItem6";
+import PreCobItem7 from "./cobitems/PreCobItem7";
+import PreCobItem8 from "./cobitems/PreCobItem8";
 
 export default {
     components: {
