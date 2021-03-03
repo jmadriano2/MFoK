@@ -36,10 +36,10 @@
     </div>
     <div class="row">
       <div v-bind:class="[isStatusComplete ? completeClass : incompleteClass]">
-        <CobLogErrors :update-cob-errors="updateCobErrors"></CobLogErrors>
+        <CobLogErrors :update-cob-errors="updateCobErrors" v-on:removeLogError="refreshAllErrors"></CobLogErrors>
       </div>
       <div class="col-sm-6" v-if="!isStatusComplete">
-        <Errors :log-details-id="coblog.id" v-on:addLogError="refreshCobLogErrors"></Errors>
+        <Errors :log-details-id="coblog.id" :update-all-errors="updateAllErrors" v-on:addLogError="refreshCobLogErrors"></Errors>
       </div>
     </div>
   </div>
@@ -55,6 +55,7 @@ export default {
     return {
       coblog: [],
       updateCobErrors: 0,
+      updateAllErrors: 0,
       isStatusComplete: false,
       completeClass: "col-sm-12",
       incompleteClass: "col-sm-6",
@@ -85,6 +86,9 @@ export default {
     },
     refreshCobLogErrors() {
         this.updateCobErrors += 1;
+    },
+    refreshAllErrors() {
+        this.updateAllErrors += 1;
     },
   },
   filters: {

@@ -102,7 +102,7 @@ export default {
       page_url: "",
     };
   },
-  props: ["logDetailsId"],
+  props: ["logDetailsId", "updateAllErrors"],
   components: {
     Pagination,
     NewError,
@@ -208,7 +208,10 @@ export default {
   watch: {
     logDetailsId: function () {
       this.fetchAllErrors();
-    }
+    },
+    updateAllErrors: function () {
+      this.fetchAllErrors();
+    },
   },
 };
 </script>

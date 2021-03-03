@@ -60,7 +60,12 @@
             v-if="removeActive"
             class="col-sm-1 l-border d-flex align-items-center justify-content-center"
           >
-            <div style="font-size: 4rem" @click="removeCoblogError(coblogError.id)">
+            <div
+              style="font-size: 4rem"
+              @click="
+                removeCoblogError(coblogError.log_id, coblogError.error_id)
+              "
+            >
               <i class="fa fa-angle-double-right customRightArrow"></i>
             </div>
           </div>
@@ -125,6 +130,17 @@ export default {
     },
     refreshPage() {
       this.fetchErrors();
+    },
+    removeCoblogError(log_id, error_id) {
+      fetch(`/api/coblog/${log_id}/${error_id}`, {
+        method: "delete",
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          this.fetchCobLogErrors();
+          this.$emit("removeLogError");
+        })
+        .catch((err) => console.log(err));
     },
   },
   computed: {
