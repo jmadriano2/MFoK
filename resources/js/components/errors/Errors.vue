@@ -41,8 +41,8 @@
             v-if="isCobDetails"
             class="col-sm-1 r-border d-flex align-items-center justify-content-center"
           >
-            <div style="font-size: 4rem" @click="addCoblogError">
-              <i class="fa fa-angle-double-left"></i>
+            <div style="font-size: 4rem" @click="addCoblogError(error.id)">
+              <i class="fa fa-angle-double-left customLeftArrow"></i>
             </div>
           </div>
           <div v-bind:class="[isCobDetails ? CDClass : notCDClass]">
@@ -85,6 +85,10 @@ export default {
         og_resolver: "",
         created_at: "",
       },
+      logError: {
+        log_id: "",
+        error_id: "",
+      },
       error_id: "",
       pageSize: 5,
       pagination: {},
@@ -95,23 +99,30 @@ export default {
       isCobDetails: false,
       CDClass: "col-sm-11",
       notCDClass: "col-sm-12",
+      page_url: "",
     };
   },
+  props: ["logDetailsId"],
   components: {
     Pagination,
     NewError,
   },
-  created() {
-    this.fetchErrors();
+  mounted() {
     if (window.location.pathname.substring(1, 7) === "coblog") {
       this.isCobDetails = true;
     }
+    this.fetchAllErrors();
   },
   methods: {
-    fetchErrors(page_url) {
+    fetchAllErrors() {
       let vm = this;
-      page_url = page_url || "/api/errors";
-      fetch(page_url)
+      if (this.isCobDetails) {
+        console.log('logDetailsId: ' + this.$props.logDetailsId);
+        this.page_url = "/api/errors/unselected/" + this.logDetailsId;
+      } else {
+        this.page_url = "/api/errors";
+      }
+      fetch(this.page_url)
         .then((res) => res.json())
         .then((res) => {
           this.errors = res.data;
@@ -137,25 +148,26 @@ export default {
       this.currentPage = pageNumber;
       this.updateErrorsInPage();
     },
-    addCoblogError() {
+    addCoblogError(errorId) {
       let page_url = window.location.origin + "/api/coblogError";
-      console.log(page_url);
+      this.logError.log_id = this.logDetailsId;
+      this.logError.error_id = errorId;
       fetch(page_url, {
         method: "post",
-        body: JSON.stringify(this.error),
+        body: JSON.stringify(this.logError),
         headers: {
           "content-type": "application/json",
         },
       })
         .then((res) => res.json())
         .then((data) => {
-          alert("Error has been recorded to log");
-          this.$emit("refreshPage");
+          this.$emit("addLogError");
+          this.fetchAllErrors();
         })
         .catch((err) => console.log(err));
     },
     refreshPage() {
-      this.fetchErrors();
+      this.fetchAllErrors();
     },
   },
   computed: {
@@ -193,6 +205,11 @@ export default {
       }
     },
   },
+  watch: {
+    logDetailsId: function () {
+      this.fetchAllErrors();
+    }
+  },
 };
 </script>
 
@@ -203,6 +220,15 @@ strong {
 .r-border {
   border-right: 3px solid indigo;
   color: indigo;
+}
+.customLeftArrow {
+  color: rgb(187, 125, 231);
+}
+.customLeftArrow:hover {
+  color: rgb(205, 183, 221);
+}
+.customLeftArrow:active {
+  color: rgb(132, 43, 196);
 }
 .card {
   background-color: rgba(245, 245, 245, 0.938);

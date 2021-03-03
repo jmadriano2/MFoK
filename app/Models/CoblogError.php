@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class CoblogError extends Model
 {
     use HasFactory;
+    protected $table = 'logs_contains_errors';
 }

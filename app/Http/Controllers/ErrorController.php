@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use Illuminate\Support\Facades\DB;
 use App\Models\Error;
 use App\Http\Resources\Error as ErrorResource;
 
@@ -26,18 +27,14 @@ class ErrorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function unselectedErrors()
+    public function unselectedErrors($log_id)
     {
         //Get Errors
-        $errors = Error::whereIn();
-
-        DB::table('errors')
-            ->whereIn('cob_id', function ($query) {
-                $query->select(DB::raw(1))
-                    ->from('logs_contains_errors')
-                    ->whereRaw('orders.user_id = users.id');
-            })
-            ->get();
+        $errors = Error::whereNotIn('id', function($query) use($log_id) {
+            $query->select('error_id')
+            ->from('logs_contains_errors')
+            ->where('log_id', $log_id);
+        })->get();
 
         return ErrorResource::collection($errors);
     }

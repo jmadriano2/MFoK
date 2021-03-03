@@ -133,6 +133,7 @@ class CobLogController extends Controller
             )
         ->join('errors','logs_contains_errors.error_id','=','errors.id')
         ->where(['logs_contains_errors.log_id' => $id])
+        ->orderBy('created_at', 'DESC')
         ->get();
         return new CobLogResource($coblog);
     }

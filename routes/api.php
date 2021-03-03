@@ -42,6 +42,7 @@ Route::delete('admin/{username}', [AdminController::class, 'destroy']);
 
 //Errors and Resolutions API Routes
 Route::get('errors', [ErrorController::class, 'index']);
+Route::get('errors/unselected/{id}', [ErrorController::class, 'unselectedErrors']);
 Route::get('error/{id}', [ErrorController::class, 'show']);
 Route::post('error', [ErrorController::class, 'store']);
 Route::put('error', [ErrorController::class, 'store']);
@@ -52,7 +53,7 @@ Route::delete('error/{id}', [ErrorController::class, 'destroy']);
 Route::get('coblogs', [CobLogController::class, 'index']);
 Route::get('coblog/{id}', [CobLogController::class, 'show']);
 Route::get('coblog/{id}/errors', [CobLogController::class, 'showErrors']);
-Route::get('coblogError', [CobLogController::class, 'storeCoblogError']);
+Route::post('coblogError', [CobLogController::class, 'storeCoblogError']);
 Route::post('coblog', [CobLogController::class, 'store']);
 Route::put('coblog', [CobLogController::class, 'store']);
 Route::delete('coblog/{id}', [CobLogController::class, 'destroy']);

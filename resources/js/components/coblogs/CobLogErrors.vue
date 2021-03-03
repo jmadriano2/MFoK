@@ -66,6 +66,7 @@ export default {
       filteredCoblogErrors: [],
     };
   },
+  props: ["updateCobErrors"],
   components: {
     Pagination,
   },
@@ -130,6 +131,11 @@ export default {
         return this.coblogErrorsInPage;
       }
     },
+  },
+  watch: {
+    updateCobErrors: function () {
+      this.fetchCobLogErrors();
+    }
   },
 };
 </script>
