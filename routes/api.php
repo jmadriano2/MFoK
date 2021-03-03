@@ -52,6 +52,7 @@ Route::delete('error/{id}', [ErrorController::class, 'destroy']);
 Route::get('coblogs', [CobLogController::class, 'index']);
 Route::get('coblog/{id}', [CobLogController::class, 'show']);
 Route::get('coblog/{id}/errors', [CobLogController::class, 'showErrors']);
+Route::get('coblogError', [CobLogController::class, 'storeCoblogError']);
 Route::post('coblog', [CobLogController::class, 'store']);
 Route::put('coblog', [CobLogController::class, 'store']);
 Route::delete('coblog/{id}', [CobLogController::class, 'destroy']);

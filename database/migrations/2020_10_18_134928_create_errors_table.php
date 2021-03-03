@@ -16,6 +16,8 @@ class CreateErrorsTable extends Migration
         Schema::create('errors', function (Blueprint $table) {
             $table->id();
             $table->string('component', 10);
+            $table->string('sequence', 5);
+            $table->text('problem');
             $table->text('resolution');
             $table->string('og_resolver', 50);
             $table->timestamps();

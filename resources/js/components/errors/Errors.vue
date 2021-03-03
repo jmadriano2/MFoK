@@ -37,15 +37,26 @@
         v-for="error in resultQuery"
       >
         <div class="row">
-          <div v-if="isCobDetails"
+          <div
+            v-if="isCobDetails"
             class="col-sm-1 r-border d-flex align-items-center justify-content-center"
           >
-            <div style="font-size: 4rem">
+            <div style="font-size: 4rem" @click="addCoblogError">
               <i class="fa fa-angle-double-left"></i>
             </div>
           </div>
           <div v-bind:class="[isCobDetails ? CDClass : notCDClass]">
-            <h3>{{ error.id }}: {{ error.component }}</h3>
+            <h5>
+              Component:
+              <strong>{{ error.component }}</strong> &nbsp;&nbsp;&nbsp; Seq.:
+              <strong>{{ error.sequence }}</strong>
+            </h5>
+            <hr />
+            <h5>Problem:</h5>
+            <p>
+              <strong>{{ error.problem }}</strong>
+            </p>
+            <h5>Resolution:</h5>
             <p>
               <strong>{{ error.resolution }}</strong>
             </p>
@@ -68,6 +79,8 @@ export default {
       error: {
         id: "",
         component: "",
+        sequence: "",
+        problem: "",
         resolution: "",
         og_resolver: "",
         created_at: "",
@@ -80,8 +93,8 @@ export default {
       errorsInPage: [],
       filteredErrors: [],
       isCobDetails: false,
-      CDClass: 'col-sm-11',
-      notCDClass: 'col-sm-12',
+      CDClass: "col-sm-11",
+      notCDClass: "col-sm-12",
     };
   },
   components: {
@@ -124,6 +137,23 @@ export default {
       this.currentPage = pageNumber;
       this.updateErrorsInPage();
     },
+    addCoblogError() {
+      let page_url = window.location.origin + "/api/coblogError";
+      console.log(page_url);
+      fetch(page_url, {
+        method: "post",
+        body: JSON.stringify(this.error),
+        headers: {
+          "content-type": "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          alert("Error has been recorded to log");
+          this.$emit("refreshPage");
+        })
+        .catch((err) => console.log(err));
+    },
     refreshPage() {
       this.fetchErrors();
     },
@@ -138,6 +168,14 @@ export default {
               .toLowerCase()
               .split(" ")
               .every((v) => error.component.toLowerCase().includes(v)) ||
+            this.searchQuery
+              .toLowerCase()
+              .split(" ")
+              .every((v) => error.sequence.toLowerCase().includes(v)) ||
+            this.searchQuery
+              .toLowerCase()
+              .split(" ")
+              .every((v) => error.problem.toLowerCase().includes(v)) ||
             this.searchQuery
               .toLowerCase()
               .split(" ")
@@ -159,15 +197,18 @@ export default {
 </script>
 
 <style scoped>
+strong {
+  color: green;
+}
 .r-border {
   border-right: 3px solid indigo;
   color: indigo;
 }
 .card {
-  background-color: rgba(245, 245, 245, 0.4);
+  background-color: rgba(245, 245, 245, 0.938);
 }
 .card-header,
 .card-footer {
-  opacity: 0.7;
+  opacity: 0.9;
 }
 </style>

@@ -32,7 +32,17 @@
         v-bind:key="coblogError.id"
         v-for="coblogError in resultQuery"
       >
-        <h3>{{ coblogError.id }}: {{ coblogError.component }}</h3>
+        <h5>
+          Component:
+          <strong>{{ coblogError.component }}</strong> &nbsp;&nbsp;&nbsp; Seq.:
+          <strong>{{ coblogError.sequence }}</strong>
+        </h5>
+        <hr />
+        <h5>Problem:</h5>
+        <p>
+          <strong>{{ coblogError.problem }}</strong>
+        </p>
+        <h5>Resolution:</h5>
         <p>
           <strong>{{ coblogError.resolution }}</strong>
         </p>
@@ -124,4 +134,14 @@ export default {
 };
 </script>
 <style scoped>
+strong {
+  color: green;
+}
+.card {
+  background-color: rgba(245, 245, 245, 0.938);
+}
+.card-header,
+.card-footer {
+  opacity: 0.9;
+}
 </style>

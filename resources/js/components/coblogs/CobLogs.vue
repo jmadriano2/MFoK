@@ -8,19 +8,25 @@
         v-for="coblog in coblogs"
       >
         <div class="row">
-          <div class="col-sm-10">
+          <div class="col-sm-5">
             <h4>System:</h4>
             <h5>
               {{ coblog.machine }} | {{ coblog.system }}/{{ coblog.zone }}
             </h5>
+            <h4>Release:</h4>
+            <h5>
+              {{ coblog.release }}
+            </h5>
+            <p class="mt-3">
+              <strong>Status: {{ coblog.status }}</strong>
+            </p>
+          </div>
+          <div class="col-sm-5">
             <h4>Runday:</h4>
             <h5>{{ coblog.runday | formatDate }}</h5>
             <h4>Next Working Day:</h4>
             <h5>{{ coblog.next_working_day | formatDate }}</h5>
             <p class="mt-3">
-              <strong>Status: {{ coblog.status }}</strong>
-            </p>
-            <p>
               <strong>Creator: {{ coblog.creator }}</strong>
             </p>
           </div>

@@ -21,6 +21,26 @@ class ErrorController extends Controller
 
         return ErrorResource::collection($errors);
     }
+    /**
+     * Display a list of errors that does not exist in current CoB Log.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function unselectedErrors()
+    {
+        //Get Errors
+        $errors = Error::whereIn();
+
+        DB::table('errors')
+            ->whereIn('cob_id', function ($query) {
+                $query->select(DB::raw(1))
+                    ->from('logs_contains_errors')
+                    ->whereRaw('orders.user_id = users.id');
+            })
+            ->get();
+
+        return ErrorResource::collection($errors);
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -30,15 +50,20 @@ class ErrorController extends Controller
      */
     public function store(Request $request)
     {
-        $error = $request->isMethod('put') ? Error::findorFail
-        ($request->error_id) : new Error;
+        $error = $request->isMethod('put') ? Error::findorFail($request->error_id) : new Error;
 
         $error->id = $request->input('error_id');
         $error->component = $request->input('component');
+        $sequence = $request->input('sequence');
+        if ((int) $sequence < 10000) {
+            $sequence = str_pad($sequence, 5, '0', STR_PAD_LEFT);
+        }
+        $error->sequence = $sequence;
+        $error->problem = $request->input('problem');
         $error->resolution = $request->input('resolution');
         $error->og_resolver = $request->input('og_resolver');
 
-        if($error->save()) {
+        if ($error->save()) {
             return new ErrorResource($error);
         }
     }
@@ -65,7 +90,7 @@ class ErrorController extends Controller
     {
         $error = Error::findOrFail($id);
 
-        if($error->delete()) {
+        if ($error->delete()) {
             return new ErrorResource($error);
         }
     }

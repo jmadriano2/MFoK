@@ -39,6 +39,18 @@
                 <input type="text" class="form-control" id="component-name"  v-model="error.component"/>
               </div>
               <div class="form-group">
+                <label for="recipient-name" class="col-form-label"
+                  >Sequence:</label
+                >
+                <input type="text" class="form-control" id="component-name"  v-model="error.sequence"/>
+              </div>
+              <div class="form-group">
+                <label for="message-text" class="col-form-label"
+                  >Problem:</label
+                >
+                <textarea class="form-control" id="resolution-text" v-model="error.problem"></textarea>
+              </div>
+              <div class="form-group">
                 <label for="message-text" class="col-form-label"
                   >Resolution:</label
                 >
@@ -71,6 +83,8 @@ export default {
       error: {
         id: "",
         component: "",
+        sequence: "",
+        problem: "",
         resolution: "",
         og_resolver: "Default User",
         created_at: "",

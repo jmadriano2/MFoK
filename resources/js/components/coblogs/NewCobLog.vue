@@ -1,7 +1,7 @@
 <template>
   <div class="col-sm">
     <form-wizard
-      @on-complete="onComplete"
+      @on-complete="addNewCobLog"
       color="#6c7ae0"
       title="Close of Business Logger"
       subtitle="New CoB Log"
@@ -158,6 +158,7 @@
 <script>
 import { FormWizard, TabContent } from "vue-form-wizard";
 import DatePicker from "v-calendar/lib/components/date-picker.umd";
+import moment from 'moment';
 import "vue-form-wizard/dist/vue-form-wizard.min.css";
 import PreCob from "./PreCob";
 
@@ -184,25 +185,21 @@ export default {
       },
       coblog: {
           id: "",
-          systemId: "",
+        system_id: "",
           runday: "",
-          nextWorkingDay: "",
-          start: "",
-          end: "",
+        next_working_day: "",
           status: "",
           runtime: "",
           conclusion: "",
           creator: "",
       },
+      returnData: [],
     };
   },
   created() {
     this.fetchSystems();
   },
   methods: {
-    onComplete: function () {
-      alert("Yay. Done!");
-    },
     fetchSystems(page_url) {
       let vm = this;
       page_url = page_url || "/api/systems";
@@ -220,20 +217,27 @@ export default {
       this.showNRDCalendar = !this.showNRDCalendar;
     },
     addNewCobLog() {
-        fetch('api/error',{
-            method: 'post',
-            body: JSON.stringify(this.error),
-            headers: {
-                'content-type': 'application/json'
-            }
+      this.coblog.system_id = this.selectedSystem.id;
+      this.coblog.runday = moment(this.rundate).format('YYYYMMDD');
+      this.coblog.next_working_day = moment(this.nextWorkingDay).format('YYYYMMDD');
+      this.coblog.status = 'Ongoing';
+      this.coblog.runtime = 0;
+      this.coblog.conclusion = 'Ongoing';
+      this.coblog.creator = 'Administrator';
+      fetch("api/coblog", {
+        method: "post",
+        body: JSON.stringify(this.coblog),
+        headers: {
+          "content-type": "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          alert("New Cob Log Added");
+          let $newCobUrl = 'coblog/' + res.data.id + '/details';
+          this.$router.push($newCobUrl);
         })
-        .then(res => res.json())
-        .then(data => {
-            this.error.component = '';
-            this.error.resolution = '';
-            alert('New Cob Log Added');
-        })
-        .catch(err => console.log(err));
+        .catch((err) => console.log(err));
     },
     validateSystem() {
         if (this.selectedSystem == '') {
