@@ -26,11 +26,12 @@ class CobLogsTableSeeder extends Seeder
             'next_working_day' => '20210217',
             'status' => 'Ongoing',
             'runtime' => 3600,
-            'conclusion' => 'Full CoB',
+            'conclusion' => '',
             'creator' => 'Administrator',
             'created_at' => $current_date_time,
             'updated_at' => $current_date_time
         ]);
+        $conclusions = ["","Full CoB", "Reopened", "Reopened"];
         for ($x = 1; $x < 4; $x++) {
             DB::table('cob_logs')->insert([
                 'id' => $x + 1,
@@ -39,7 +40,7 @@ class CobLogsTableSeeder extends Seeder
                 'next_working_day' => '20210217',
                 'status' => 'Completed',
                 'runtime' => 3600,
-                'conclusion' => 'Reopened',
+                'conclusion' => $conclusions[$x],
                 'creator' => 'Administrator',
                 'created_at' => $current_date_time,
                 'updated_at' => $current_date_time

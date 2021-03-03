@@ -27,7 +27,8 @@
           </h6>
         </div>
         <div class="col-sm-3">
-          Status: <strong>{{ coblog.status }}</strong>
+          <div v-if="coblog.conclusion">Conclusion: <strong>{{ coblog.conclusion }}</strong></div>
+          <div v-else>Status: <strong>{{ coblog.status }}</strong></div>
         </div>
         <div class="col-sm-4">
           Creator: <strong>{{ coblog.creator }}</strong>
