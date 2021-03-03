@@ -214,12 +214,14 @@ export default {
 </script>
 
 <style scoped>
+i {
+  cursor: pointer;
+}
 strong {
   color: green;
 }
 .r-border {
   border-right: 3px solid indigo;
-  color: indigo;
 }
 .customLeftArrow {
   color: rgb(187, 125, 231);

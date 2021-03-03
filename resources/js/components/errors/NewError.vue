@@ -122,4 +122,7 @@ export default {
 </script>
 
 <style scoped>
+i {
+  cursor: pointer;
+}
 </style>

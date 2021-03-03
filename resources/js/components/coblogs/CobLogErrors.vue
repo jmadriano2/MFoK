@@ -24,6 +24,12 @@
         >
         </Pagination>
       </div>
+      <div class="col-sm-1 offset-sm-5 text-right">
+        <i
+          class="fa fa-minus-square fa-2x"
+          v-on:click="removeActive = !removeActive"
+        ></i>
+      </div>
     </div>
 
     <div v-if="coblogErrors.length">
@@ -32,20 +38,33 @@
         v-bind:key="coblogError.id"
         v-for="coblogError in resultQuery"
       >
-        <h5>
-          Component:
-          <strong>{{ coblogError.component }}</strong> &nbsp;&nbsp;&nbsp; Seq.:
-          <strong>{{ coblogError.sequence }}</strong>
-        </h5>
-        <hr />
-        <h5>Problem:</h5>
-        <p>
-          <strong>{{ coblogError.problem }}</strong>
-        </p>
-        <h5>Resolution:</h5>
-        <p>
-          <strong>{{ coblogError.resolution }}</strong>
-        </p>
+        <div class="row">
+          <div v-bind:class="[removeActive ? RAClass : notRAClass]">
+            <h5>
+              Component:
+              <strong>{{ coblogError.component }}</strong> &nbsp;&nbsp;&nbsp;
+              Seq.:
+              <strong>{{ coblogError.sequence }}</strong>
+            </h5>
+            <hr />
+            <h5>Problem:</h5>
+            <p>
+              <strong>{{ coblogError.problem }}</strong>
+            </p>
+            <h5>Resolution:</h5>
+            <p>
+              <strong>{{ coblogError.resolution }}</strong>
+            </p>
+          </div>
+          <div
+            v-if="removeActive"
+            class="col-sm-1 l-border d-flex align-items-center justify-content-center"
+          >
+            <div style="font-size: 4rem" @click="removeCoblogError(coblogError.id)">
+              <i class="fa fa-angle-double-right customRightArrow"></i>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -64,6 +83,9 @@ export default {
       pageSize: 5,
       coblogErrorsInPage: [],
       filteredCoblogErrors: [],
+      removeActive: false,
+      RAClass: "col-sm-11",
+      notRAClass: "col-sm-12",
     };
   },
   props: ["updateCobErrors"],
@@ -135,11 +157,14 @@ export default {
   watch: {
     updateCobErrors: function () {
       this.fetchCobLogErrors();
-    }
+    },
   },
 };
 </script>
 <style scoped>
+i {
+  cursor: pointer;
+}
 strong {
   color: green;
 }
@@ -149,5 +174,17 @@ strong {
 .card-header,
 .card-footer {
   opacity: 0.9;
+}
+.l-border {
+  border-left: 3px solid rgb(230, 92, 133);
+}
+.customRightArrow {
+  color: rgb(212, 83, 122);
+}
+.customRightArrow:hover {
+  color: rgb(241, 120, 156);
+}
+.customRightArrow:active {
+  color: rgb(230, 32, 92);
 }
 </style>

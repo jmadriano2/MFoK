@@ -56,7 +56,7 @@ Route::get('coblog/{id}/errors', [CobLogController::class, 'showErrors']);
 Route::post('coblogError', [CobLogController::class, 'storeCoblogError']);
 Route::post('coblog', [CobLogController::class, 'store']);
 Route::put('coblog', [CobLogController::class, 'store']);
-Route::delete('coblog/{id}', [CobLogController::class, 'destroy']);
+Route::delete('coblog/{log_id}/{error_id}', [CobLogController::class, 'destroy']);
 
 
 //Systems API Routes

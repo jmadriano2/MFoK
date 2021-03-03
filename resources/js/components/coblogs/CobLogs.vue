@@ -37,7 +37,7 @@
               :to="{ name: 'cobLogDetails', params: { id: coblog.id } }"
             >
               <div style="font-size: 4rem">
-                <i class="fa fa-chevron-right fa-lg" style="color: indigo"> </i>
+                <i class="fa fa-chevron-right fa-lg customRightArrow"> </i>
               </div>
             </router-link>
           </div>
@@ -104,5 +104,14 @@ h5 {
 }
 .expand {
   border-left: 3px solid indigo;
+}
+.customRightArrow {
+  color: indigo;
+}
+.customRightArrow:hover {
+  color: rgb(205, 183, 221);
+}
+.customRightArrow:active {
+  color: rgb(151, 65, 212);
 }
 </style>
