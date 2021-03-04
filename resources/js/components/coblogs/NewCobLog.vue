@@ -222,7 +222,6 @@ export default {
       this.coblog.next_working_day = moment(this.nextWorkingDay).format('YYYYMMDD');
       this.coblog.status = 'Ongoing';
       this.coblog.runtime = 0;
-      this.coblog.conclusion = '';
       this.coblog.creator = 'Administrator';
       fetch("api/coblog", {
         method: "post",
