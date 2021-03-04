@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use App\Models\Error;
 use App\Models\CobLog;
 use App\Models\CoblogError;
 use App\Http\Resources\CobLog as CobLogResource;
@@ -144,8 +145,14 @@ class CobLogController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($log_id, $error_id)
     {
-        //
+        // Get Error
+        $error = Error::findOrFail($error_id);
+
+
+        if($error->logs()->detach($log_id)) {
+            return new CobLogErrorResource($error);
+        }
     }
 }
