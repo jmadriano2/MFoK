@@ -1,6 +1,21 @@
 <template>
   <div class="col-sm-12">
-    <h1>Cob Log Details</h1>
+    <div class="row">
+      <div class="col-sm-9">
+        <h1>Cob Log Details</h1>
+      </div>
+      <form id="concludeCob">
+        <div class="col-sm-2">
+          <select id="conclusions" class="form-control">
+            <option value="Full CoB">Full CoB</option>
+            <option value="Reopened">Reopen</option>
+          </select>
+        </div>
+        <div class="col-sm-1">
+          <button type="submit" class="btn btn-success">Conclude</button>
+        </div>
+      </form>
+    </div>
     <hr />
     <div class="card card-body mb-2">
       <div class="row">
@@ -27,8 +42,12 @@
           </h6>
         </div>
         <div class="col-sm-3">
-          <div v-if="coblog.conclusion">Conclusion: <strong>{{ coblog.conclusion }}</strong></div>
-          <div v-else>Status: <strong>{{ coblog.status }}</strong></div>
+          <div v-if="coblog.conclusion">
+            Conclusion: <strong>{{ coblog.conclusion }}</strong>
+          </div>
+          <div v-else>
+            Status: <strong>{{ coblog.status }}</strong>
+          </div>
         </div>
         <div class="col-sm-4">
           Creator: <strong>{{ coblog.creator }}</strong>
@@ -37,10 +56,17 @@
     </div>
     <div class="row">
       <div v-bind:class="[isStatusComplete ? completeClass : incompleteClass]">
-        <CobLogErrors :update-cob-errors="updateCobErrors" v-on:removeLogError="refreshAllErrors"></CobLogErrors>
+        <CobLogErrors
+          :update-cob-errors="updateCobErrors"
+          v-on:removeLogError="refreshAllErrors"
+        ></CobLogErrors>
       </div>
       <div class="col-sm-6" v-if="!isStatusComplete">
-        <Errors :log-details-id="coblog.id" :update-all-errors="updateAllErrors" v-on:addLogError="refreshCobLogErrors"></Errors>
+        <Errors
+          :log-details-id="coblog.id"
+          :update-all-errors="updateAllErrors"
+          v-on:addLogError="refreshCobLogErrors"
+        ></Errors>
       </div>
     </div>
   </div>
@@ -86,10 +112,10 @@ export default {
         .catch((err) => console.log(err));
     },
     refreshCobLogErrors() {
-        this.updateCobErrors += 1;
+      this.updateCobErrors += 1;
     },
     refreshAllErrors() {
-        this.updateAllErrors += 1;
+      this.updateAllErrors += 1;
     },
   },
   filters: {

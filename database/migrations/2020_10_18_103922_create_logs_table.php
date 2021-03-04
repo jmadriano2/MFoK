@@ -22,7 +22,7 @@ class CreateLogsTable extends Migration
             $table->timestamp('end', 0)->nullable();
             $table->string('status', 10);
             $table->integer('runtime');
-            $table->string('conclusion', 10);
+            $table->string('conclusion', 10)->nullable();
             $table->string('creator', 20);
             $table->timestamps();
 
