@@ -94,4 +94,27 @@ class AdminController extends Controller
             return new AdminResource($admin);
         }
     }
+
+    /**
+     * Checks for the validity of username and password combination.
+     *
+     * @param string $finUsername The user's corporate log in name.
+     * @param string $finPassword The user's corporate log in password.
+     * @return boolean True if the username and password combination is correct, false if otherwise.
+     */
+    public function corporateLogin($finUsername, $finPassword)
+    {
+        $ldap = ldap_connect("ldap://misys.global.ad:389");
+	    $ldaprdn = 'MISYSROOT' . "\\" . $finUsername;
+
+	    ldap_set_option($ldap, LDAP_OPT_PROTOCOL_VERSION, 3);
+	    ldap_set_option($ldap, LDAP_OPT_REFERRALS, 0);
+
+        //@ldap_bind is true if the credentials are correct
+	    if (@ldap_bind($ldap, $ldaprdn, $finPassword)) {
+		    return true;
+	    } else {
+		    return false;
+	    }
+    }
 }
