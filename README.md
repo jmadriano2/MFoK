@@ -54,35 +54,3 @@ Functions:
 1. Open command prompt on the project root directory.
 2. Enter the command `npm install`.
 3. While running the server either using a Virtual host or an artisan server, remember to run `npm run watch` on the project's root directory in order for the code changes to apply.
-
-### Setting up a Virtual Host (Optional)
-1. Go to `<xampp installation folder>\apache\conf\extra` and open `httpd-vhosts.conf` using a text editor.
-2. Add the following lines at the end of the document:
-    ```xml
-    <VirtualHost *:<XAMPP Apache HTTP Port>
-        DocumentRoot "<project's root directory>/public"
-        ServerName mfok.local
-            <Directory "C:/github/MFoK/public">
-		        Require all granted    
-	        </Directory>
-    </VirtualHost>
-    ```
-    Below is an example:
-    ```xml
-    <VirtualHost *:100
-        DocumentRoot "C:/github/MFoK/public"
-        ServerName mfok.local
-            <Directory "C:/github/MFoK/public">
-		        Require all granted    
-	        </Directory>   
-    </VirtualHost>
-    ```
-3. Go to `C:\Windows\System32\drivers\etc\`.
-4. Open the `hosts` file using a text editor that is running as administrator, otherwise the changes could not be saved.
-5. Add the line `127.0.0.1 mfok.local` at the end of the file.
-6. Save the changes. If the text editor is not running as administrator, the changes cound not be saved. But most text editors would usually ask if you would like to reopen the file as an administrator for the changes to be saved.
-7. Stop Apache on XAMMP and start it again.
-8. Go to `http://mfok.local` on your favorite web browser to check if the virtual host is properly running.
-
-# Note:
-Virtual hosts usually do not work seamlessly when using corporate machines. It would be better to use `php artisan serve` for a hassle free run.
