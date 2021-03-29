@@ -102,8 +102,10 @@ class AdminController extends Controller
      * @param string $finPassword The user's corporate log in password.
      * @return boolean True if the username and password combination is correct, false if otherwise.
      */
-    public function corporateLogin($finUsername, $finPassword)
+    public function corporateLogin(Request $request)
     {
+        $finUsername = $request->input('username');
+        $finPassword = $request->input('password');
         $ldap = ldap_connect("ldap://misys.global.ad:389");
 	    $ldaprdn = 'MISYSROOT' . "\\" . $finUsername;
 

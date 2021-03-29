@@ -39,6 +39,9 @@ Route::put('admin', [AdminController::class, 'store']);
 // Route::delete('admins', 'AdminController@destroy');
 Route::delete('admin/{username}', [AdminController::class, 'destroy']);
 
+// Route::post('login/{finUsername}&{finPassword}', [AdminController::class, 'corporateLogin']);
+Route::post('login/', [AdminController::class, 'corporateLogin']);
+
 
 //Errors and Resolutions API Routes
 Route::get('errors', [ErrorController::class, 'index']);
