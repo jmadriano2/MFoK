@@ -28,6 +28,7 @@
         <i
           class="fa fa-minus-square fa-2x"
           v-on:click="removeActive = !removeActive"
+          v-if="!conclusion"
         ></i>
       </div>
     </div>
@@ -93,7 +94,7 @@ export default {
       notRAClass: "col-sm-12",
     };
   },
-  props: ["updateCobErrors"],
+  props: ["updateCobErrors", "conclusion"],
   components: {
     Pagination,
   },
@@ -104,11 +105,11 @@ export default {
     fetchCobLogErrors(page_url) {
       let vm = this;
       page_url = page_url || "/api/coblog/" + this.$route.params.id + "/errors";
-      console.log(page_url);
       fetch(page_url)
         .then((res) => res.json())
         .then((res) => {
           this.coblogErrors = res.data;
+          console.log("fetchLogErrors(): " + this.coblogErrors);
         })
         .catch((err) => console.log(err));
     },

@@ -45,6 +45,7 @@ class CobLogController extends Controller
             'systems.updated_at as s_uat',
             )
         ->join('systems','systems.id','=','cob_logs.system_id')
+        ->orderBy('cob_logs.created_at', 'desc')
         ->get();
 
         return new CobLogResource($coblogs);
@@ -77,10 +78,10 @@ class CobLogController extends Controller
     public function store(Request $request)
     {
         $coblog = $request->isMethod('put') ? CobLog::findorFail
-        ($request->system_id) : new CobLog;
+        ($request->id) : new CobLog;
 
         $coblog->id = $request->input('id');
-        $coblog->system_id = $request->input('system_id');
+        $coblog->system_id = $request->input('s_id');
         $coblog->runday = $request->input('runday');
         $coblog->next_working_day = $request->input('next_working_day');
         $coblog->start = Carbon::now();
@@ -103,7 +104,27 @@ class CobLogController extends Controller
     public function show($id)
     {
         $coblog = DB::table('cob_logs')
-        ->select('*')
+        ->select(
+            'cob_logs.id',
+            'cob_logs.system_id',
+            'cob_logs.runday',
+            'cob_logs.next_working_day',
+            'cob_logs.start',
+            'cob_logs.end',
+            'cob_logs.status',
+            'cob_logs.runtime',
+            'cob_logs.conclusion',
+            'cob_logs.creator',
+            'cob_logs.created_at',
+            'cob_logs.updated_at',
+            'systems.id as s_id',
+            'systems.machine',
+            'systems.system',
+            'systems.zone',
+            'systems.release',
+            'systems.created_at as s_cat',
+            'systems.updated_at as s_uat'
+            )
         ->join('systems','systems.id','=','cob_logs.system_id')
         ->where(['cob_logs.id' => $id])
         ->get();

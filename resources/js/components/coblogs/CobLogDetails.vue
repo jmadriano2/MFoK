@@ -1,21 +1,21 @@
 <template>
   <div class="col-sm-12">
-    <div class="row">
-      <div class="col-sm-9">
-        <h1>Cob Log Details</h1>
-      </div>
-      <form id="concludeCob">
-        <div class="col-sm-2">
-          <select id="conclusions" class="form-control">
+    <form id="concludeCob" @submit.prevent="concludeCob">
+      <div class="row">
+        <div class="col-sm-8">
+          <h1>Cob Log Details</h1>
+        </div>
+        <div class="col-sm-2 mt-2" v-if="!coblog.conclusion" >
+          <select id="conclusions" class="form-control" v-model="concludeCobOption" >
             <option value="Full CoB">Full CoB</option>
             <option value="Reopened">Reopen</option>
           </select>
         </div>
-        <div class="col-sm-1">
-          <button type="submit" class="btn btn-success">Conclude</button>
+        <div class="col-sm-1 mt-2" v-if="!coblog.conclusion" >
+          <button type="submit" class="btn btn-success" :disabled="!concludeCobOption" >Conclude</button>
         </div>
-      </form>
-    </div>
+      </div>
+    </form>
     <hr />
     <div class="card card-body mb-2">
       <div class="row">
@@ -58,6 +58,7 @@
       <div v-bind:class="[isStatusComplete ? completeClass : incompleteClass]">
         <CobLogErrors
           :update-cob-errors="updateCobErrors"
+          :conclusion="coblog.conclusion"
           v-on:removeLogError="refreshAllErrors"
         ></CobLogErrors>
       </div>
@@ -81,6 +82,7 @@ export default {
   data() {
     return {
       coblog: [],
+      concludeCobOption: "",
       updateCobErrors: 0,
       updateAllErrors: 0,
       isStatusComplete: false,
@@ -110,6 +112,25 @@ export default {
           }
         })
         .catch((err) => console.log(err));
+    },
+    concludeCob() {
+        this.coblog.conclusion = this.concludeCobOption;
+        this.coblog.status = "Completed";
+        console.log(this.coblog);
+        fetch('/api/coblog', {
+          method: 'put',
+          body: JSON.stringify(this.coblog),
+          headers: {
+            'content-type': 'application/json'
+          }
+        })
+          .then(res => res.json())
+          .then(data => {
+            this.coblog.concludeCobOption = "";
+            alert('CoB Concluded');
+            this.fetchCobLog();
+          })
+          .catch(err => console.log(err));
     },
     refreshCobLogErrors() {
       this.updateCobErrors += 1;
