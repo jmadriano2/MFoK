@@ -19,6 +19,7 @@ class CreateSystemsTable extends Migration
             $table->string('system', 2);
             $table->string('zone', 2);
             $table->string('release', 50);
+            $table->string('rundate', 8);//YYYYMMDD
             $table->timestamps();
         });
     }

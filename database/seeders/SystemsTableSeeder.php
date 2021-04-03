@@ -22,6 +22,7 @@ class SystemsTableSeeder extends Seeder
         $systems = array('MA', 'PF', 'CV', 'TC');
         $zones = array('M1', 'F6', 'C9', 'T3');
         $releases = array('MP121', 'FM2.0', 'FM2.1', 'R4.01.03');
+        $rundates = array('20020816', '20040506', '20011126', '19970723');
         $current_date_time = Carbon::now()->toDateTimeString();
         for ($x = 0; $x < 4; $x++) {
             DB::table('systems')->insert([
@@ -30,6 +31,7 @@ class SystemsTableSeeder extends Seeder
                 'system' => $systems[$x],
                 'zone' => $zones[$x],
                 'release' => $releases[$x],
+                'rundate' => $rundates[$x],
                 'created_at' => $current_date_time,
                 'updated_at' => $current_date_time
                 ]);
