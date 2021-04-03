@@ -37,6 +37,7 @@ class SystemController extends Controller
         $system->system = $request->input('system');
         $system->zone = $request->input('zone');
         $system->release = $request->input('release');
+        $system->rundate = $request->input('rundate');
 
         if($system->save()) {
             return new SystemResource($system);
