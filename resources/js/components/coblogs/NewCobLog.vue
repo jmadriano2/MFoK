@@ -35,7 +35,7 @@
                                             class="alert alert-danger d-none"
                                             role="alert"
                                             :class="{'d-block': hasSystemError}">
-                                                System is required.
+                                                {{ SystemErrorMessage }}
                                         </div>
                                         <!-- System dropdown -->
                                         <select
@@ -50,7 +50,8 @@
                                                     id: system.id,
                                                     machine: system.machine,
                                                     system: system.system,
-                                                    zone: system.zone,}">
+                                                    zone: system.zone,
+                                                    rundate: system.rundate,}">
                                                         {{ system.machine }} - {{ system.system }}/{{system.zone}}
                                             </option>
                                         </select>
@@ -66,7 +67,7 @@
                                             class="alert alert-danger d-none"
                                             role="alert"
                                             :class="{'d-block': hasRDError}">
-                                                Rundate is required.
+                                                {{ RDErrorMessage }}
                                         </div>
                                         <input
                                             readonly
@@ -99,7 +100,7 @@
                                             class="alert alert-danger d-none"
                                             role="alert"
                                             :class="{'d-block': hasNRDError}">
-                                                Next Rundate is required.
+                                                {{ NRDErrorMessage }}
                                         </div>
                                         <input
                                             readonly
@@ -188,10 +189,13 @@ export default {
   },
   data() {
     return {
-        hasSystemError: false,
-        hasRDError: false,
-        hasNRDError: false,
-        isClearedToProceed: false,
+      hasSystemError: false,
+      hasRDError: false,
+      hasNRDError: false,
+      SystemErrorMessage: "",
+      RDErrorMessage: "",
+      NRDErrorMessage: "",
+      isClearedToProceed: false,
       systems: [],
       selectedSystem: "",
       rundate: "",
@@ -258,20 +262,38 @@ export default {
         .catch((err) => console.log(err));
     },
     validateSystem() {
+        // Selected System can't be blank
         if (this.selectedSystem == '') {
             this.hasSystemError = true;
+            this.SystemErrorMessage = 'System is required.';
         } else {
             this.hasSystemError = false;
         }
+        // Rundate can't be blank
         if (this.rundate == '') {
             this.hasRDError = true;
+            this.RDErrorMessage = 'Rundate is required.';
         } else {
             this.hasRDError = false;
         }
+        // Next Rundate can't be blank
         if (this.nextRundate == '') {
             this.hasNRDError = true;
+            this.NRDErrorMessage = 'Next Rundate is required.';
         } else {
             this.hasNRDError = false;
+            // Next Rundate can't be before Rundate
+            let RDMoment = moment(this.rundate);
+            let NRDMoment = moment(this.nextRundate);
+            if (NRDMoment.isBefore(RDMoment)) {
+                this.hasNRDError = true;
+                this.NRDErrorMessage = 'Next Run Date can\'t be before Current Run Date.';
+            }
+            // Next Rundate can't be same as Rundate
+            if (NRDMoment.isSame(RDMoment, 'day')) {
+                this.hasNRDError = true;
+                this.NRDErrorMessage = 'Next Run Date can\'t be the same as Current Run Date.';
+            }
         }
 
         console.log('System:' + this.selectedSystem);
@@ -291,6 +313,10 @@ export default {
     //below is a filler method which has no real use
     onSystemChange() {
       console.log(this.selectedSystem);
+      let systemRundateMoment = moment(this.selectedSystem.rundate, 'YYYYMMDD');
+      this.rundate = systemRundateMoment.format('MMMM D, YYYY');
+      systemRundateMoment = systemRundateMoment.add(1, 'days');
+      this.nextRundate = systemRundateMoment.format('MMMM D, YYYY');
     }
   },
 };
