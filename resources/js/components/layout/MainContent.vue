@@ -1,9 +1,9 @@
 <template>
   <div class="wrapper">
-    <Sidebar v-bind:sidebarActive="sidebarActive"></Sidebar>
+    <Sidebar v-bind:sidebarActive="sidebarActive" v-if="authenticated" ></Sidebar>
 
     <div id="content">
-      <Navbar v-on:toggleSidebar="sidebarToggle"></Navbar>
+      <Navbar v-on:toggleSidebar="sidebarToggle" v-if="authenticated" ></Navbar>
       <div class="container-fluid">
         <div class="row">
           <router-view></router-view>
@@ -23,6 +23,7 @@ export default {
   data() {
     return {
       sidebarActive: true,
+      authenticated: false,
     };
   },
   components: {

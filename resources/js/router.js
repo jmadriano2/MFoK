@@ -4,6 +4,7 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 import dashboardPage from './components/dashboard/Dashboard.vue'
+import loginPage from './components/login/Login.vue'
 import errorPage from './components/errors/Errors.vue'
 import cobLogPage from './components/coblogs/CobLogs.vue'
 import newCobLogPage from './components/coblogs/NewCobLog.vue'
@@ -13,6 +14,11 @@ const routes = [
     {
         path: '/',
         component: dashboardPage
+    },
+    {
+        path: '/login',
+        name: 'login',
+        component: loginPage
     },
     {
         path: '/errors',
