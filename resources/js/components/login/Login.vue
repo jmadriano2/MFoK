@@ -1,6 +1,6 @@
 <template>
   <div class="centerForm">
-    <div class="card rounded formBorder" style="width: 40rem;">
+      <div class="card rounded formBorder" style="width: 40rem">
       <div class="card-body">
         <div class="formHeader">
           <img src="/images/MFoK_logo_v2.png" class="logo" />
@@ -9,49 +9,76 @@
             <br />of Knowledge
           </h2>
         </div>
-        <div class="row mt-5">
-          <div class="col-sm-8 offset-sm-2">
-            <form class="mt-3">
-              <div class="form-group">
-                <div class="input-icon">
+        <form id="login" @submit.prevent="login">
+          <div class="row mt-5">
+            <div class="col-sm-8 offset-sm-2">
+              <form class="mt-3">
+                <div class="form-group">
+                  <div class="input-icon">
                   <i class="fa fa-user"></i>
-                  <input
-                    id="username"
-                    class="form-control"
-                    placeholder="Username"
-                    name="username"
-                    required
-                    autofocus
-                  />
+                    <input
+                      id="username"
+                      class="form-control"
+                      placeholder="Username"
+                      name="username"
+                      v-model="credentials.username"
+                      required
+                      autofocus
+                    />
+                  </div>
                 </div>
-              </div>
-              <div class="form-group">
-                <div class="input-icon">
+                <div class="form-group">
+                  <div class="input-icon">
                   <i class="fa fa-key"></i>
-                  <input
-                    id="password"
-                    type="password"
-                    class="form-control"
-                    placeholder="Password"
-                    name="password"
-                    required
-                  />
+                    <input
+                      id="password"
+                      type="password"
+                      class="form-control"
+                      placeholder="Password"
+                      v-model="credentials.password"
+                      name="password"
+                      required
+                    />
+                  </div>
                 </div>
-              </div>
-              <button class="btn btn-common log-btn">Login</button>
-            </form>
+                <button type="submit" class="btn btn-common log-btn">Login</button>
+              </form>
+            </div>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   </div>
 </template>
 <script>
-export default {};
-</script>
-<style scoped>
-.centerForm {
-  display: flex;
+export default {
+  data() {
+    return {
+      credentials: {
+        username: "",
+        password: "",
+      },
+    };
+  },
+  methods: {
+    login() {
+        console.log(this.credentials);
+        fetch('/login', {
+          method: 'post',
+          body: JSON.stringify(this.coblog),
+          headers: {
+            'content-type': 'application/json'
+          }
+        })
+          .then(res => res.json())
+          .then(data => {
+
+          })
+          .catch(err => console.log(err));
+    },
+  }
+};
+flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
