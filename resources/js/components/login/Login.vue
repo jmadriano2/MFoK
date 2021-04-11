@@ -14,6 +14,7 @@
             <form class="mt-3">
               <div class="form-group">
                 <div class="input-icon">
+                  <i class="fa fa-user"></i>
                   <input
                     id="username"
                     class="form-control"
@@ -26,6 +27,7 @@
               </div>
               <div class="form-group">
                 <div class="input-icon">
+                  <i class="fa fa-key"></i>
                   <input
                     id="password"
                     type="password"
@@ -94,5 +96,25 @@ export default {};
 }
 .formBorder {
   border: 3px solid #cc9cd8;
+}
+.input-icon input {
+  padding-left: 40px;
+}
+.input-icon {
+  position: relative;
+}
+.input-icon i {
+  color: #444;
+  opacity: 0.6;
+  padding-right: 10px;
+  margin-top: -3px;
+}
+.input-icon i {
+  font-size: 15px;
+  left: 12px;
+  line-height: 22px;
+  margin-top: -11px;
+  position: absolute;
+  top: 50%;
 }
 </style>
