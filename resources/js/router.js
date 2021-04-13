@@ -12,11 +12,11 @@ import cobLogDetailsPage from './components/coblogs/CobLogDetails.vue'
 
 const routes = [
     {
-        path: '/',
+        path: '/dashboard',
         component: dashboardPage
     },
     {
-        path: '/login',
+        path: '/',
         name: 'login',
         component: loginPage
     },

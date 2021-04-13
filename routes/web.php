@@ -15,7 +15,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('login');
+
+Route::get('/auth', function () {
+    return view('authenticated');
+})->middleware('auth');
 
 Route::any('{slug}', function(){
     return view('welcome');
