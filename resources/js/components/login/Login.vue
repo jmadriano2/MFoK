@@ -1,6 +1,6 @@
 <template>
   <div class="centerForm">
-      <div class="card rounded formBorder" style="width: 40rem">
+    <div class="card rounded formBorder" style="width: 40rem">
       <div class="card-body">
         <div class="formHeader">
           <img src="/images/MFoK_logo_v2.png" class="logo" />
@@ -15,13 +15,13 @@
               <form class="mt-3">
                 <div class="form-group">
                   <div class="input-icon">
-                  <i class="fa fa-user"></i>
+                    <i class="fa fa-user"></i>
                     <input
                       id="username"
                       class="form-control"
                       placeholder="Username"
-                      name="username"
                       v-model="credentials.username"
+                      name="username"
                       required
                       autofocus
                     />
@@ -29,7 +29,7 @@
                 </div>
                 <div class="form-group">
                   <div class="input-icon">
-                  <i class="fa fa-key"></i>
+                    <i class="fa fa-key"></i>
                     <input
                       id="password"
                       type="password"
@@ -56,26 +56,28 @@ export default {
     return {
       credentials: {
         username: "",
-        password: "",
-      },
+        password: ""
+      }
     };
   },
   methods: {
     login() {
-        console.log(this.credentials);
-        fetch('/login', {
-          method: 'post',
-          body: JSON.stringify(this.coblog),
-          headers: {
-            'content-type': 'application/json'
-          }
+      console.log(this.credentials);
+      fetch("/login", {
+        method: "post",
+        body: JSON.stringify(this.credentials),
+        headers: {
+          "content-type": "application/json"
+        }
+      })
+        .then(res => res.json())
+        .then(data => {
+          consol.alert(data);
+          alert("New Cob Log Added");
+          this.$router.push("auth");
         })
-          .then(res => res.json())
-          .then(data => {
-
-          })
-          .catch(err => console.log(err));
-    },
+        .catch(err => console.log(err));
+    }
   }
 };
 </script>

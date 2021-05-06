@@ -21,7 +21,7 @@ class CreateLogsContainErrorsTable extends Migration
             $table->foreign('log_id')->references('id')->on('cob_logs');
             $table->foreign('error_id')->references('id')->on('errors');
             
-            $table->primary(['log_id','error_id']);
+            $table->primary(['log_id','error_id']); 
         });
     }
 
