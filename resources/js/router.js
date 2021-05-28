@@ -9,11 +9,22 @@ import errorPage from './components/errors/Errors.vue'
 import cobLogPage from './components/coblogs/CobLogs.vue'
 import newCobLogPage from './components/coblogs/NewCobLog.vue'
 import cobLogDetailsPage from './components/coblogs/CobLogDetails.vue'
+import pageNotFound from './components/utility/PageNotFound.vue'
+import axios from 'axios'
 
 const routes = [
     {
         path: '/dashboard',
-        component: dashboardPage
+        component: dashboardPage,
+        name: 'dashboard',
+        beforeEnter: (to, from, next) =>{
+            axios.get('/api/authenticated').then(()=>{
+                console.log('rekt')
+                next()
+            }).catch(()=>{
+                return next({ name: 'login' })
+            })
+        }
     },
     {
         path: '/',
@@ -22,20 +33,60 @@ const routes = [
     },
     {
         path: '/errors',
-        component: errorPage
+        component: errorPage,
+        beforeEnter: (to, from, next) =>{
+            axios.get('/api/authenticated').then(()=>{
+                next()
+            }).catch(()=>{
+                return next({ name: 'login' })
+            })
+        }
     },
     {
         path: '/coblogs',
-        component: cobLogPage
+        component: cobLogPage,
+        beforeEnter: (to, from, next) =>{
+            axios.get('/api/authenticated').then(()=>{
+                next()
+            }).catch(()=>{
+                return next({ name: 'login' })
+            })
+        }
     },
     {
         path: '/newcoblog',
-        component: newCobLogPage
+        component: newCobLogPage,
+        beforeEnter: (to, from, next) =>{
+            axios.get('/api/authenticated').then(()=>{
+                next()
+            }).catch(()=>{
+                return next({ name: 'login' })
+            })
+        }
     },
     {
         path: '/coblog/:id/details',
+        component: cobLogDetailsPage,
         name: 'cobLogDetails',
-        component: cobLogDetailsPage
+        beforeEnter: (to, from, next) =>{
+            axios.get('/api/authenticated').then(()=>{
+                next()
+            }).catch(()=>{
+                return next({ name: 'login' })
+            })
+        }
+    },
+    {
+        path: '*',
+        component: pageNotFound,
+        name: 'pageNotFound',
+        beforeEnter: (to, from, next) =>{
+            axios.get('/api/authenticated').then(()=>{
+                next()
+            }).catch(()=>{
+                return next({ name: 'login' })
+            })
+        }
     },
 ]
 

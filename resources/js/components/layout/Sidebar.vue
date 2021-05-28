@@ -16,8 +16,7 @@
           data-toggle="collapse"
           aria-expanded="true"
           class="dropdown-toggle"
-          >CoB Logs</a
-        >
+        >CoB Logs</a>
         <ul class="collapse list-unstyled" id="homeSubmenu">
           <li>
             <router-link to="/coblogs">View All Logs</router-link>
@@ -36,8 +35,7 @@
           data-toggle="collapse"
           aria-expanded="true"
           class="dropdown-toggle"
-          >Errors and Resolutions</a
-        >
+        >Errors and Resolutions</a>
         <ul class="collapse list-unstyled" id="pageSubmenu">
           <li>
             <router-link to="/errors">All Errors</router-link>
@@ -57,15 +55,24 @@
         <a href="#">Profile</a>
       </li>
       <li>
-        <a href="#">Sign Out</a>
+        <a href="#" @click.prevent="logout">Sign Out</a>
       </li>
     </ul>
   </nav>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   props: ["sidebarActive"],
+  methods: {
+    logout() {
+      axios.post("/api/logout").then(() => {
+        this.$router.push({ name: "login" });
+      });
+    }
+  },
 };
 </script>
 

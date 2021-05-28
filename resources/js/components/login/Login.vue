@@ -9,74 +9,86 @@
             <br />of Knowledge
           </h2>
         </div>
-        <form id="login" @submit.prevent="login">
-          <div class="row mt-5">
-            <div class="col-sm-8 offset-sm-2">
-              <form class="mt-3">
-                <div class="form-group">
-                  <div class="input-icon">
-                    <i class="fa fa-user"></i>
-                    <input
-                      id="username"
-                      class="form-control"
-                      placeholder="Username"
-                      v-model="credentials.username"
-                      name="username"
-                      required
-                      autofocus
-                    />
-                  </div>
+        <div class="row mt-5">
+          <div class="col-sm-8 offset-sm-2">
+            <form class="mt-3" id="login" @submit.prevent="login">
+              <div class="form-group">
+                <div class="input-icon">
+                  <i class="fa fa-user"></i>
+                  <input
+                    id="username"
+                    class="form-control"
+                    placeholder="Username"
+                    v-model="credentials.username"
+                    name="username"
+                    required
+                    autofocus
+                  />
                 </div>
-                <div class="form-group">
-                  <div class="input-icon">
-                    <i class="fa fa-key"></i>
-                    <input
-                      id="password"
-                      type="password"
-                      class="form-control"
-                      placeholder="Password"
-                      v-model="credentials.password"
-                      name="password"
-                      required
-                    />
-                  </div>
+              </div>
+              <div class="form-group">
+                <div class="input-icon">
+                  <i class="fa fa-key"></i>
+                  <input
+                    id="password"
+                    type="password"
+                    class="form-control"
+                    placeholder="Password"
+                    v-model="credentials.password"
+                    name="password"
+                    required
+                  />
                 </div>
-                <button type="submit" class="btn btn-common log-btn">Login</button>
-              </form>
-            </div>
+              </div>
+              <button type="submit" class="btn btn-common log-btn">Login</button>
+            </form>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   </div>
 </template>
 <script>
+import axios from "axios";
+
 export default {
   data() {
     return {
       credentials: {
+        name: "",
         username: "",
         password: ""
       }
     };
   },
+  mounted() {
+    console.log("ggezgetrekt " + this.user);
+    this.$emit("showNavs", false);
+    axios
+      .get("/api/user")
+      .then(res => {
+        this.$router.push({ name: "dashboard" })
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  },
   methods: {
     login() {
-      console.log(this.credentials);
-      fetch("/login", {
-        method: "post",
-        body: JSON.stringify(this.credentials),
-        headers: {
-          "content-type": "application/json"
-        }
-      })
-        .then(res => res.json())
-        .then(data => {
-          consol.alert(data);
-          alert("New Cob Log Added");
-          this.$router.push("auth");
-        })
-        .catch(err => console.log(err));
+      console.log("urmum");
+
+      axios.get("/sanctum/csrf-cookie").then(response => {
+        console.log(response);
+        this.name = this.username;
+        axios.post("/api/login", this.credentials).then(response => {
+          console.log(response);
+          console.log("wtf man");
+          this.$router.push({ name: "dashboard" })
+          }).catch(error => {
+            this.errors = error.response.data.errors;
+            console.log(error);
+        });
+      });
     }
   }
 };

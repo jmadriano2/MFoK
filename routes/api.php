@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ErrorController;
 use App\Http\Controllers\CobLogController;
 use App\Http\Controllers\SystemController;
@@ -18,8 +19,12 @@ use App\Http\Controllers\SystemController;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::middleware('auth:sanctum')->get('/authenticated', function () {
+    return true;
 });
 
 //get
@@ -41,6 +46,9 @@ Route::delete('admin/{username}', [AdminController::class, 'destroy']);
 
 // Route::post('login/{finUsername}&{finPassword}', [AdminController::class, 'corporateLogin']);
 Route::post('login/', [AdminController::class, 'corporateLogin']);
+
+Route::post('login', [LoginController::class, 'login']);
+Route::post('logout', [LoginController::class, 'logout']);
 
 
 //Errors and Resolutions API Routes
