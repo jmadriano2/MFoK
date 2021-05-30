@@ -77,22 +77,37 @@ class CobLogController extends Controller
      */
     public function store(Request $request)
     {
-        $coblog = $request->isMethod('put') ? CobLog::findorFail
-        ($request->id) : new CobLog;
+        // $coblog = $request->isMethod('put') ? CobLog::findorFail
+        // ($request->id) : new CobLog;
 
-        $coblog->id = $request->input('id');
-        $coblog->system_id = $request->input('s_id');
-        $coblog->runday = $request->input('runday');
-        $coblog->next_working_day = $request->input('next_working_day');
-        $coblog->start = Carbon::now();
-        $coblog->status = $request->input('status');
-        $coblog->runtime = $request->input('runtime');
-        $coblog->conclusion = $request->input('conclusion');
-        $coblog->creator = $request->input('creator');
+        // $coblog->id = $request->input('id');
+        // $coblog->system_id = $request->input('system_id');
+        // $coblog->runday = $request->input('runday');
+        // $coblog->next_working_day = $request->input('next_working_day');
+        // $coblog->start = Carbon::now();
+        // $coblog->status = $request->input('status');
+        // $coblog->runtime = $request->input('runtime');
+        // $coblog->conclusion = $request->input('conclusion');
+        // $coblog->creator = $request->input('creator');
 
-        if($coblog->save()) {
-            return new CobLogResource($coblog);
-        }
+        // if($coblog->save()) {
+        //     return new CobLogResource($coblog);
+        // }
+
+        $request->validate([
+            'system_id' => 'required',
+            'runday' => 'required',
+            'next_working_day' => 'required',
+            'status' => 'required',
+            'runtime' => 'required',
+        ]);
+
+        return CobLog::create(array_merge($request->all(),
+            [
+                'logger_id' => auth()->user()->id,
+                'start' => Carbon::now(),
+            ])
+        );
     }
 
     /**

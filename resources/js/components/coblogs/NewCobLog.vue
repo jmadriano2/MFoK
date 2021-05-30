@@ -179,6 +179,7 @@ import DatePicker from "v-calendar/lib/components/date-picker.umd";
 import moment from 'moment';
 import "vue-form-wizard/dist/vue-form-wizard.min.css";
 import PreCob from "./PreCob";
+import axios from "axios";
 
 export default {
   components: {
@@ -208,9 +209,9 @@ export default {
       },
       coblog: {
           id: "",
-        system_id: "",
+          system_id: "",
           runday: "",
-        next_working_day: "",
+          next_working_day: "",
           status: "",
           runtime: "",
           conclusion: "",
@@ -245,21 +246,39 @@ export default {
       this.coblog.next_working_day = moment(this.nextWorkingDay).format('YYYYMMDD');
       this.coblog.status = 'Ongoing';
       this.coblog.runtime = 0;
-      this.coblog.creator = 'Administrator';
-      fetch("api/coblog", {
-        method: "post",
-        body: JSON.stringify(this.coblog),
-        headers: {
-          "content-type": "application/json",
-        },
-      })
-        .then((res) => res.json())
-        .then((res) => {
-          alert("New Cob Log Added");
+
+      axios.get('/sanctum/csrf-cookie').then(response => {
+        alert("csrf get!");
+        axios.post('/api/coblog', this.coblog).then((res) => {
+            alert("New Cob Log Added");
           let $newCobUrl = 'coblog/' + res.data.id + '/details';
           this.$router.push($newCobUrl);
         })
-        .catch((err) => console.log(err));
+        .catch(function (error) {
+            if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+            }
+        });
+      });
+
+    //   fetch("api/coblog", {
+    //     method: "post",
+    //     body: JSON.stringify(this.coblog),
+    //     headers: {
+    //       "content-type": "application/json",
+    //     },
+    //   })
+    //     .then((res) => res.json())
+    //     .then((res) => {
+    //       alert("New Cob Log Added");
+    //       let $newCobUrl = 'coblog/' + res.data.id + '/details';
+    //       this.$router.push($newCobUrl);
+    //     })
+    //     .catch((err) => console.log(err));
     },
     validateSystem() {
         // Selected System can't be blank

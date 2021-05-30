@@ -8,6 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class CobLog extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'system_id',
+        'runday',
+        'next_working_day',
+        'start',
+        'status',
+        'runtime',
+        'conclusion',
+        'logger_id',
+    ];
 
     public function system() {
         return $this->belongsTo(System::class, 'system_id', 'id');
