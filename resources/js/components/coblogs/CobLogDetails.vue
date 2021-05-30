@@ -77,6 +77,7 @@
 import moment from "moment";
 import CobLogErrors from "./CobLogErrors.vue";
 import Errors from "../errors/Errors.vue";
+import axios from "axios";
 
 export default {
   data() {
@@ -102,16 +103,34 @@ export default {
       let vm = this;
       page_url = page_url || "/api/coblog/" + this.$route.params.id;
       console.log(page_url);
-      fetch(page_url)
-        .then((res) => res.json())
-        .then((res) => {
+
+      axios.get(page_url).then((res) => {
           this.coblog = res.data[0];
           console.log(this.coblog.status);
           if (this.coblog.status === "Completed") {
             this.isStatusComplete = true;
           }
-        })
-        .catch((err) => console.log(err));
+      })
+      .catch(function (error) {
+            if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+            }
+      });
+
+    //   fetch(page_url)
+    //     .then((res) => res.json())
+    //     .then((res) => {
+    //       this.coblog = res.data[0];
+    //       console.log(this.coblog.status);
+    //       if (this.coblog.status === "Completed") {
+    //         this.isStatusComplete = true;
+    //       }
+    //     })
+    //     .catch((err) => console.log(err));
     },
     concludeCob() {
         this.coblog.conclusion = this.concludeCobOption;

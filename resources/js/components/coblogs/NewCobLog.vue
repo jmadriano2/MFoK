@@ -44,7 +44,7 @@
                                             v-model="selectedSystem"
                                             @change="onSystemChange()">
                                             <option
-                                                v-for="system in systems.data"
+                                                v-for="system in systems"
                                                 v-bind:key="system.id"
                                                 v-bind:value="{
                                                     id: system.id,
@@ -230,7 +230,7 @@ export default {
 
       axios.get(page_url).then((res) => {
           console.log(res);
-          this.systems = res.data;
+          this.systems = res.data.data;
       })
       .catch(function (error) {
             if (error.response) {
@@ -241,14 +241,6 @@ export default {
             console.log(error.response.headers);
             }
       });
-
-    //   fetch(page_url)
-    //     .then((res) => res.json())
-    //     .then((res) => {
-    //       console.log(res.data);
-    //       this.systems = res.data;
-    //     })
-    //     .catch((err) => console.log(err));
     },
     toggleRDCalendar() {
       this.showRDCalendar = !this.showRDCalendar;

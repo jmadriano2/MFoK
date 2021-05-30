@@ -21,34 +21,7 @@ class CobLogController extends Controller
      */
     public function index()
     {
-        //Get CobLogs
-        $coblogs = DB::table('cob_logs')
-        ->select(
-            'cob_logs.id',
-            'cob_logs.system_id',
-            'cob_logs.runday',
-            'cob_logs.next_working_day',
-            'cob_logs.start',
-            'cob_logs.end',
-            'cob_logs.status',
-            'cob_logs.runtime',
-            'cob_logs.conclusion',
-            'cob_logs.creator',
-            'cob_logs.created_at',
-            'cob_logs.updated_at',
-            'systems.id as s_id',
-            'systems.machine',
-            'systems.system',
-            'systems.zone',
-            'systems.release',
-            'systems.created_at as s_cat',
-            'systems.updated_at as s_uat',
-            )
-        ->join('systems','systems.id','=','cob_logs.system_id')
-        ->orderBy('cob_logs.created_at', 'desc')
-        ->get();
-
-        return new CobLogResource($coblogs);
+        return CobLog::with(['system','logger'])->get();
     }
 
     /**

@@ -23,6 +23,10 @@ class CobLog extends Model
         return $this->belongsTo(System::class, 'system_id', 'id');
     }
 
+    public function logger() {
+        return $this->belongsTo(User::class, 'logger_id', 'id');
+    }
+
     public function errors() {
         return $this->belongsToMany(Error::class,'logs_contains_errors','log_id','error_id')->withTimestamps();
     }

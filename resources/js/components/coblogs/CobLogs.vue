@@ -11,7 +11,7 @@
           <div class="col-sm-5">
             <h4>System:</h4>
             <h5>
-              {{ coblog.machine }} | {{ coblog.system }}/{{ coblog.zone }}
+              {{ coblog.system.machine }} | {{ coblog.system.system }}/{{ coblog.system.zone }}
             </h5>
             <h4>Release:</h4>
             <h5>
@@ -27,7 +27,7 @@
             <h4>Next Working Day:</h4>
             <h5>{{ coblog.next_working_day | formatDate }}</h5>
             <p class="mt-3">
-              <strong>Creator: {{ coblog.creator }}</strong>
+              <strong>Creator: {{ coblog.logger.name }}</strong>
             </p>
           </div>
           <div
@@ -48,6 +48,7 @@
 </template>
 <script>
 import moment from "moment";
+import axios from "axios";
 
 export default {
   data() {
@@ -75,12 +76,21 @@ export default {
     fetchCobLogs(page_url) {
       let vm = this;
       page_url = page_url || "/api/coblogs";
-      fetch(page_url)
-        .then((res) => res.json())
-        .then((res) => {
+
+      console.log(page_url);
+      axios.get(page_url).then((res) => {
+          console.log(res);
           this.coblogs = res.data;
-        })
-        .catch((err) => console.log(err));
+      })
+      .catch(function (error) {
+            if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+            }
+      });
     },
   },
   filters: {
