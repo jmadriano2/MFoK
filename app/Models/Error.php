@@ -12,4 +12,8 @@ class Error extends Model
     public function logs() {
         return $this->belongsToMany(CobLog::class,'logs_contains_errors','error_id','log_id')->withTimestamps();
     }
+
+    public function resolver() {
+        return $this->belongsTo(User::class, 'resolver_id', 'id');
+    }
 }

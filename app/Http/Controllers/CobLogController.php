@@ -74,32 +74,21 @@ class CobLogController extends Controller
      */
     public function show($id)
     {
-        $coblog = DB::table('cob_logs')
-        ->select(
-            'cob_logs.id',
-            'cob_logs.system_id',
-            'cob_logs.runday',
-            'cob_logs.next_working_day',
-            'cob_logs.start',
-            'cob_logs.end',
-            'cob_logs.status',
-            'cob_logs.runtime',
-            'cob_logs.conclusion',
-            'cob_logs.creator',
-            'cob_logs.created_at',
-            'cob_logs.updated_at',
-            'systems.id as s_id',
-            'systems.machine',
-            'systems.system',
-            'systems.zone',
-            'systems.release',
-            'systems.created_at as s_cat',
-            'systems.updated_at as s_uat'
-            )
-        ->join('systems','systems.id','=','cob_logs.system_id')
-        ->where(['cob_logs.id' => $id])
-        ->get();
-        return new CobLogResource($coblog);
+        return CobLog::with(['system','logger'])->where('id', $id)->get();
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $coblog = CobLog::find($id);
+        $coblog->update($request->all());
+        return $coblog;
     }
 
     /**
@@ -110,25 +99,8 @@ class CobLogController extends Controller
      */
     public function showErrors($id)
     {
-        $coblog = DB::table('logs_contains_errors')
-        ->select(
-            'log_id',
-            'error_id',
-            'logs_contains_errors.created_at',
-            'logs_contains_errors.updated_at',
-            'errors.component',
-            'errors.sequence',
-            'errors.problem',
-            'errors.resolution',
-            'errors.og_resolver',
-            'errors.created_at as err_cr_at',
-            'errors.updated_at as err_up_at',
-            )
-        ->join('errors','logs_contains_errors.error_id','=','errors.id')
-        ->where(['logs_contains_errors.log_id' => $id])
-        ->orderBy('created_at', 'DESC')
-        ->get();
-        return new CobLogResource($coblog);
+        $coblogErrors = CobLog::find($id)->errors()->with('resolver')->orderBy('created_at', 'DESC')->get();
+        return $coblogErrors;
     }
 
     /**

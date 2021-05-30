@@ -77,6 +77,7 @@
 </template>
 <script>
 import Pagination from "../utility/Pagination.vue";
+import axios from "axios";
 
 export default {
   data() {
@@ -105,13 +106,20 @@ export default {
     fetchCobLogErrors(page_url) {
       let vm = this;
       page_url = page_url || "/api/coblog/" + this.$route.params.id + "/errors";
-      fetch(page_url)
-        .then((res) => res.json())
-        .then((res) => {
+
+      axios.get(page_url).then((res) => {
           this.coblogErrors = res.data;
           console.log("fetchLogErrors(): " + this.coblogErrors);
-        })
-        .catch((err) => console.log(err));
+      })
+      .catch(function (error) {
+            if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+            }
+      });
     },
     updateCoblogErrorsInPage() {
       let startIndex = this.currentPage * this.pageSize;

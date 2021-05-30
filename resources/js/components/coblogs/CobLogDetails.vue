@@ -23,8 +23,8 @@
           <h6>
             System:
             <strong
-              >{{ coblog.machine }} | {{ coblog.system }}/{{
-                coblog.zone
+              >{{ coblog.system.machine }} | {{ coblog.system.system }}/{{
+                coblog.system.zone
               }}</strong
             >
           </h6>
@@ -50,7 +50,7 @@
           </div>
         </div>
         <div class="col-sm-4">
-          Creator: <strong>{{ coblog.creator }}</strong>
+          Creator: <strong>{{ coblog.logger.name }}</strong>
         </div>
       </div>
     </div>
@@ -82,7 +82,16 @@ import axios from "axios";
 export default {
   data() {
     return {
-      coblog: [],
+      coblog: {
+        system: {
+            machine: '',
+            system: '',
+            zone: '',
+        },
+        logger: {
+            name: '',
+        },
+      },
       concludeCobOption: "",
       updateCobErrors: 0,
       updateAllErrors: 0,
@@ -95,14 +104,14 @@ export default {
     CobLogErrors,
     Errors,
   },
-  created() {
+  mounted() {
     this.fetchCobLog();
   },
   methods: {
     fetchCobLog(page_url) {
       let vm = this;
       page_url = page_url || "/api/coblog/" + this.$route.params.id;
-      console.log(page_url);
+      console.log(page_url+' urmum');
 
       axios.get(page_url).then((res) => {
           this.coblog = res.data[0];
@@ -120,36 +129,41 @@ export default {
             console.log(error.response.headers);
             }
       });
-
-    //   fetch(page_url)
-    //     .then((res) => res.json())
-    //     .then((res) => {
-    //       this.coblog = res.data[0];
-    //       console.log(this.coblog.status);
-    //       if (this.coblog.status === "Completed") {
-    //         this.isStatusComplete = true;
-    //       }
-    //     })
-    //     .catch((err) => console.log(err));
     },
     concludeCob() {
         this.coblog.conclusion = this.concludeCobOption;
         this.coblog.status = "Completed";
         console.log(this.coblog);
-        fetch('/api/coblog', {
-          method: 'put',
-          body: JSON.stringify(this.coblog),
-          headers: {
-            'content-type': 'application/json'
-          }
-        })
-          .then(res => res.json())
-          .then(data => {
+
+      axios.put('/api/coblog/' + this.coblog.id, this.coblog).then((res) => {
             this.coblog.concludeCobOption = "";
             alert('CoB Concluded');
             this.fetchCobLog();
-          })
-          .catch(err => console.log(err));
+      })
+      .catch(function (error) {
+            if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+            }
+      });
+
+        // fetch('/api/coblog', {
+        //   method: 'put',
+        //   body: JSON.stringify(this.coblog),
+        //   headers: {
+        //     'content-type': 'application/json'
+        //   }
+        // })
+        //   .then(res => res.json())
+        //   .then(data => {
+        //     this.coblog.concludeCobOption = "";
+        //     alert('CoB Concluded');
+        //     this.fetchCobLog();
+        //   })
+        //   .catch(err => console.log(err));
     },
     refreshCobLogErrors() {
       this.updateCobErrors += 1;
