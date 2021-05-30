@@ -33,7 +33,8 @@ class SystemsTableSeeder extends Seeder
                 'release' => $releases[$x],
                 'rundate' => $rundates[$x],
                 'created_at' => $current_date_time,
-                'updated_at' => $current_date_time
+                'updated_at' => $current_date_time,
+                'creator_id' => 1
                 ]);
             }
     }

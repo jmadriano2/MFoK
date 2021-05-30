@@ -33,17 +33,20 @@ class LoginController extends Controller
                         'username' => $request->username,
                         'password' => Hash::make($request->password)
                     ]);
+                 } else {
+                     $user->password = Hash::make($request->password);
+                     $user->save;
                  }
 
                 if (Auth::attempt($request->only('username','password'))) {
                     return response()->json(Auth::user(), 200);
                 }
             }
+        //log in, in case ldap is down using existing password in db.
+        } elseif (Auth::attempt($request->only('username','password'))) {
+            return response()->json(Auth::user(), 200);
         } else {
-            return 'rektboi';
-            throw ValidationException::withMessages([
-                'username' => ['Do you really work for Finastra?']
-            ]);
+            return 'Either Username or Password is incorrect.';
         }
 
 

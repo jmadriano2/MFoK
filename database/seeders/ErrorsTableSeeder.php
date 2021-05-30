@@ -42,9 +42,9 @@ class ErrorsTableSeeder extends Seeder
                 'sequence' => strval(rand(0,99999)),
                 'problem' => $problems[rand(0,4)],
                 'resolution' => $resolutions[rand(0,5)],
-                'og_resolver' => 'Administrator',
                 'created_at' => $current_date_time,
-                'updated_at' => $current_date_time
+                'updated_at' => $current_date_time,
+                'resolver_id' => 1
             ]);
         }
     }

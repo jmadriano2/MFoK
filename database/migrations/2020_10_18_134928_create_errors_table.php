@@ -19,8 +19,10 @@ class CreateErrorsTable extends Migration
             $table->string('sequence', 5);
             $table->text('problem');
             $table->text('resolution');
-            $table->string('og_resolver', 50);
+            $table->bigInteger('resolver_id')->unsigned();
             $table->timestamps();
+
+            $table->foreign('resolver_id')->references('id')->on('users');
         });
     }
 

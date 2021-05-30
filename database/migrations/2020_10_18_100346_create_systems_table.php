@@ -20,7 +20,10 @@ class CreateSystemsTable extends Migration
             $table->string('zone', 2)->nullable();
             $table->string('release', 50);
             $table->string('rundate', 8);//YYYYMMDD
+            $table->bigInteger('creator_id')->unsigned();
             $table->timestamps();
+
+            $table->foreign('creator_id')->references('id')->on('users');
         });
     }
 

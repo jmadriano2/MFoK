@@ -62,7 +62,7 @@ export default {
     };
   },
   mounted() {
-    console.log("ggezgetrekt " + this.user);
+    console.log("ggezgetrekt ");
     this.$emit("showNavs", false);
     axios
       .get("/api/user")
@@ -82,8 +82,10 @@ export default {
         this.name = this.username;
         axios.post("/api/login", this.credentials).then(response => {
           console.log(response);
-          console.log("wtf man");
-          this.$router.push({ name: "dashboard" })
+          if(response.data.username != null){
+            console.log("wtf man");
+            this.$router.push({ name: "dashboard" })
+          }
           }).catch(error => {
             this.errors = error.response.data.errors;
             console.log(error);

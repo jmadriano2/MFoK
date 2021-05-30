@@ -23,9 +23,10 @@ class CreateLogsTable extends Migration
             $table->string('status', 10);
             $table->integer('runtime');
             $table->string('conclusion', 10)->nullable();
-            $table->string('creator', 20);
+            $table->bigInteger('logger_id')->unsigned();
             $table->timestamps();
 
+            $table->foreign('logger_id')->references('id')->on('users');
             $table->foreign('system_id')->references('id')->on('systems');
         });
     }

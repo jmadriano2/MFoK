@@ -27,9 +27,9 @@ class CobLogsTableSeeder extends Seeder
             'status' => 'Ongoing',
             'runtime' => 3600,
             'conclusion' => '',
-            'creator' => 'Administrator',
             'created_at' => $current_date_time,
-            'updated_at' => $current_date_time
+            'updated_at' => $current_date_time,
+            'logger_id' => 1
         ]);
         $conclusions = ["","Full CoB", "Reopened", "Reopened"];
         for ($x = 1; $x < 4; $x++) {
@@ -41,9 +41,9 @@ class CobLogsTableSeeder extends Seeder
                 'status' => 'Completed',
                 'runtime' => 3600,
                 'conclusion' => $conclusions[$x],
-                'creator' => 'Administrator',
                 'created_at' => $current_date_time,
-                'updated_at' => $current_date_time
+                'updated_at' => $current_date_time,
+                'logger_id' => 1
             ]);
         }
     }
