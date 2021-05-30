@@ -44,7 +44,7 @@
                                             v-model="selectedSystem"
                                             @change="onSystemChange()">
                                             <option
-                                                v-for="system in systems"
+                                                v-for="system in systems.data"
                                                 v-bind:key="system.id"
                                                 v-bind:value="{
                                                     id: system.id,
@@ -227,12 +227,28 @@ export default {
     fetchSystems(page_url) {
       let vm = this;
       page_url = page_url || "/api/systems";
-      fetch(page_url)
-        .then((res) => res.json())
-        .then((res) => {
+
+      axios.get(page_url).then((res) => {
+          console.log(res);
           this.systems = res.data;
-        })
-        .catch((err) => console.log(err));
+      })
+      .catch(function (error) {
+            if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+            }
+      });
+
+    //   fetch(page_url)
+    //     .then((res) => res.json())
+    //     .then((res) => {
+    //       console.log(res.data);
+    //       this.systems = res.data;
+    //     })
+    //     .catch((err) => console.log(err));
     },
     toggleRDCalendar() {
       this.showRDCalendar = !this.showRDCalendar;
@@ -248,7 +264,6 @@ export default {
       this.coblog.runtime = 0;
 
       axios.get('/sanctum/csrf-cookie').then(response => {
-        alert("csrf get!");
         axios.post('/api/coblog', this.coblog).then((res) => {
             alert("New Cob Log Added");
           let $newCobUrl = 'coblog/' + res.data.id + '/details';
@@ -264,21 +279,6 @@ export default {
             }
         });
       });
-
-    //   fetch("api/coblog", {
-    //     method: "post",
-    //     body: JSON.stringify(this.coblog),
-    //     headers: {
-    //       "content-type": "application/json",
-    //     },
-    //   })
-    //     .then((res) => res.json())
-    //     .then((res) => {
-    //       alert("New Cob Log Added");
-    //       let $newCobUrl = 'coblog/' + res.data.id + '/details';
-    //       this.$router.push($newCobUrl);
-    //     })
-    //     .catch((err) => console.log(err));
     },
     validateSystem() {
         // Selected System can't be blank
