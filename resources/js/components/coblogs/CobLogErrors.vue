@@ -157,16 +157,6 @@ export default {
             console.log(error.response.headers);
             }
       });
-
-    //   fetch(`/api/coblog/${log_id}/${error_id}`, {
-    //     method: "delete",
-    //   })
-    //     .then((res) => res.json())
-    //     .then((data) => {
-    //       this.fetchCobLogErrors();
-    //       this.$emit("removeLogError");
-    //     })
-    //     .catch((err) => console.log(err));
     },
   },
   computed: {

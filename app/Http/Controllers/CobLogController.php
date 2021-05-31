@@ -3,14 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests;
-use App\Models\Error;
 use App\Models\CobLog;
-use App\Models\CoblogError;
-use App\Http\Resources\CobLog as CobLogResource;
-use App\Http\Resources\CoblogError as CoblogErrorResource;
 use Illuminate\Support\Carbon;
-use DB;
 
 class CobLogController extends Controller
 {
@@ -95,7 +89,7 @@ class CobLogController extends Controller
      */
     public function showErrors($id)
     {
-        $coblogErrors = CobLog::find($id)->errors()->with('resolver')->orderBy('created_at', 'DESC')->get();
+        $coblogErrors = CobLog::find($id)->errors()->with('resolver')->orderByPivot('created_at', 'DESC')->get();
         return $coblogErrors;
     }
 
