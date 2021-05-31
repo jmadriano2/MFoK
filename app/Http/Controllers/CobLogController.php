@@ -32,14 +32,10 @@ class CobLogController extends Controller
      */
     public function storeCoblogError(Request $request)
     {
-        $coblogError = new CoblogError;
+        $coblog = CobLog::find($request->input('log_id'));
+        $coblog->errors()->attach($request->input('error_id'));
 
-        $coblogError->log_id = $request->input('log_id');
-        $coblogError->error_id = $request->input('error_id');
-
-        if($coblogError->save()) {
-            return new CoblogErrorResource($coblogError);
-        }
+        return $coblog->errors->find($request->input('error_id'));
     }
 
     /**
@@ -112,11 +108,9 @@ class CobLogController extends Controller
     public function destroy($log_id, $error_id)
     {
         // Get Error
-        $error = Error::findOrFail($error_id);
+        $coblog = CobLog::find($log_id);
+        $coblog->errors()->detach($error_id);
 
-
-        if($error->logs()->detach($log_id)) {
-            return new CobLogErrorResource($error);
-        }
+        return $coblog->errors;
     }
 }

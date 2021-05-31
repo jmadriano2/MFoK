@@ -70,6 +70,7 @@
 <script>
 import Pagination from "../utility/Pagination.vue";
 import NewError from "./NewError.vue";
+import axios from "axios";
 
 export default {
   data() {
@@ -122,15 +123,22 @@ export default {
       } else {
         this.page_url = "/api/errors";
       }
-      fetch(this.page_url)
-        .then((res) => res.json())
-        .then((res) => {
-          this.errors = res.data;
-          this.filteredErrors = res.data;
+
+      axios.get(this.page_url).then((res) => {
+          this.errors = res.data.data;
+          this.filteredErrors = res.data.data;
           //Update Errors in Page for Pagination
           this.updateErrorsInPage();
-        })
-        .catch((err) => console.log(err));
+      })
+      .catch(function (error) {
+            if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+            }
+      });
     },
     updateErrorsInPage() {
       let startIndex = this.currentPage * this.pageSize;
@@ -152,19 +160,20 @@ export default {
       let page_url = window.location.origin + "/api/coblogError";
       this.logError.log_id = this.logDetailsId;
       this.logError.error_id = errorId;
-      fetch(page_url, {
-        method: "post",
-        body: JSON.stringify(this.logError),
-        headers: {
-          "content-type": "application/json",
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => {
+
+      axios.post(page_url, this.logError).then((res) => {
           this.$emit("addLogError");
           this.fetchAllErrors();
-        })
-        .catch((err) => console.log(err));
+      })
+      .catch(function (error) {
+            if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+            }
+      });
     },
     refreshPage() {
       this.fetchAllErrors();

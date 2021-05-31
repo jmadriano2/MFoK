@@ -64,7 +64,7 @@
             <div
               style="font-size: 4rem"
               @click="
-                removeCoblogError(coblogError.log_id, coblogError.error_id)
+                removeCoblogError(coblogError.pivot.log_id, coblogError.pivot.error_id)
               "
             >
               <i class="fa fa-angle-double-right customRightArrow"></i>
@@ -141,15 +141,32 @@ export default {
       this.fetchErrors();
     },
     removeCoblogError(log_id, error_id) {
-      fetch(`/api/coblog/${log_id}/${error_id}`, {
-        method: "delete",
-      })
-        .then((res) => res.json())
-        .then((data) => {
+      let page_url = '/api/coblog/'+ log_id + '/' + error_id;
+      console.log('gay' + log_id)
+
+      axios.delete(page_url).then((res) => {
           this.fetchCobLogErrors();
           this.$emit("removeLogError");
-        })
-        .catch((err) => console.log(err));
+      })
+      .catch(function (error) {
+            if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+            }
+      });
+
+    //   fetch(`/api/coblog/${log_id}/${error_id}`, {
+    //     method: "delete",
+    //   })
+    //     .then((res) => res.json())
+    //     .then((data) => {
+    //       this.fetchCobLogErrors();
+    //       this.$emit("removeLogError");
+    //     })
+    //     .catch((err) => console.log(err));
     },
   },
   computed: {
