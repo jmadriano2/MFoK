@@ -17,7 +17,7 @@ class ErrorController extends Controller
      */
     public function index()
     {
-        return Error::with(['resolver'])->get();
+        return Error::with(['resolver'])->orderBy('created_at', 'DESC')->get();
     }
     /**
      * Display a list of errors that does not exist in current CoB Log.

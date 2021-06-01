@@ -3,15 +3,11 @@
     <h2>All CoB Errors</h2>
     <div class="row">
       <div class="search-wrapper panel-heading col mb-2">
-        <input
-          class="form-control"
-          type="text"
-          v-model="searchQuery"
-          placeholder="Search"
-        />
+        <input class="form-control" type="text" v-model="searchQuery" placeholder="Search" />
       </div>
       <div class="col mt-2">
-        Showing <b>{{ filteredErrors.length }}</b> Results
+        Showing
+        <b>{{ filteredErrors.length }}</b> Results
       </div>
     </div>
 
@@ -22,8 +18,7 @@
           v-bind:currentPage="currentPage"
           v-bind:pageSize="pageSize"
           v-on:pageUpdate="updatePage"
-        >
-        </Pagination>
+        ></Pagination>
       </div>
       <div class="col-sm-1 offset-sm-5 text-right">
         <NewError v-on:refreshPage="refreshPage"></NewError>
@@ -31,11 +26,7 @@
     </div>
 
     <div v-if="errors.length">
-      <div
-        class="card card-body mb-2"
-        v-bind:key="error.id"
-        v-for="error in resultQuery"
-      >
+      <div class="card card-body mb-5 border-primary" v-bind:key="error.id" v-for="error in resultQuery">
         <div class="row">
           <div
             v-if="isCobDetails"
@@ -53,13 +44,9 @@
             </h5>
             <hr />
             <h5>Problem:</h5>
-            <p>
-              <strong>{{ error.problem }}</strong>
-            </p>
+            <div v-html="error.problem" class="mb-3"></div>
             <h5>Resolution:</h5>
-            <p>
-              <strong>{{ error.resolution }}</strong>
-            </p>
+            <div v-html="error.resolution"></div>
             <hr />
             <h6>Resolved By: {{ error.resolver.name }}</h6>
           </div>
@@ -86,11 +73,11 @@ export default {
         problem: "",
         resolution: "",
         og_resolver: "",
-        created_at: "",
+        created_at: ""
       },
       logError: {
         log_id: "",
-        error_id: "",
+        error_id: ""
       },
       error_id: "",
       pageSize: 5,
@@ -102,13 +89,13 @@ export default {
       isCobDetails: false,
       CDClass: "col-sm-11",
       notCDClass: "col-sm-12",
-      page_url: "",
+      page_url: ""
     };
   },
   props: ["logDetailsId", "updateAllErrors"],
   components: {
     Pagination,
-    NewError,
+    NewError
   },
   mounted() {
     if (window.location.pathname.substring(1, 7) === "coblog") {
@@ -121,28 +108,30 @@ export default {
     fetchAllErrors() {
       let vm = this;
       if (this.isCobDetails) {
-        console.log('logDetailsId: ' + this.$props.logDetailsId);
+        console.log("logDetailsId: " + this.$props.logDetailsId);
         this.page_url = "/api/errors/unselected/" + this.logDetailsId;
       } else {
         this.page_url = "/api/errors";
       }
 
-      console.log('urmum 1 ' + this.page_url);
-      axios.get(this.page_url).then((res) => {
+      console.log("urmum 1 " + this.page_url);
+      axios
+        .get(this.page_url)
+        .then(res => {
           this.errors = res.data;
           this.filteredErrors = res.data;
           //Update Errors in Page for Pagination
           this.updateErrorsInPage();
-      })
-      .catch(function (error) {
-            if (error.response) {
+        })
+        .catch(function(error) {
+          if (error.response) {
             // The request was made and the server responded with a status code
             // that falls out of the range of 2xx
             console.log(error.response.data);
             console.log(error.response.status);
             console.log(error.response.headers);
-            }
-      });
+          }
+        });
     },
     updateErrorsInPage() {
       let startIndex = this.currentPage * this.pageSize;
@@ -165,46 +154,48 @@ export default {
       this.logError.log_id = this.logDetailsId;
       this.logError.error_id = errorId;
 
-      axios.post(page_url, this.logError).then((res) => {
+      axios
+        .post(page_url, this.logError)
+        .then(res => {
           this.$emit("addLogError");
           this.fetchAllErrors();
-      })
-      .catch(function (error) {
-            if (error.response) {
+        })
+        .catch(function(error) {
+          if (error.response) {
             // The request was made and the server responded with a status code
             // that falls out of the range of 2xx
             console.log(error.response.data);
             console.log(error.response.status);
             console.log(error.response.headers);
-            }
-      });
+          }
+        });
     },
     refreshPage() {
       this.fetchAllErrors();
-    },
+    }
   },
   computed: {
     resultQuery() {
       if (this.searchQuery) {
         //Save the result of queries in array filteredErrors
-        this.filteredErrors = this.errors.filter((error) => {
+        this.filteredErrors = this.errors.filter(error => {
           return (
             this.searchQuery
               .toLowerCase()
               .split(" ")
-              .every((v) => error.component.toLowerCase().includes(v)) ||
+              .every(v => error.component.toLowerCase().includes(v)) ||
             this.searchQuery
               .toLowerCase()
               .split(" ")
-              .every((v) => error.sequence.toLowerCase().includes(v)) ||
+              .every(v => error.sequence.toLowerCase().includes(v)) ||
             this.searchQuery
               .toLowerCase()
               .split(" ")
-              .every((v) => error.problem.toLowerCase().includes(v)) ||
+              .every(v => error.problem.toLowerCase().includes(v)) ||
             this.searchQuery
               .toLowerCase()
               .split(" ")
-              .every((v) => error.resolution.toLowerCase().includes(v))
+              .every(v => error.resolution.toLowerCase().includes(v))
           );
         });
 
@@ -216,16 +207,16 @@ export default {
         this.updateErrorsInPage();
         return this.errorsInPage;
       }
-    },
+    }
   },
   watch: {
-    logDetailsId: function () {
+    logDetailsId: function() {
       this.fetchAllErrors();
     },
-    updateAllErrors: function () {
+    updateAllErrors: function() {
       this.fetchAllErrors();
-    },
-  },
+    }
+  }
 };
 </script>
 

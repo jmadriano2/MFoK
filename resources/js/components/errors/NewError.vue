@@ -24,31 +24,33 @@
           </div>
           <div class="modal-body">
             <form id="addErrorResolution">
-              <div class="form-group">
-                <label for="recipient-name" class="col-form-label">Component:</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="component-name"
-                  v-model="error.component"
-                />
-              </div>
-              <div class="form-group">
-                <label for="recipient-name" class="col-form-label">Sequence:</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="component-name"
-                  v-model="error.sequence"
-                />
+              <div class="input-group row">
+                <div class="form-group col-md">
+                  <label for="recipient-name" class="col-form-label">Component:</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="component-name"
+                    v-model="error.component"
+                  />
+                </div>
+                <div class="form-group col-md">
+                  <label for="recipient-name" class="col-form-label">Sequence:</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="component-name"
+                    v-model="error.sequence"
+                  />
+                </div>
               </div>
               <div class="form-group">
                 <label for="message-text" class="col-form-label">Problem:</label>
-                <textarea class="form-control" id="resolution-text" v-model="error.problem"></textarea>
+                <quill-editor v-model="error.problem" :options="editorOptionProblem" />
               </div>
               <div class="form-group">
                 <label for="message-text" class="col-form-label">Resolution:</label>
-                <textarea class="form-control" id="resolution-text" v-model="error.resolution"></textarea>
+                <quill-editor v-model="error.resolution" :options="editorOptionResolution" />
               </div>
             </form>
           </div>
@@ -69,9 +71,30 @@
 
 <script>
 import axios from "axios";
+import { quillEditor } from "vue-quill-editor";
+import "quill/dist/quill.snow.css";
 
 export default {
   data() {
+    let toolbarOptions = [
+      ["bold", "italic", "underline", "strike"], // toggled buttons
+      ["blockquote", "code-block"],
+
+      [{ header: 1 }, { header: 2 }], // custom button values
+      [{ list: "ordered" }, { list: "bullet" }],
+      [{ script: "sub" }, { script: "super" }], // superscript/subscript
+      [{ indent: "-1" }, { indent: "+1" }], // outdent/indent
+      [{ direction: "rtl" }], // text direction
+
+      [{ size: ["small", false, "large", "huge"] }], // custom dropdown
+      [{ header: [1, 2, 3, 4, 5, 6, false] }],
+
+      [{ color: [] }, { background: [] }], // dropdown with defaults from theme
+      [{ font: [] }],
+      [{ align: [] }],
+
+      ["clean"] // remove formatting button
+    ];
     return {
       error: {
         id: "",
@@ -79,11 +102,32 @@ export default {
         sequence: "",
         problem: "",
         resolution: "",
-        og_resolver: "Default User",
         created_at: ""
       },
-      edit: false
+      edit: false,
+      editorOptionProblem: {
+        debug: "info",
+        placeholder: "Type in the CoB Error Description",
+        readonly: true,
+        modules: {
+          toolbar: toolbarOptions
+        },
+        theme: "snow"
+      },
+      editorOptionResolution: {
+        debug: "info",
+        placeholder: "Type in the CoB Error Resolution",
+        readonly: true,
+        modules: {
+          toolbar: toolbarOptions
+        },
+        theme: "snow"
+      },
+      delta: undefined
     };
+  },
+  components: {
+    quillEditor
   },
   methods: {
     addErrorResolution() {
@@ -93,8 +137,12 @@ export default {
         console.log(page_url);
 
         axios.get("/sanctum/csrf-cookie").then(response => {
-          axios.post(page_url, this.error).then(res => {
+          axios
+            .post(page_url, this.error)
+            .then(res => {
               this.error.component = "";
+              this.error.sequence = "";
+              this.error.problem = "";
               this.error.resolution = "";
               alert("Error Resolution Added");
               this.$emit("refreshPage");
@@ -109,22 +157,6 @@ export default {
               }
             });
         });
-
-        // fetch(page_url, {
-        //   method: "post",
-        //   body: JSON.stringify(this.error),
-        //   headers: {
-        //     "content-type": "application/json"
-        //   }
-        // })
-        //   .then(res => res.json())
-        //   .then(data => {
-        //     this.error.component = "";
-        //     this.error.resolution = "";
-        //     alert("Error Resolution Added");
-        //     this.$emit("refreshPage");
-        //   })
-        //   .catch(err => console.log(err));
       } else {
         //Update
       }
@@ -133,8 +165,16 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 i {
   cursor: pointer;
+}
+
+.modal-dialog {
+  max-width: 70%;
+}
+
+.ql-editor {
+  height: 10vh;
 }
 </style>
