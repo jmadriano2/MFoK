@@ -56,6 +56,8 @@
             <p>
               <strong>{{ coblogError.resolution }}</strong>
             </p>
+            <hr />
+            <h6>Resolved By: {{ coblogError.resolver.name }}</h6>
           </div>
           <div
             v-if="removeActive"

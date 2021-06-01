@@ -43,9 +43,6 @@
           <li>
             <a href="#">Errors Reported by Me</a>
           </li>
-          <li>
-            <a href="#">Report New Error</a>
-          </li>
         </ul>
       </li>
       <li>

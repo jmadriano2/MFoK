@@ -56,7 +56,7 @@ Route::get('errors', [ErrorController::class, 'index']);
 Route::get('errors/unselected/{id}', [ErrorController::class, 'unselectedErrors']);
 Route::get('error/{id}', [ErrorController::class, 'show']);
 Route::post('error', [ErrorController::class, 'store']);
-Route::put('error', [ErrorController::class, 'store']);
+Route::put('/error/{error}', [ErrorController::class, 'update']);
 Route::delete('error/{id}', [ErrorController::class, 'destroy']);
 
 

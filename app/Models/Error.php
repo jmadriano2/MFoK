@@ -8,6 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Error extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'component',
+        'sequence',
+        'problem',
+        'resolution',
+        'resolver_id',
+    ];
 
     public function logs() {
         return $this->belongsToMany(CobLog::class,'logs_contains_errors','error_id','log_id')->withTimestamps();

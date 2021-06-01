@@ -17,10 +17,7 @@ class ErrorController extends Controller
      */
     public function index()
     {
-        //Get Errors
-        $errors = Error::all();
-
-        return ErrorResource::collection($errors);
+        return Error::with(['resolver'])->get();
     }
     /**
      * Display a list of errors that does not exist in current CoB Log.
@@ -30,13 +27,11 @@ class ErrorController extends Controller
     public function unselectedErrors($log_id)
     {
         //Get Errors
-        $errors = Error::whereNotIn('id', function($query) use($log_id) {
+        return Error::whereNotIn('id', function($query) use($log_id) {
             $query->select('error_id')
             ->from('logs_contains_errors')
             ->where('log_id', $log_id);
-        })->get();
-
-        return ErrorResource::collection($errors);
+        })->with(['resolver'])->get();
     }
 
     /**
@@ -47,22 +42,18 @@ class ErrorController extends Controller
      */
     public function store(Request $request)
     {
-        $error = $request->isMethod('put') ? Error::findorFail($request->error_id) : new Error;
+        $request->validate([
+            'component' => 'required',
+            'sequence' => 'required',
+            'problem' => 'required',
+            'resolution' => 'required',
+        ]);
 
-        $error->id = $request->input('error_id');
-        $error->component = $request->input('component');
-        $sequence = $request->input('sequence');
-        if ((int) $sequence < 10000) {
-            $sequence = str_pad($sequence, 5, '0', STR_PAD_LEFT);
-        }
-        $error->sequence = $sequence;
-        $error->problem = $request->input('problem');
-        $error->resolution = $request->input('resolution');
-        $error->og_resolver = $request->input('og_resolver');
-
-        if ($error->save()) {
-            return new ErrorResource($error);
-        }
+        return Error::create(array_merge($request->all(),
+            [
+                'resolver_id' => auth()->user()->id,
+            ])
+        );
     }
 
     /**
@@ -73,10 +64,23 @@ class ErrorController extends Controller
      */
     public function show($id)
     {
-        $error = Error::findOrFail($id);
-
-        return new ErrorResource($error);
+        return Error::find($id);
     }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $error = Error::find($id);
+        $error->update($request->all());
+        return $error;
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -85,10 +89,6 @@ class ErrorController extends Controller
      */
     public function destroy($id)
     {
-        $error = Error::findOrFail($id);
-
-        if ($error->delete()) {
-            return new ErrorResource($error);
-        }
+        return Error::destroy($id);
     }
 }

@@ -60,6 +60,8 @@
             <p>
               <strong>{{ error.resolution }}</strong>
             </p>
+            <hr />
+            <h6>Resolved By: {{ error.resolver.name }}</h6>
           </div>
         </div>
       </div>
@@ -112,6 +114,7 @@ export default {
     if (window.location.pathname.substring(1, 7) === "coblog") {
       this.isCobDetails = true;
     }
+
     this.fetchAllErrors();
   },
   methods: {
@@ -124,9 +127,10 @@ export default {
         this.page_url = "/api/errors";
       }
 
+      console.log('urmum 1 ' + this.page_url);
       axios.get(this.page_url).then((res) => {
-          this.errors = res.data.data;
-          this.filteredErrors = res.data.data;
+          this.errors = res.data;
+          this.filteredErrors = res.data;
           //Update Errors in Page for Pagination
           this.updateErrorsInPage();
       })
