@@ -32,6 +32,7 @@
                     class="form-control"
                     id="component-name"
                     v-model="error.component"
+                    required
                   />
                 </div>
                 <div class="form-group col-md">
@@ -41,6 +42,7 @@
                     class="form-control"
                     id="component-name"
                     v-model="error.sequence"
+                    required
                   />
                 </div>
               </div>
@@ -54,14 +56,18 @@
               </div>
             </form>
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button
-              type="button"
-              class="btn btn-primary"
-              @click="addErrorResolution"
-              data-dismiss="modal"
-            >Confirm</button>
+          <div class="modal-footer justify-content-between">
+            <button type="button" class="btn btn-warning" @click="clearFields">Clear</button>
+            <div>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button
+                type="button"
+                class="btn btn-primary"
+                :disabled="disableConfirm"
+                @click="addErrorResolution"
+                data-dismiss="modal"
+              >Confirm</button>
+            </div>
           </div>
         </div>
       </div>
@@ -160,6 +166,25 @@ export default {
       } else {
         //Update
       }
+    },
+    clearFields() {
+      this.error.component = "";
+      this.error.sequence = "";
+      this.error.problem = "";
+      this.error.resolution = "";
+    }
+  },
+  computed: {
+    disableConfirm: function() {
+      if (
+        this.error.component !== "" &&
+        this.error.sequence !== "" &&
+        this.error.problem !== "" &&
+        this.error.resolution !== ""
+      ) {
+        return false;
+      }
+      return true;
     }
   }
 };
