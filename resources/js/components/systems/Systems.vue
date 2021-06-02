@@ -1,5 +1,5 @@
 <template>
-  <div class="col-sm-8">
+  <div class="col-sm-9">
     <h2>All Systems</h2>
 
     <!-- Search Bar -->
@@ -39,33 +39,33 @@
         <div class="row">
           <div class="col-sm-3">
             <p>
-              <strong>Machine: {{system.machine}}</strong>
+              Machine:<strong> {{system.machine}}</strong>
             </p>
           </div>
           <div class="col-sm-2">
             <p>
-              <strong>System: {{system.system}}</strong>
+              System:<strong> {{system.system}}</strong>
             </p>
           </div>
           <div class="col-sm-2">
             <p>
-              <strong>Zone: {{system.zone}}</strong>
+              Zone:<strong> {{system.zone}}</strong>
             </p>
           </div>
           <div class="col-sm-5">
             <p>
-              <strong>Release: {{system.release}}</strong>
+              Release:<strong> {{system.release}}</strong>
             </p>
           </div>
           <div class="col-sm-6">
             <p>
-              <strong>Rundate: {{ system.rundate | formatDate }}</strong>
+              Rundate:<strong> {{ system.rundate | formatDate }}</strong>
             </p>
           </div>
           <div class="col-sm-6"></div>
           <div class="col-sm-6">
             <p class="mb-0">
-              <strong>Inserted By: {{system.creator.name}}</strong>
+              Inserted By:<strong> {{system.creator.name}}</strong>
             </p>
           </div>
         </div>
