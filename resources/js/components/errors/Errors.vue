@@ -1,5 +1,5 @@
 <template>
-  <div v-bind:class="[isCobDetails ? fillRow : notFillRow]">
+  <div class="col-md-10">
     <h2>All CoB Errors</h2>
 
     <!-- Search Bar -->
@@ -32,7 +32,7 @@
     <!-- Errors List -->
     <div v-if="errors.length">
       <div
-        class="card card-body mb-5 border-primary"
+        class="card card-body mb-3 border-primary"
         v-bind:key="error.id"
         v-for="error in resultQuery"
       >
@@ -47,11 +47,11 @@
           </div>
           <div v-bind:class="[isCobDetails ? CDClass : notCDClass]">
             <div class="row justify-content-between">
-              <h5 class="ml-3">
+              <h6 class="ml-3">
                 Component:
                 <strong>{{ error.component }}</strong> &nbsp;&nbsp;&nbsp; Seq.:
                 <strong>{{ error.sequence }}</strong>
-              </h5>
+              </h6>
               <UpdateErrorResolution
                 v-on:refreshPage="refreshPage"
                 class="mr-3"
@@ -60,9 +60,9 @@
               ></UpdateErrorResolution>
             </div>
             <hr />
-            <h5 class="ml-2">Problem:</h5>
+            <h6 class="ml-2">Problem:</h6>
             <div v-html="error.problem" class="mb-3 ml-4"></div>
-            <h5 class="ml-2">Resolution:</h5>
+            <h6 class="ml-2">Resolution:</h6>
             <div v-html="error.resolution" class="ml-4"></div>
             <hr />
             <h6>Resolved By: {{ error.resolver.name }}</h6>

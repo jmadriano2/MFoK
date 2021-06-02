@@ -15,7 +15,7 @@ class CobLogController extends Controller
      */
     public function index()
     {
-        return CobLog::with(['system','logger'])->get();
+        return CobLog::with(['system','logger'])->orderBy('updated_at', 'DESC')->get();
     }
 
     /**
