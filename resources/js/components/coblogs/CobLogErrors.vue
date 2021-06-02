@@ -35,7 +35,7 @@
 
     <div v-if="coblogErrors.length">
       <div
-        class="card card-body mb-2"
+        class="card card-body mb-5 border-primary"
         v-bind:key="coblogError.id"
         v-for="coblogError in resultQuery"
       >
@@ -49,13 +49,9 @@
             </h5>
             <hr />
             <h5>Problem:</h5>
-            <p>
-              <strong>{{ coblogError.problem }}</strong>
-            </p>
+            <div v-html="coblogError.problem" class="mb-3 ml-4"></div>
             <h5>Resolution:</h5>
-            <p>
-              <strong>{{ coblogError.resolution }}</strong>
-            </p>
+            <div v-html="coblogError.resolution" class="ml-4"></div>
             <hr />
             <h6>Resolved By: {{ coblogError.resolver.name }}</h6>
           </div>

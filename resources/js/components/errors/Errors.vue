@@ -21,12 +21,16 @@
         ></Pagination>
       </div>
       <div class="col-sm-1 offset-sm-5 text-right">
-        <NewError v-on:refreshPage="refreshPage"></NewError>
+        <NewErrorResolution v-on:refreshPage="refreshPage" :edit="false"></NewErrorResolution>
       </div>
     </div>
 
     <div v-if="errors.length">
-      <div class="card card-body mb-5 border-primary" v-bind:key="error.id" v-for="error in resultQuery">
+      <div
+        class="card card-body mb-5 border-primary"
+        v-bind:key="error.id"
+        v-for="error in resultQuery"
+      >
         <div class="row">
           <div
             v-if="isCobDetails"
@@ -37,16 +41,24 @@
             </div>
           </div>
           <div v-bind:class="[isCobDetails ? CDClass : notCDClass]">
-            <h5>
-              Component:
-              <strong>{{ error.component }}</strong> &nbsp;&nbsp;&nbsp; Seq.:
-              <strong>{{ error.sequence }}</strong>
-            </h5>
+            <div class="row justify-content-between">
+              <h5 class="ml-3">
+                Component:
+                <strong>{{ error.component }}</strong> &nbsp;&nbsp;&nbsp; Seq.:
+                <strong>{{ error.sequence }}</strong>
+              </h5>
+              <UpdateErrorResolution
+                v-on:refreshPage="refreshPage"
+                class="mr-3"
+                :selfReported="selfReported(error.resolver.id)"
+                :error_id="error.id"
+              ></UpdateErrorResolution>
+            </div>
             <hr />
-            <h5>Problem:</h5>
-            <div v-html="error.problem" class="mb-3"></div>
-            <h5>Resolution:</h5>
-            <div v-html="error.resolution"></div>
+            <h5 class="ml-2">Problem:</h5>
+            <div v-html="error.problem" class="mb-3 ml-4"></div>
+            <h5 class="ml-2">Resolution:</h5>
+            <div v-html="error.resolution" class="ml-4"></div>
             <hr />
             <h6>Resolved By: {{ error.resolver.name }}</h6>
           </div>
@@ -58,7 +70,8 @@
 
 <script>
 import Pagination from "../utility/Pagination.vue";
-import NewError from "./NewError.vue";
+import NewErrorResolution from "./NewError.vue";
+import UpdateErrorResolution from "./UpdateError.vue";
 import axios from "axios";
 
 export default {
@@ -66,15 +79,7 @@ export default {
     return {
       searchQuery: "",
       errors: [],
-      error: {
-        id: "",
-        component: "",
-        sequence: "",
-        problem: "",
-        resolution: "",
-        og_resolver: "",
-        created_at: ""
-      },
+      user: {},
       logError: {
         log_id: "",
         error_id: ""
@@ -95,9 +100,27 @@ export default {
   props: ["logDetailsId", "updateAllErrors"],
   components: {
     Pagination,
-    NewError
+    NewErrorResolution,
+    UpdateErrorResolution
   },
   mounted() {
+    axios
+      .get("/api/user")
+      .then(res => {
+        this.user = res.data;
+        this.$emit("showNavs", true);
+        console.log("ggezgetrekt in " + this.user);
+      })
+      .catch(function(error) {
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        }
+      });
+
     if (window.location.pathname.substring(1, 7) === "coblog") {
       this.isCobDetails = true;
     }
@@ -170,6 +193,10 @@ export default {
           }
         });
     },
+    selfReported(resolver) {
+        if(this.user.id === resolver) return true;
+        return false;
+    },
     refreshPage() {
       this.fetchAllErrors();
     }
@@ -207,7 +234,7 @@ export default {
         this.updateErrorsInPage();
         return this.errorsInPage;
       }
-    }
+    },
   },
   watch: {
     logDetailsId: function() {

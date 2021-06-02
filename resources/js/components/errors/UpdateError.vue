@@ -1,11 +1,17 @@
 <template>
   <div>
-    <i class="fa fa-plus-square fa-2x" data-toggle="modal" data-target="#NewErrorResolution"></i>
+    <i
+      class="fa fa-edit fa-2x"
+      data-toggle="modal"
+      :data-target="'#update' + error_id"
+      v-if="selfReported"
+      @click="updateFields()"
+    ></i>
 
-    <!-- New Error and Resolution Modal -->
+    <!-- Update Error and Resolution Modal -->
     <div
       class="modal fade text-left"
-      id="NewErrorResolution"
+      :id="'update'+error_id"
       tabindex="-1"
       role="dialog"
       aria-labelledby="errorResolution"
@@ -14,13 +20,13 @@
       <div class="modal-dialog modal-dialog-centered" role="dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5>Add New Error &amp; Resolution</h5>
+            <h5>Update Error &amp; Resolution</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            <form id="addErrorResolution">
+            <form id="editErrorResolution">
               <div class="input-group row">
                 <div class="form-group col-md">
                   <label for="recipient-name" class="col-form-label">Component:</label>
@@ -46,18 +52,15 @@
               </div>
             </form>
           </div>
-          <div class="modal-footer justify-content-between">
-            <button type="button" class="btn btn-warning" @click="clearFields">Clear</button>
-            <div>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button
-                type="button"
-                class="btn btn-primary"
-                :disabled="disableConfirm"
-                @click="addErrorResolution"
-                data-dismiss="modal"
-              >Confirm</button>
-            </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              :disabled="disableConfirm"
+              @click="updateErrorResolution"
+              data-dismiss="modal"
+            >Confirm</button>
           </div>
         </div>
       </div>
@@ -97,8 +100,7 @@ export default {
         component: "",
         sequence: "",
         problem: "",
-        resolution: "",
-        created_at: ""
+        resolution: ""
       },
       editorOptionProblem: {
         debug: false,
@@ -117,26 +119,28 @@ export default {
           toolbar: toolbarOptions
         },
         theme: "snow"
-      },
+      }
     };
+  },
+  props: {
+    edit: Boolean,
+    selfReported: Boolean,
+    error_id: Number
   },
   components: {
     quillEditor
   },
   methods: {
-    addErrorResolution() {
-      let page_url = window.location.origin + "/api/error";
+    updateErrorResolution() {
+      let page_url = "/api/error/" + this.error_id;
       console.log(page_url);
 
       axios.get("/sanctum/csrf-cookie").then(response => {
         axios
-          .post(page_url, this.error)
+          .put(page_url, this.error)
           .then(res => {
-            this.error.component = "";
-            this.error.sequence = "";
-            this.error.problem = "";
-            this.error.resolution = "";
-            alert("Error Resolution Added");
+            alert("Error Resolution Updated");
+            console.log(res.data);
             this.$emit("refreshPage");
           })
           .catch(function(error) {
@@ -150,16 +154,33 @@ export default {
           });
       });
     },
+    updateFields() {
+      let page_url = "/api/error/" + this.error_id;
+      console.log(page_url);
+
+      axios
+        .get(page_url)
+        .then(res => {
+          this.error.id = res.data.id;
+          this.error.component = res.data.component;
+          this.error.sequence = res.data.sequence;
+          this.error.problem = res.data.problem;
+          this.error.resolution = res.data.resolution;
+        })
+        .catch(function(error) {
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          }
+        });
+    },
     limitSequence() {
       if (this.error.sequence.length > 5) {
         this.error.sequence = this.error.sequence.slice(0, 5);
       }
-    },
-    clearFields() {
-      this.error.component = "";
-      this.error.sequence = "";
-      this.error.problem = "";
-      this.error.resolution = "";
     }
   },
   computed: {
