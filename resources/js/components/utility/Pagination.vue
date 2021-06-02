@@ -36,13 +36,13 @@
 
 <script>
 export default {
-    props: ['errors', 'currentPage', 'pageSize'],
+    props: ['items', 'currentPage', 'pageSize'],
     methods: {
         updatePage(pageNumber) {
             this.$emit('pageUpdate', pageNumber);
         },
         totalPages() {
-            return Math.ceil(this.errors.length / this.pageSize);
+            return Math.ceil(this.items.length / this.pageSize);
         },
         onFirstPage() {
             return this.currentPage < 1 ? true : false;

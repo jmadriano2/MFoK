@@ -15,7 +15,7 @@
             </h5>
             <h4>Release:</h4>
             <h5>
-              {{ coblog.release }}
+              {{ coblog.system.release }}
             </h5>
             <p class="mt-3">
               <strong>Status: {{ coblog.status }}</strong>

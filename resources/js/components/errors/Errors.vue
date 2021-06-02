@@ -1,6 +1,8 @@
 <template>
-  <div class="col-sm-12">
+  <div v-bind:class="[isCobDetails ? fillRow : notFillRow]">
     <h2>All CoB Errors</h2>
+
+    <!-- Search Bar -->
     <div class="row">
       <div class="search-wrapper panel-heading col mb-2">
         <input class="form-control" type="text" v-model="searchQuery" placeholder="Search" />
@@ -11,20 +13,23 @@
       </div>
     </div>
 
+    <!-- Pagination -->
     <div class="row">
       <div class="col-sm-6">
         <Pagination
-          v-bind:errors="filteredErrors"
-          v-bind:currentPage="currentPage"
-          v-bind:pageSize="pageSize"
+          :items="filteredErrors"
+          :currentPage="currentPage"
+          :pageSize="pageSize"
           v-on:pageUpdate="updatePage"
         ></Pagination>
       </div>
+      <!-- New Error Button -->
       <div class="col-sm-1 offset-sm-5 text-right">
-        <NewErrorResolution v-on:refreshPage="refreshPage" :edit="false"></NewErrorResolution>
+        <NewErrorResolution v-on:refreshPage="refreshPage"></NewErrorResolution>
       </div>
     </div>
 
+    <!-- Errors List -->
     <div v-if="errors.length">
       <div
         class="card card-body mb-5 border-primary"
@@ -94,6 +99,8 @@ export default {
       isCobDetails: false,
       CDClass: "col-sm-11",
       notCDClass: "col-sm-12",
+      notFillRow: "col-sm-10",
+      fillRow: "col-sm-12",
       page_url: ""
     };
   },

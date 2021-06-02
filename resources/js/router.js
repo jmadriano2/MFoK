@@ -10,6 +10,7 @@ import cobLogPage from './components/coblogs/CobLogs.vue'
 import newCobLogPage from './components/coblogs/NewCobLog.vue'
 import cobLogDetailsPage from './components/coblogs/CobLogDetails.vue'
 import pageNotFound from './components/utility/PageNotFound.vue'
+import systemPage from './components/systems/Systems.vue'
 import axios from 'axios'
 
 const routes = [
@@ -68,6 +69,17 @@ const routes = [
         path: '/coblog/:id/details',
         component: cobLogDetailsPage,
         name: 'cobLogDetails',
+        beforeEnter: (to, from, next) =>{
+            axios.get('/api/authenticated').then(()=>{
+                next()
+            }).catch(()=>{
+                return next({ name: 'login' })
+            })
+        }
+    },
+    {
+        path: '/systems',
+        component: systemPage,
         beforeEnter: (to, from, next) =>{
             axios.get('/api/authenticated').then(()=>{
                 next()

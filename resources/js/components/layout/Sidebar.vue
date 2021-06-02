@@ -31,12 +31,12 @@
       </li>
       <li>
         <a
-          href="#pageSubmenu"
+          href="#errorSubmenu"
           data-toggle="collapse"
           aria-expanded="true"
           class="dropdown-toggle"
         >Errors and Resolutions</a>
-        <ul class="collapse list-unstyled" id="pageSubmenu">
+        <ul class="collapse list-unstyled" id="errorSubmenu">
           <li>
             <router-link to="/errors">All Errors</router-link>
           </li>
@@ -44,6 +44,9 @@
             <a href="#">Errors Reported by Me</a>
           </li>
         </ul>
+      </li>
+      <li>
+        <router-link to="/systems">Systems</router-link>
       </li>
       <li>
         <a href="#">Forum</a>
@@ -69,7 +72,7 @@ export default {
         this.$router.push({ name: "login" });
       });
     }
-  },
+  }
 };
 </script>
 

@@ -15,10 +15,11 @@ class SystemController extends Controller
      */
     public function index()
     {
-        //Get All Systems
-        $systems = System::all();
-
-        return SystemResource::collection($systems);
+        return System::with(['creator'])
+        ->orderBy('machine')
+        ->orderBy('system')
+        ->orderBy('zone')
+        ->get();
     }
 
     /**
@@ -29,19 +30,19 @@ class SystemController extends Controller
      */
     public function store(Request $request)
     {
-        $system = $request->isMethod('put') ? System::findorFail
-        ($request->system_id) : new System;
+        $request->validate([
+            'machine' => 'required',
+            'system' => 'required',
+            'zone' => 'required',
+            'release' => 'required',
+            'rundate' => 'required',
+        ]);
 
-        $system->id = $request->input('system_id');
-        $system->machine = $request->input('machine');
-        $system->system = $request->input('system');
-        $system->zone = $request->input('zone');
-        $system->release = $request->input('release');
-        $system->rundate = $request->input('rundate');
-
-        if($system->save()) {
-            return new SystemResource($system);
-        }
+        return System::create(array_merge($request->all(),
+            [
+                'creator_id' => auth()->user()->id,
+            ])
+        );
     }
 
     /**
@@ -52,9 +53,21 @@ class SystemController extends Controller
      */
     public function show($id)
     {
-        $system = System::findOrFail($id);
+        return System::find($id);
+    }
 
-        return new SystemResource($system);
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $system = System::find($id);
+        $system->update($request->all());
+        return $system;
     }
 
     /**
@@ -65,10 +78,6 @@ class SystemController extends Controller
      */
     public function destroy($id)
     {
-        $system = System::findOrFail($id);
-
-        if($system->delete()) {
-            return new SystemResource($system);
-        }
+        return System::destroy($id);
     }
 }

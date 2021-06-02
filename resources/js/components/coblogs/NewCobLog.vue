@@ -52,7 +52,7 @@
                                                     system: system.system,
                                                     zone: system.zone,
                                                     rundate: system.rundate,}">
-                                                        {{ system.machine }} - {{ system.system }}/{{system.zone}}
+                                                        {{ system.machine }} - {{ system.system }}/{{system.zone}} | {{system.release}}
                                             </option>
                                         </select>
                                     </div>
@@ -230,7 +230,7 @@ export default {
 
       axios.get(page_url).then((res) => {
           console.log(res);
-          this.systems = res.data.data;
+          this.systems = res.data;
       })
       .catch(function (error) {
             if (error.response) {

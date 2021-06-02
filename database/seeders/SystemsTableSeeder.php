@@ -18,24 +18,30 @@ class SystemsTableSeeder extends Seeder
         DB::table('cob_logs')->delete();
         DB::table('systems')->delete();
 
-        $machines = array('MNF', 'MNP', 'MNQ', 'GBMKILNW');
-        $systems = array('MA', 'PF', 'CV', 'TC');
-        $zones = array('M1', 'F6', 'C9', 'T3');
-        $releases = array('MP121', 'FM2.0', 'FM2.1', 'R4.01.03');
-        $rundates = array('20020816', '20040506', '20011126', '19970723');
+        $machines = array('MNF', 'MNP', 'MNQ', 'GBMKILNW', 'PHMKIMNA', 'MNO');
+        $systems = array('MA', 'PF', 'CV', 'TC', 'GB', 'LH');
+        $releases = array('Midas Plus 1.2.1 Service Pack 19', 'Fusion Midas 2.0', 'Fusion Midas 2.1', 'Midas R4.01.03', 'Fusion Midas 1.4.11.06 IR01', 'Fusion Midas 1.4.11.06 IR02');
         $current_date_time = Carbon::now()->toDateTimeString();
-        for ($x = 0; $x < 4; $x++) {
-            DB::table('systems')->insert([
-                'id' => $x + 1,
-                'machine' => $machines[$x],
-                'system' => $systems[$x],
-                'zone' => $zones[$x],
-                'release' => $releases[$x],
-                'rundate' => $rundates[$x],
-                'created_at' => $current_date_time,
-                'updated_at' => $current_date_time,
-                'creator_id' => 1
+        $counter = 0;
+        for ($x = 0; $x < 6; $x++) {
+            $zone2 = rand(1, 8);
+            for ($y = 0; $y < 2; $y++) {
+                $zone1 = substr($systems[$x], 0, 1);
+                $year = rand(1990, 2015);
+                $month = str_pad(rand(1, 12), 2, '0', STR_PAD_LEFT);
+                $day = str_pad(rand(1, 28), 2, '0', STR_PAD_LEFT);;
+                $rundate = $year . $month . $day;
+                DB::table('systems')->insert([
+                    'machine' => $machines[$x],
+                    'system' => $systems[$x],
+                    'zone' => $zone1 . $zone2 + $y,
+                    'release' => $releases[$x],
+                    'rundate' => $rundate,
+                    'created_at' => $current_date_time,
+                    'updated_at' => $current_date_time,
+                    'creator_id' => 1
                 ]);
             }
+        }
     }
 }
