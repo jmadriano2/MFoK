@@ -6,7 +6,7 @@
         <span>Toggle Sidebar</span>
       </button>
       <a href="#" class="navbar-brand"
-        >Midas Fountain of Knowledge
+        >Midas CoB Logger
         <img class="navbarLogo" src="/images/MFoK_logo_v2.png"
       /></a>
     </div>

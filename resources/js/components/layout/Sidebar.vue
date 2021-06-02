@@ -1,8 +1,8 @@
 <template>
   <nav id="sidebar" v-bind:class="{ hide: !sidebarActive }">
     <div class="sidebar-header">
-      <h3>Midas Fountain</h3>
-      <h3>of Knowledge</h3>
+      <h3>Midas</h3>
+      <h3>CoB Logger</h3>
     </div>
 
     <ul class="list-unstyled components">
