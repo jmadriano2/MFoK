@@ -1,6 +1,6 @@
 <template>
   <div class="col-sm-8">
-    <h1>All Systems</h1>
+    <h2>All Systems</h2>
 
     <!-- Search Bar -->
     <div class="row">
@@ -185,7 +185,7 @@ export default {
         return this.systemsInPage;
       }
     }
-  }
+  },
 };
 </script>
 <style scoped>

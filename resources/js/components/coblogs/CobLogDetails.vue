@@ -1,46 +1,78 @@
 <template>
   <div class="col-sm-12">
-    <h1>Cob Log Details</h1>
+    <h2>Cob Log Details</h2>
     <hr />
 
     <!-- CoB Log Details -->
-    <div class="card card-body mb-2">
-      <div class="row">
-        <div class="col-sm-3">
-          <h6>
-            System:
-            <strong>
-              {{ coblog.system.machine }} | {{ coblog.system.system }}/{{
-              coblog.system.zone
-              }}
-            </strong>
-          </h6>
-        </div>
-        <div class="col-sm-4">
-          <h6>
-            Runday:
-            <strong>{{ coblog.runday | formatDate }}</strong>
-          </h6>
-        </div>
-        <div class="col-sm-4">
-          <h6>
-            Next Working Day:
-            <strong>{{ coblog.next_working_day | formatDate }}</strong>
-          </h6>
-        </div>
-        <div class="col-sm-3">
-          <div v-if="coblog.conclusion">
-            Conclusion:
-            <strong>{{ coblog.conclusion }}</strong>
-          </div>
-          <div v-else>
-            Status:
-            <strong>{{ coblog.status }}</strong>
+    <div id="accordion" class="mb-2">
+      <div class="card">
+        <div class="card-header" id="headingCobLogDetails">
+          <div class="row">
+            <div class="col-sm-11">
+              <h6>
+                <strong>{{ coblog.description }}</strong>
+              </h6>
+            </div>
+            <div class="col-sm-1">
+              <i
+                v-bind:class="[detailToggled ? chevronUp : chevronDown]"
+                @click="detailToggled = !detailToggled"
+                data-toggle="collapse"
+                data-target="#collapseCobLogDetails"
+                aria-expanded="true"
+                aria-controls="collapseCobLogDetails"
+                style="font-size: 1.5rem;"
+              ></i>
+            </div>
           </div>
         </div>
-        <div class="col-sm-4">
-          Creator:
-          <strong>{{ coblog.logger.name }}</strong>
+
+        <div
+          id="collapseCobLogDetails"
+          class="collapse show"
+          aria-labelledby="headingCobLogDetails"
+          data-parent="#accordion"
+        >
+          <div class="card card-body">
+            <div class="row">
+              <div class="col-sm-3">
+                <h6>
+                  System:
+                  <strong>
+                    {{ coblog.system.machine }} | {{ coblog.system.system }}/{{
+                    coblog.system.zone
+                    }}
+                  </strong>
+                </h6>
+              </div>
+              <div class="col-sm-4">
+                <h6>
+                  Runday:
+                  <strong>{{ coblog.runday | formatDate }}</strong>
+                </h6>
+              </div>
+              <div class="col-sm-4">
+                <h6>
+                  Next Working Day:
+                  <strong>{{ coblog.next_working_day | formatDate }}</strong>
+                </h6>
+              </div>
+              <div class="col-sm-3">
+                <div v-if="coblog.conclusion">
+                  Conclusion:
+                  <strong>{{ coblog.conclusion }}</strong>
+                </div>
+                <div v-else>
+                  Status:
+                  <strong>{{ coblog.status }}</strong>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                Creator:
+                <strong>{{ coblog.logger.name }}</strong>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -90,7 +122,10 @@ export default {
       updateAllErrors: 0,
       isStatusComplete: false,
       completeClass: "col-sm-12",
-      incompleteClass: "col-sm-6"
+      incompleteClass: "col-sm-6",
+      detailToggled: true,
+      chevronUp: "fa fa-chevron-circle-up",
+      chevronDown: "fa fa-chevron-circle-down"
     };
   },
   components: {
@@ -130,7 +165,7 @@ export default {
     },
     refreshAllErrors() {
       this.updateAllErrors += 1;
-    }
+    },
   },
   filters: {
     formatDate: function(value) {
@@ -141,7 +176,4 @@ export default {
 };
 </script>
 <style scoped>
-strong {
-  color: green;
-}
 </style>

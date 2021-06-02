@@ -10,6 +10,7 @@ class CobLog extends Model
     use HasFactory;
     protected $fillable = [
         'system_id',
+        'description',
         'runday',
         'next_working_day',
         'start',

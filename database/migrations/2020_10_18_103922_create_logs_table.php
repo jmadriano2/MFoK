@@ -16,6 +16,7 @@ class CreateLogsTable extends Migration
         Schema::create('cob_logs', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('system_id')->unsigned();
+            $table->string('description',100);
             $table->string('runday', 8);//YYYYMMDD
             $table->string('next_working_day', 8);//YYYYMMDD
             $table->timestamp('start', 0)->nullable();

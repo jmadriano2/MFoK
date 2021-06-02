@@ -23,10 +23,27 @@
                         <div class="card see-through">
                             <div class="row">
                                 <div class="offset-sm-1 col-sm-10">
-                                    <!-- System field -->
+                                    <!-- Description field -->
                                     <div class="form-group mb-2 mt-1">
                                         <label
                                             for="recipient-name"
+                                            class="col-form-label mr-4">
+                                            Description:
+                                        </label>
+                                        <!-- System error -->
+                                        <div
+                                            class="alert alert-danger d-none"
+                                            role="alert"
+                                            :class="{'d-block': hasSystemError}">
+                                                {{ SystemErrorMessage }}
+                                        </div>
+                                        <!-- System dropdown -->
+                                        <input type="text" class="form-control" maxlength="100" v-model="coblog.description" />
+                                    </div>
+
+                                    <!-- System field -->
+                                    <div class="form-group mb-2 mt-1">
+                                        <label
                                             class="col-form-label mr-4">
                                             System:
                                         </label>
@@ -59,7 +76,7 @@
 
                                     <!-- Rundate field -->
                                     <div class="form-group mb-2">
-                                        <label for="recipient-name" class="col-form-label mr-4">
+                                        <label class="col-form-label mr-4">
                                             Current Run Date:
                                         </label>
                                         <!-- Rundate error -->
@@ -92,7 +109,7 @@
                                     </div>
 
                                     <div class="form-group mb-3">
-                                        <label for="recipient-name" class="col-form-label mr-4">
+                                        <label class="col-form-label mr-4">
                                             Next Run Date:
                                         </label>
                                         <!-- Next Rundate error -->
@@ -134,6 +151,12 @@
             <tab-content title="Start Log" icon="fa fa-list">
                 <div class="row">
                     <div class="col-sm-6 offset-sm-3">
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-sm-4">Description:</div>
+                                <div class="col-sm-6">{{ coblog.description }}</div>
+                            </div>
+                        </li>
                         <li class="list-group-item">
                             <div class="row">
                                 <div class="col-sm-4">Machine:</div>
@@ -210,6 +233,7 @@ export default {
       coblog: {
           id: "",
           system_id: "",
+          description: "",
           runday: "",
           next_working_day: "",
           status: "",

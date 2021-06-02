@@ -179,7 +179,7 @@ i {
   cursor: pointer;
 }
 
-.modal-dialog {
+#NewSystem > .modal-dialog {
   max-width: 35%;
 }
 </style>

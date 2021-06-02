@@ -1,5 +1,5 @@
 <template>
-  <div class="col-md-10">
+  <div class="col-md-11">
     <h2>All CoB Errors</h2>
 
     <!-- Search Bar -->
@@ -15,7 +15,7 @@
 
     <!-- Pagination -->
     <div class="row">
-      <div class="col-sm-6">
+      <div class="col-sm-8">
         <Pagination
           :items="filteredErrors"
           :currentPage="currentPage"
@@ -24,7 +24,7 @@
         ></Pagination>
       </div>
       <!-- New Error Button -->
-      <div class="col-sm-1 offset-sm-5 text-right">
+      <div class="col-sm-1 offset-sm-3 text-right">
         <NewErrorResolution v-on:refreshPage="refreshPage"></NewErrorResolution>
       </div>
     </div>
@@ -41,7 +41,7 @@
             v-if="isCobDetails"
             class="col-sm-1 r-border d-flex align-items-center justify-content-center"
           >
-            <div style="font-size: 4rem" @click="addCoblogError(error.id)">
+            <div style="font-size: 3rem" @click="addCoblogError(error.id)">
               <i class="fa fa-angle-double-left customLeftArrow"></i>
             </div>
           </div>

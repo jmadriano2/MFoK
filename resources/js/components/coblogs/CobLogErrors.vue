@@ -1,9 +1,9 @@
 <template>
-  <div class="col-sm-10">
+  <div class="col-sm-11">
     <form id="concludeCob" @submit.prevent="concludeCob">
       <div class="row">
         <div class="col-sm-8">
-          <h2>Errors Encountered</h2>
+          <h3>Errors Encountered</h3>
         </div>
         <div class="col-sm-3 mt-2" v-if="!coblog.conclusion">
           <select id="conclusions" class="form-control" v-model="concludeCobOption">
@@ -30,7 +30,7 @@
 
     <!-- Pagination -->
     <div class="row">
-      <div class="col-sm-6">
+      <div class="col-sm-8">
         <Pagination
           v-bind:items="filteredCoblogErrors"
           v-bind:currentPage="currentPage"
@@ -38,7 +38,7 @@
           v-on:pageUpdate="updatePage"
         ></Pagination>
       </div>
-      <div class="col-sm-1 offset-sm-5 text-right">
+      <div class="col-sm-1 offset-sm-3 text-right">
         <i
           class="fa fa-minus-square fa-2x"
           v-on:click="removeActive = !removeActive"
@@ -75,7 +75,7 @@
             class="col-sm-1 l-border d-flex align-items-center justify-content-center"
           >
             <div
-              style="font-size: 4rem"
+              style="font-size: 3rem"
               @click="
                 removeCoblogError(coblogError.pivot.log_id, coblogError.pivot.error_id)
               "
@@ -188,6 +188,7 @@ export default {
         .then(res => {
           this.coblog.concludeCobOption = "";
           alert("CoB Concluded");
+          this.removeActive = false;
           this.$emit("refreshPage");
         })
         .catch(function(error) {

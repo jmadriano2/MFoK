@@ -42,6 +42,7 @@ class CobLogController extends Controller
     {
         $request->validate([
             'system_id' => 'required',
+            'description' => 'required',
             'runday' => 'required',
             'next_working_day' => 'required',
             'status' => 'required',

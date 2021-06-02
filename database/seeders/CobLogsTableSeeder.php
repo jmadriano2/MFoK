@@ -22,6 +22,7 @@ class CobLogsTableSeeder extends Seeder
         DB::table('cob_logs')->insert([
             'id' => 1,
             'system_id' => 1,
+            'description' => 'CoB Log for MD-56361',
             'runday' => '20210216',
             'next_working_day' => '20210217',
             'status' => 'Ongoing',
@@ -35,6 +36,7 @@ class CobLogsTableSeeder extends Seeder
         for ($x = 1; $x < 4; $x++) {
             DB::table('cob_logs')->insert([
                 'id' => $x + 1,
+                'description' => 'CoB Log for MD-'.rand(50000,57948),
                 'system_id' => $x + 1,
                 'runday' => '20210216',
                 'next_working_day' => '20210217',
