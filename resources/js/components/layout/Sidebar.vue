@@ -27,6 +27,9 @@
           <li>
             <router-link to="/newcoblog">Create New Log</router-link>
           </li>
+          <li>
+            <router-link to="/uploadcoblog">Upload Log</router-link>
+          </li>
         </ul>
       </li>
       <li>

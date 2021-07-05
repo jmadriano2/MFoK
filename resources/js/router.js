@@ -8,6 +8,7 @@ import loginPage from './components/login/Login.vue'
 import errorPage from './components/errors/Errors.vue'
 import cobLogPage from './components/coblogs/CobLogs.vue'
 import newCobLogPage from './components/coblogs/NewCobLog.vue'
+import uploadCobLogPage from './components/coblogs/UploadCobLog.vue'
 import cobLogDetailsPage from './components/coblogs/CobLogDetails.vue'
 import pageNotFound from './components/utility/PageNotFound.vue'
 import systemPage from './components/systems/Systems.vue'
@@ -57,6 +58,17 @@ const routes = [
     {
         path: '/newcoblog',
         component: newCobLogPage,
+        beforeEnter: (to, from, next) =>{
+            axios.get('/api/authenticated').then(()=>{
+                next()
+            }).catch(()=>{
+                return next({ name: 'login' })
+            })
+        }
+    },
+    {
+        path: '/uploadcoblog',
+        component: uploadCobLogPage,
         beforeEnter: (to, from, next) =>{
             axios.get('/api/authenticated').then(()=>{
                 next()

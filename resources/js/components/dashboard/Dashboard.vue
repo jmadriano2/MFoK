@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Welcome to Dashboard, {{user.username}}!</h1>
+    <h2>Welcome to Dashboard, {{user.name}}!</h2>
   </div>
 </template>
 <script>

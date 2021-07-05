@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\CoblogImport;
 use Illuminate\Http\Request;
 use App\Models\CobLog;
+use App\Models\System;
 use Illuminate\Support\Carbon;
+use Excel;
+use \PhpOffice\PhpSpreadsheet\IOFactory;
 
 class CobLogController extends Controller
 {
@@ -15,7 +19,7 @@ class CobLogController extends Controller
      */
     public function index()
     {
-        return CobLog::with(['system','logger'])->orderBy('updated_at', 'DESC')->get();
+        return CobLog::with(['system', 'logger'])->orderBy('updated_at', 'DESC')->get();
     }
 
     /**
@@ -49,12 +53,94 @@ class CobLogController extends Controller
             'runtime' => 'required',
         ]);
 
-        return CobLog::create(array_merge($request->all(),
-            [
-                'logger_id' => auth()->user()->id,
-                'start' => Carbon::now(),
-            ])
+        return CobLog::create(
+            array_merge(
+                $request->all(),
+                [
+                    'logger_id' => auth()->user()->id,
+                    'start' => Carbon::now(),
+                ]
+            )
         );
+    }
+
+    /**
+     * Import Excel file contoining Cob Log Details and Errors.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function import(Request $request)
+    {
+        // $spreadsheet = IOFactory::load("05featuredemo.xlsx");
+        $sheets = Excel::toArray(new CoblogImport, $request->file('select_file'));
+        $table = 0;
+        $logDetails = [];
+        $errors = [];
+        $log = [];
+        $data = [];
+
+        foreach ($sheets as $sheet) {
+            foreach ($sheet as $row) {
+                switch ($table) {
+                    case 0:
+                        if ($row[0] == "D") {
+                            $system = System::where('machine', $row[1])
+                                ->where('system', $row[2])
+                                ->where('zone', $row[3])
+                                ->first();
+                            if ($system == "") {
+                                $system = [
+                                    "id" => -1,
+                                    "machine" => $row[1],
+                                    "system" => $row[2],
+                                    "zone" => $row[3],
+                                    "release" => $row[4],
+                                ];
+                            }
+                        }
+                        break;
+                    case 1:
+                        if ($row[0] == "D" && $system !== "") {
+                            $logDetails = [
+                                "system" => $system,
+                                "runday" => $row[1],
+                                "next_working_day" => $row[2],
+                                "description" => $row[3],
+                                "status" => $row[4],
+                                "start" => $row[5],
+                                "end" => $row[6],
+                                "runtime" => $row[7],
+                                "conclusion" => $row[8],
+                            ];
+                        }
+                        break;
+                    case 2:
+                        if ($row[0] == "D") {
+                            $error = [
+                                "component" => $row[1],
+                                "sequence" => "".$row[2],
+                                "problem" => $row[3],
+                                "resolution" => $row[4],
+                            ];
+                            array_push($errors, $error);
+                        }
+                        break;
+                }
+                if ($row[0] == "F") {
+                    $table++;
+                }
+            }
+            $log = [
+                "logDetails" => $logDetails,
+                "errors" => $errors,
+            ];
+            array_push($data, $log);
+            $table = 0;
+        }
+
+
+        return $data;
     }
 
     /**
@@ -65,7 +151,7 @@ class CobLogController extends Controller
      */
     public function show($id)
     {
-        return CobLog::with(['system','logger'])->where('id', $id)->get();
+        return CobLog::with(['system', 'logger'])->where('id', $id)->get();
     }
 
     /**
